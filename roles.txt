@@ -1,0 +1,24 @@
+Trainroute(Mark):
+	-Direction
+	-Line name(red, blue, etc.)
+Train(Andrew):
+	-ID
+	-Direction
+	-Speed (ticks / second)
+	-Passengers list
+Passenger(Tin):
+	-ID
+	-Embark
+	-Disembark
+	-Destination
+	-Switch lines
+Station(Bryon):
+	-Platforms
+	-Station Name
+Platform(Jeffery):
+	-ID
+	-Line
+	-Direction
+TrainSimulation(Shakib):
+	-Read from file
+	-Initialize route
