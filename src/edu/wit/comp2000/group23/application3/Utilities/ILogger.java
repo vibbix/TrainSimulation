@@ -1,8 +1,15 @@
 package edu.wit.comp2000.group23.application3.Utilities;
 
+
 /**
- * Created by beznosm on 10/24/2016.
+ * The logging interface implemented in each of the 5 main classes.
  */
 public interface ILogger {
+    Logger logger = null;
+
+    /**
+     * Log's an event spawned by the
+     * @param event Event to log
+     */
     void LogEvent(Event event);
 }

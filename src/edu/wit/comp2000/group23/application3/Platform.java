@@ -1,5 +1,6 @@
 package edu.wit.comp2000.group23.application3;
 
+import edu.wit.comp2000.group23.application3.Utilities.Event;
 import edu.wit.comp2000.group23.application3.Utilities.ILogger;
 
 /**
@@ -7,7 +8,7 @@ import edu.wit.comp2000.group23.application3.Utilities.ILogger;
  */
 public class Platform implements ILogger {
     @Override
-    public void LogEvent(String className, int instanceID, String event) {
+    public void LogEvent(Event event) {
 
     }
 }
