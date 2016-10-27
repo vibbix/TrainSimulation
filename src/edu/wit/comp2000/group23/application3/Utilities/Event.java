@@ -1,7 +1,7 @@
 package edu.wit.comp2000.group23.application3.Utilities;
 
 /**
- * Created by beznosm on 10/24/2016.
+ * An immutable logged Event.
  */
 public class Event {
     private String className;
@@ -13,29 +13,22 @@ public class Event {
         instanceID = instanceid;
         eventText = eventtext;
     }
-    //region Accesors/Mutators
+    //region Accesors
     public String getClassName() {
         return className;
-    }
-
-    public void setClassName(String className) {
-        this.className = className;
     }
 
     public int getInstanceID() {
         return instanceID;
     }
 
-    public void setInstanceID(int instanceID) {
-        this.instanceID = instanceID;
-    }
-
     public String getEventText() {
         return eventText;
     }
 
-    public void setEventText(String eventText) {
-        this.eventText = eventText;
-    }
     //endregion
+    @Override
+    public String toString(){
+        return "["+getClassName()+"\t\t]"+"["+getInstanceID()+"\t]" + "[" + getEventText() + "]";
+    }
 }
