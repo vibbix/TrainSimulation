@@ -1,6 +1,7 @@
 Trainroute(Mark):
 	-Direction
 	-Line name(red, blue, etc.)
+	-nextStation()
 Train(Andrew):
 	-ID
 	-Direction
@@ -17,8 +18,10 @@ Station(Bryon):
 	-Station Name
 Platform(Jeffery):
 	-ID
-	-Line
-	-Direction
+	-Station //accesors
+	-Direction //Accesors
+	-EnqueuePassengers //
+	-train
 TrainSimulation(Shakib):
 	-Read from file
 	-Initialize route
