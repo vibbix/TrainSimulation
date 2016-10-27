@@ -1,12 +1,17 @@
-Trainroute(Mark):
+TrainRoute(Mark):
+	-sync()
 	-Direction
 	-Line name(red, blue, etc.)
-	-nextStation()
+	-nextStation(train T)
+	-direction GetRoute(station arrival, station destination)
 Train(Andrew):
 	-ID
+	-Maximum # of occupants
 	-Direction
 	-Speed (ticks / second)
 	-Passengers ArrayList
+	-bool Board(Passenger)
+	-Disembark(passenger)
 Passenger(Tin):
 	-ID
 	-Embark
@@ -14,14 +19,51 @@ Passenger(Tin):
 	-Destination
 	-Switch lines
 Station(Bryon):
-	-Platforms
+	-Platforms(inbound, outbound)
+	-TrainRoute
 	-Station Name
+	-station ID
+	-SetPlatformTrain(train)//if null passed, that means there is no train
+	-Arrivingassenger(passenger) //Decides where to send the passenger to which platform
+	-DepartingPassenger(passenger) //
 Platform(Jeffery):
 	-ID
 	-Station //accesors
 	-Direction //Accesors
-	-EnqueuePassengers //
+	-EnqueuePassenger
+	-ArrivingPassenger(passenger) ->
+	-Departing passenger -> station.DepartPassenger(passenger);
 	-train
+	-queue length
 TrainSimulation(Shakib):
 	-Read from file
 	-Initialize route
+	-generate passengers
+Action
+	-embark(Platform)
+	-disembark(station)
+---------------------------------
+---------------------------------
+-TrainSimulation->TrainRoute
+	-Route information
+		-list of stations, and ticks between them, and # of trains
+		
+-TrainSimulation->Stations
+	-generate Random Passengers
+-TrainRoute->Station
+	-Creates station, creates platform
+	-Update when train arrives
+-Station->Passenger
+	-TrainRoute
+	
+-Station->Platform
+	-Tells it when train has arrived
+-platform->station
+	-
+	
+-TrainRoute->Train
+	-CurrentLocation(Platform)
+-Train->Passenger
+	-Update location
+-Passenger->Train
+	-disembark
