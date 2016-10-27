@@ -5,7 +5,7 @@ Train(Andrew):
 	-ID
 	-Direction
 	-Speed (ticks / second)
-	-Passengers list
+	-Passengers ArrayList
 Passenger(Tin):
 	-ID
 	-Embark
