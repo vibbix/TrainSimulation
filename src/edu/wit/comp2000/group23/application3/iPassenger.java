@@ -1,15 +1,15 @@
 package edu.wit.comp2000.group23.application3;
 
 public interface iPassenger {
-    public void enterStation(String station);
+    void enterStation(String station);
 
-    public void enterPlatform();
+    void enterPlatform();
 
-    public void waitForPassengers();
+    void waitForPassengers();
 
-    public void enterTrain();
+    void enterTrain();
 
-    public void leaveTrain();
+    void leaveTrain();
 
-    public void leaveStation();
+    void leaveStation();
 }

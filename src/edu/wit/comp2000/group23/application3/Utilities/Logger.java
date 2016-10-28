@@ -29,15 +29,12 @@ public class Logger {
         ps = stream;
     }
 
-    public void FlushQueue() {
-        while (!eventQueue.isEmpty()) {
-            ps.println("[" + currentTick + "]" + eventQueue.dequeue().toString());
-        }
+    public void Sync() {
         currentTick++;
     }
 
     public void AddEvent(Event event) {
-        eventQueue.enqueue(event);
+        ps.println("[" + currentTick + "]" + event.toString());
     }
 
 

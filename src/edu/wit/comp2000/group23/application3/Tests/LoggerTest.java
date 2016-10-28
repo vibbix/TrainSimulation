@@ -24,9 +24,9 @@ public class LoggerTest {
         PrintStream ps = new PrintStream(baos);
         //catches system.out
         Logger lg = new Logger(ps);
-        lg.AddEvent(new Event("classname", 1, "message"));
         Assert.assertEquals("", new String(baos.toByteArray(), StandardCharsets.UTF_8));
-        lg.FlushQueue();
+        lg.AddEvent(new Event("classname", 1, "message"));
+        lg.Sync();
         Assert.assertEquals("[0][classname\t\t][1\t][message]", new String(baos.toByteArray(), StandardCharsets.UTF_8).trim());
     }
 
@@ -40,9 +40,9 @@ public class LoggerTest {
         //catches system.out
         Logger lg = new Logger(ps);
         lg.AddEvent(new Event("classname", 1, "message"));
-        lg.FlushQueue();
+        lg.Sync();
         lg.AddEvent(new Event("classname", 2, "message"));
-        lg.FlushQueue();
+        lg.Sync();
         Assert.assertEquals("[0][classname\t\t][1\t][message]\n[1][classname\t\t][2\t][message]",
                 baos.toString().trim().replace("\r", ""));
 
@@ -55,7 +55,7 @@ public class LoggerTest {
         System.setOut(new java.io.PrintStream(out));
         Logger logger = new Logger();
         logger.AddEvent(new Event("classname", 1, "message"));
-        logger.FlushQueue();
+        logger.Sync();
         Assert.assertEquals("[0][classname\t\t][1\t][message]", out.toString().trim());
         System.setOut(old);
     }

@@ -1,7 +1,7 @@
 package edu.wit.comp2000.group23.application3;
 
-import edu.wit.comp2000.group23.application3.Utilities.Event;
-import edu.wit.comp2000.group23.application3.Utilities.ILogger;
+import edu.wit.comp2000.group23.application3.Utilities.Loggable;
+import edu.wit.comp2000.group23.application3.Utilities.Logger;
 
 /**
  * Created by beznosm on 10/24/2016.
@@ -31,25 +31,25 @@ import edu.wit.comp2000.group23.application3.Utilities.ILogger;
  * <p>
  * IMPLEMENT THIS IN STATION/PLATFORM CLASS
  */
-public class Passenger implements iPassenger, ILogger {
+public class Passenger extends Loggable {
 
     //private field variables
-    private static String destination;
-    private static String name;
-    private static String currentStation;
-    private static String currentPlatform;
-    private static boolean onTrain;
+    private Station destination;
+    private Station currentStation;
+    private Platform currentPlatform;
+    private boolean onTrain;
 
     //constructors
-    public Passenger() {
-
+    public Passenger(Logger l){
+        this(l, null, null, null);
     }
 
-    public Passenger(String destination, String name) {
-        Passenger.destination = destination;
-        Passenger.name = name;
+    public Passenger(Logger l, Station destination, Platform currentPlatform, Station currentStation) {
+        super(l);
         onTrain = false;
-        currentStation = "non";
+        this.destination = destination;
+        this.currentPlatform = currentPlatform;
+        this.currentStation = currentStation;
     }
 
     //passenger methods (core methods)
@@ -57,7 +57,7 @@ public class Passenger implements iPassenger, ILogger {
     /**
      * When the passenger enters the station
      */
-    public void enterStation(String station) {
+    public void enterStation(Station station) {
         currentStation = station;
     }
 
@@ -68,10 +68,6 @@ public class Passenger implements iPassenger, ILogger {
 
     }
 
-    @Override
-    public void LogEvent(Event event) {
-
-    }
     //waitForPassengers and enterTrain both use queues
 
     /**
@@ -103,37 +99,27 @@ public class Passenger implements iPassenger, ILogger {
     }
 
     //accessor methods
-    public static String getDestination() {
+    public Station getDestination() {
         return destination;
     }
 
-    public static String getName() {
-        return name;
-    }
 
-    public static String getCurrentStation() {
+    public Station getCurrentStation() {
         return currentStation;
     }
 
-    public static String getCurrentPlatform() {
+    public Platform getCurrentPlatform() {
         return currentPlatform;
     }
 
-    public static boolean onTrain() {
+    public boolean onTrain() {
         return onTrain;
     }
 
     @Override
     public String toString() {
-        return "Passenger info: " + "\nName: " + getName() + "\nDestination: " + getDestination() +
+        return "Passenger info: "+ "\nDestination: " + getDestination() +
                 "\nCurrent Station: " + getCurrentStation() + "\nPlatform: " + getCurrentPlatform() + "\nOn train: " + onTrain();
     }
 
-    public static void main(String[] args) {
-        Passenger passenger = new Passenger("Boston", "Tin");
-
-        passenger.enterStation("Longwood");
-
-        System.out.println(passenger);
-    }
 }

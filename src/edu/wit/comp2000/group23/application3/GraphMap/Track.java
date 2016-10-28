@@ -3,7 +3,8 @@ package edu.wit.comp2000.group23.application3.GraphMap;
 import edu.wit.comp2000.group23.application3.Direction;
 import edu.wit.comp2000.group23.application3.IOccupant;
 import edu.wit.comp2000.group23.application3.Utilities.Event;
-import edu.wit.comp2000.group23.application3.Utilities.ILogger;
+
+import edu.wit.comp2000.group23.application3.Utilities.Loggable;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 
 import java.util.ArrayList;
@@ -12,12 +13,10 @@ import java.util.List;
 /**
  * The track class is analogous to edges in graph theory. The Trains
  */
-public class Track<T> implements IConnector<T>, ILogger {
+public class Track<T> extends Loggable implements IConnector<T> {
     private T occupant;
     private IConnector inbound;
     private IConnector outbound;
-    private Logger logger;
-
 
     /**
      * Creates the track with preset
@@ -36,12 +35,13 @@ public class Track<T> implements IConnector<T>, ILogger {
      * @param outbound The outbound connector
      */
     public Track(Logger logger, IConnector<? extends Object> inbound, IConnector<? extends Object> outbound) {
+        super(logger);
         occupant = null;
         if (inbound != null)
             setConnector(inbound, Direction.Inbound);
         if (outbound != null)
             setConnector(outbound, Direction.Outbound);
-        this.logger = logger;
+
 
     }
 
@@ -66,10 +66,6 @@ public class Track<T> implements IConnector<T>, ILogger {
         return connectors;
     }
 
-    @Override
-    public void LogEvent(Event event) {
-        logger.AddEvent(event);
-    }
 
     //region Accessors/Mutators
     @Override
@@ -101,7 +97,7 @@ public class Track<T> implements IConnector<T>, ILogger {
     @Override
     public String toString() {
         String rtn = "Track: " + this.hashCode();
-        rtn += "; logger: " + logger.hashCode();
+        rtn += "; logger: " + super.getLogger().hashCode();
         rtn += "; Inbound: " + (inbound != null ? inbound.hashCode() : "null");
         rtn += "; Outbound: " + (outbound != null ? outbound.hashCode() : "null");
         rtn += "; Occupant: " + (occupant != null ? occupant.toString() : "null");

@@ -1,8 +1,7 @@
 package edu.wit.comp2000.group23.application3;
 
 import edu.wit.comp2000.group23.application3.GraphMap.IConnector;
-import edu.wit.comp2000.group23.application3.Utilities.Event;
-import edu.wit.comp2000.group23.application3.Utilities.ILogger;
+import edu.wit.comp2000.group23.application3.Utilities.Loggable;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 
 import java.util.List;
@@ -10,22 +9,17 @@ import java.util.List;
 /**
  * Created by beznosm on 10/24/2016.
  */
-public class Platform implements ILogger, IConnector<Train> {
+public class Platform extends Loggable implements IConnector<Train> {
     private Train occupant;
     private Direction platformDirection;
     private Station station;
     private IConnector inbound;
     private IConnector outbound;
-    private Logger logger;
 
     public Platform(Logger logger, Direction direction, Station station) {
+        super(logger);
         this.platformDirection = direction;
         this.station = station;
-    }
-
-    @Override
-    public void LogEvent(Event event) {
-
     }
 
     //region accessors/mutators
