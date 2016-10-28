@@ -9,6 +9,7 @@ public interface ILogger {
 
     /**
      * Log's an event spawned by the
+     *
      * @param event Event to log
      */
     void LogEvent(Event event);

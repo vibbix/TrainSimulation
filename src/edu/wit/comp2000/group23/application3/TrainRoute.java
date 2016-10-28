@@ -17,13 +17,17 @@ public class TrainRoute implements ITrainRoute, ILogger {
 
     }
 
-    @Override
+    //@Override
     public Platform getNextPlatform(Platform pt) {
         return null;
     }
 
-    @Override
+    //@Override
     public int tickDistancetoNextPlatform(Platform pt) {
         return 0;
+    }
+
+    public Direction getRoute(Station start, Station end) {
+        return Direction.Inbound;
     }
 }

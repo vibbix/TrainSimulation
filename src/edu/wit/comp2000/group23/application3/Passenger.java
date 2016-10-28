@@ -5,30 +5,30 @@ import edu.wit.comp2000.group23.application3.Utilities.ILogger;
 
 /**
  * Created by beznosm on 10/24/2016.
- *
+ * <p>
  * STEPS OF THE PASSENGER:
- *
+ * <p>
  * Leave home: Proceed to departure station
- *
+ * <p>
  * Enter station Proceed to platform for desired direction of travel Move into
  * positive at the end of the line of passengers who arrived before you
- *
+ * <p>
  * Direction: inbound or outbound?
- *
+ * <p>
  * Wait for passengers to disembark, then embark
- *
+ * <p>
  * ...
- *
+ * <p>
  * If destination == destination, wait for doors to open
- * 	disembark
- *
+ * disembark
+ * <p>
  * Leave station
- *
+ * <p>
  * HOW INBOUND | OUTBOUND WORKS:
- *
+ * <p>
  * Each station is assigned a numeric value, we would use compareTo in this case
  * >1 means inbound, <1 means outbound, =0 means the passenger has arrived
- *
+ * <p>
  * IMPLEMENT THIS IN STATION/PLATFORM CLASS
  */
 public class Passenger implements iPassenger, ILogger {
@@ -53,6 +53,7 @@ public class Passenger implements iPassenger, ILogger {
     }
 
     //passenger methods (core methods)
+
     /**
      * When the passenger enters the station
      */
@@ -102,28 +103,28 @@ public class Passenger implements iPassenger, ILogger {
     }
 
     //accessor methods
-    public static String getDestination(){
+    public static String getDestination() {
         return destination;
     }
 
-    public static String getName(){
+    public static String getName() {
         return name;
     }
 
-    public static String getCurrentStation(){
+    public static String getCurrentStation() {
         return currentStation;
     }
 
-    public static String getCurrentPlatform(){
+    public static String getCurrentPlatform() {
         return currentPlatform;
     }
 
-    public static boolean onTrain(){
+    public static boolean onTrain() {
         return onTrain;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Passenger info: " + "\nName: " + getName() + "\nDestination: " + getDestination() +
                 "\nCurrent Station: " + getCurrentStation() + "\nPlatform: " + getCurrentPlatform() + "\nOn train: " + onTrain();
     }
