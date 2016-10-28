@@ -7,7 +7,6 @@ import java.util.List;
  */
 public interface ITrainRoute {
     void Sync();
-    List<Train> trains;
     Platform getNextPlatform(Platform pt);
     int tickDistancetoNextPlatform(Platform pt);
 
