@@ -46,6 +46,15 @@ public class Train extends IOccupant {
         };
     }
 
+    public void Sync() {
+
+        for(Passenger p : this.getPassengers()) {
+            p.setCurrentStation(this.currentStation);
+            p.setCurrentPlatform(this.currentPlatform);
+            p.Sync();
+        }
+    }
+
     public Direction getDirection() {
         return this.direction;
     }
@@ -66,16 +75,20 @@ public class Train extends IOccupant {
         return this.id;
     }
 
+    public ArrayList<Passenger> getPassengers() {
+        return this.passengers;
+    }
+
     public void openDoors(){
         this.doorsOpen = true;
-        currentPlatform.setTrainReadyToLeave(false);
-        this.LogEvent("[TRAIN] " + this.id + " - opened doors.");
+        this.currentPlatform.setTrainReadyToLeave(false);
+        this.LogEvent("Opened doors");
     }
 
     public void closeDoors(){
         this.doorsOpen = false;
-        currentPlatform.setTrainReadyToLeave(true);
-        this.LogEvent("[TRAIN] " + this.id + " - closed doors.");
+        this.currentPlatform.setTrainReadyToLeave(true);
+        this.LogEvent("Closed doors");
     }
 
     public Station getCurrentStation() {
@@ -87,13 +100,17 @@ public class Train extends IOccupant {
     }
 
     public boolean embarkPassenger(Passenger p) {
-        this.passengers.add(p);
-        currentPassengers = passengers.size();
-        this.LogEvent("[TRAIN] " + this.id + " - embark passenger: " + p.getPassengerID());
+        if(!this.doorsOpen){return false;}
 
-        if (passengers.size() == maxPassengers - 1) {
+        this.passengers.add(p);
+        p.setTrain(this);
+        currentPassengers = passengers.size();
+        this.LogEvent("Embark passenger: " + p.getPassengerID());
+
+        if (this.passengers.size() == this.maxPassengers) {
             this.closeDoors();
-            this.LogEvent("[TRAIN] " + this.id + " - train full.");
+            this.LogEvent("TRAIN FULL");
+            return false;
         }
 
         return true;
@@ -101,22 +118,14 @@ public class Train extends IOccupant {
 
     public void disembarkPassenger(Passenger p) {
         this.passengers.remove(p);
-        currentPassengers = passengers.size();
-        this.LogEvent("[TRAIN] " + this.id + " - disembark passenger: " + p.getPassengerID());
-
-    }
-
-    public void changeDirection() {
-        if (this.direction.equals(Direction.Inbound)) {
-            setDirection(Direction.Outbound);
-        } else {
-            setDirection(Direction.Inbound);
-        }
+        p.setTrain(null);
+        this.currentPassengers = passengers.size();
+        this.LogEvent("Disembark passenger: " + p.getPassengerID());
     }
 
     public void setDirection(Direction d) {
         super.setDirection(d);
-        this.LogEvent("[TRAIN] " + this.id + " - changed direction to " + this.direction.name() + ".");
+        this.LogEvent("Changed direction to " + this.direction.name() + ".");
     }
 
     private void LogEvent(String event) {
