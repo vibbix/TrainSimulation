@@ -72,7 +72,7 @@ public class TrackTest {
     public void VerifyMultiDirectionalTrackPropagation() {
         IConnector section1 = new Track(logger);
         IConnector section2 = new Track(logger);
-        IConnector section3 = new Track(logger, section1, section2);
+        IConnector section3 = new Track(logger, section1, section2, -1);
         assertEquals(section1, section3.getConnector(Direction.Inbound));
         assertEquals(section2, section3.getConnector(Direction.Outbound));
     }
@@ -80,7 +80,7 @@ public class TrackTest {
     @Test
     public void VerifyDirectionalTrackPropagation() {
         IConnector ic1 = new Track(logger);
-        IConnector ic2 = new Track(logger, ic1, null);
+        IConnector ic2 = new Track(logger, ic1, null, -1);
         assertEquals(ic1, ic2.getConnector(Direction.Inbound));
         assertEquals(ic2, ic1.getConnector(Direction.Outbound));
     }
@@ -150,7 +150,7 @@ public class TrackTest {
     public void toStringTest() {
         IConnector section1 = new Track(logger);
         IConnector section2 = new Track(logger);
-        IConnector section3 = new Track(logger, section1, section2);
+        IConnector section3 = new Track(logger, section1, section2, -1);
         String rtn = "Track: " + section3.hashCode();
         rtn += "; logger: " + logger.hashCode();
         rtn += "; Inbound: " + section1.hashCode();
@@ -163,7 +163,7 @@ public class TrackTest {
     public void getConnectors() {
         IConnector section1 = new Track(logger);
         IConnector section2 = new Track(logger);
-        IConnector section3 = new Track(logger, section1, section2);
+        IConnector section3 = new Track(logger, section1, section2, -1);
         assertArrayEquals(new IConnector[]{section1, section2}, section3.getConnectors().toArray());
     }
 

@@ -17,6 +17,7 @@ public class Track<T> extends Loggable implements IConnector<T> {
     private T occupant;
     private IConnector inbound;
     private IConnector outbound;
+    private int trackID;
 
     /**
      * Creates the track with preset
@@ -24,7 +25,7 @@ public class Track<T> extends Loggable implements IConnector<T> {
      * @param logger Logger for track to use
      */
     public Track(Logger logger) {
-        this(logger, null, null);
+        this(logger, null, null, -1);
     }
 
     /**
@@ -34,9 +35,10 @@ public class Track<T> extends Loggable implements IConnector<T> {
      * @param inbound  The inbound connector
      * @param outbound The outbound connector
      */
-    public Track(Logger logger, IConnector<? extends Object> inbound, IConnector<? extends Object> outbound) {
-        super(logger);
-        occupant = null;
+    public Track(Logger logger, IConnector<? extends Object> inbound, IConnector<? extends Object> outbound, int tID) {
+        super(logger, tID);
+        this.occupant = null;
+        this.trackID = tID;
         if (inbound != null)
             setConnector(inbound, Direction.Inbound);
         if (outbound != null)
@@ -104,4 +106,7 @@ public class Track<T> extends Loggable implements IConnector<T> {
         return rtn;
     }
 
+    public int getTrackID() {
+        return trackID;
+    }
 }

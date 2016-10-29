@@ -1,7 +1,5 @@
 package edu.wit.comp2000.group23.application3;
 
-import edu.wit.comp2000.group23.application3.Exceptions.TrainPassengerOverflowException;
-import edu.wit.comp2000.group23.application3.Utilities.Event;
 import edu.wit.comp2000.group23.application3.Utilities.Loggable;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 
@@ -19,9 +17,12 @@ public class Train extends IOccupant {
     private int maxPassengers;
     private int currentPassengers = 0;
 
+    private boolean doorsOpen = true;
+
     private int id;
 
     private Station currentStation;
+    private Platform currentPlatform;
 
     private ArrayList<Passenger> passengers;
 
@@ -65,8 +66,16 @@ public class Train extends IOccupant {
         return this.id;
     }
 
-    public boolean canMove() {
-        return true;
+    public void openDoors(){
+        this.doorsOpen = true;
+        currentPlatform.setTrainReadyToLeave(false);
+        this.LogEvent("[TRAIN] " + this.id + " - opened doors.");
+    }
+
+    public void closeDoors(){
+        this.doorsOpen = false;
+        currentPlatform.setTrainReadyToLeave(true);
+        this.LogEvent("[TRAIN] " + this.id + " - closed doors.");
     }
 
     public Station getCurrentStation() {
@@ -77,19 +86,23 @@ public class Train extends IOccupant {
         this.currentStation = s;
     }
 
-    public void embarkPassenger(Passenger p) throws TrainPassengerOverflowException {
-        if (passengers.size() >= maxPassengers) {
-            throw new TrainPassengerOverflowException(this.getId() + "");
-        }
+    public boolean embarkPassenger(Passenger p) {
         this.passengers.add(p);
         currentPassengers = passengers.size();
-        LogEvent("[TRAIN] " + this.id + " embark passenger: " + p.getPassengerID());
+        this.LogEvent("[TRAIN] " + this.id + " - embark passenger: " + p.getPassengerID());
+
+        if (passengers.size() == maxPassengers - 1) {
+            this.closeDoors();
+            this.LogEvent("[TRAIN] " + this.id + " - train full.");
+        }
+
+        return true;
     }
 
     public void disembarkPassenger(Passenger p) {
         this.passengers.remove(p);
         currentPassengers = passengers.size();
-        LogEvent("[TRAIN] " + this.id + " disembark passenger: " + p.getPassengerID());
+        this.LogEvent("[TRAIN] " + this.id + " - disembark passenger: " + p.getPassengerID());
 
     }
 
@@ -103,7 +116,7 @@ public class Train extends IOccupant {
 
     public void setDirection(Direction d) {
         super.setDirection(d);
-        LogEvent("[TRAIN] " + this.id + " changed direction to " + this.direction.name() + ".");
+        this.LogEvent("[TRAIN] " + this.id + " - changed direction to " + this.direction.name() + ".");
     }
 
     private void LogEvent(String event) {
