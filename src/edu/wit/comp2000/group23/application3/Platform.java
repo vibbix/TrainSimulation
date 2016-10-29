@@ -5,6 +5,7 @@ import edu.wit.comp2000.group23.application3.Utilities.Loggable;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 
 import java.util.List;
+import java.util.concurrent.LinkedBlockingDeque;
 
 /**
  * Created by beznosm on 10/24/2016.
@@ -16,7 +17,7 @@ public class Platform extends Loggable implements IConnector<Train> {
     private int platformID;
     private IConnector inbound;
     private IConnector outbound;
-
+    private LinkedBlockingDeque<Passenger> boardingPassengers;
     private boolean trainReady = false;
 
     public Platform(Logger logger, Direction direction, Station station, int pID) {
@@ -24,6 +25,7 @@ public class Platform extends Loggable implements IConnector<Train> {
         this.platformDirection = direction;
         this.station = station;
         this.platformID = pID;
+        this.boardingPassengers = new LinkedBlockingDeque<>();
     }
 
     //region accessors/mutators
@@ -78,6 +80,19 @@ public class Platform extends Loggable implements IConnector<Train> {
     @Override
     public void moveConnector() throws Exception {
         moveConnector(occupant.getDirection());
+    }
+    public void enqueuePassenger(Passenger p){
+        boardingPassengers.push(p);
+    }
+    public boolean canDequeuePassenger(){
+        return boardingPassengers.size() > 0;
+    }
+    public Passenger dequeuePassenger(){
+        return this.boardingPassengers.pop();
+    }
+
+    public boolean isTrainReadyToLeave() {
+        return trainReady;
     }
     //endregion
 }
