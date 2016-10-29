@@ -37,11 +37,12 @@ public class Passenger extends Loggable {
     private Station destination;
     private Station currentStation;
     private Platform currentPlatform;
+    private Train currentTrain;
     private boolean onTrain;
     private int passengerID;
 
     //constructors
-    public Passenger(Logger l){
+    public Passenger(Logger l) {
         this(l, null, null, null, -1);
     }
 
@@ -52,59 +53,68 @@ public class Passenger extends Loggable {
         this.currentPlatform = currentPlatform;
         this.currentStation = currentStation;
         this.passengerID = pID;
+        this.currentTrain = null;
     }
 
     //passenger methods (core methods)
-
-    /**
-     * When the passenger enters the station
-     */
-    public void enterStation(Station station) {
-        currentStation = station;
-    }
-
-    /**
-     * Inbound or outbound depending on the destination (use compareTo here?)
-     */
-    public void enterPlatform() {
-
-    }
-
-    //waitForPassengers and enterTrain both use queues
-
-    /**
-     * If train arrivals, wait for Passengers
-     */
-    public void waitForPassengers() {
+    public void Sync() {
+        //at a station, not in queue
+        if(this.currentPlatform == null && this.currentTrain == null){
+            this.setPlatform(this.currentStation.getRoute(this.destination));
+            this.currentPlatform.enqueuePassenger(this);
+            return;
+        }
+        if (this.currentStation == this.destination) {
+            if (this.onTrain) {
+                this.disembarkTrain();
+            }
+        }
 
     }
 
-    /**
-     * Enter train when passengers leave the train
-     */
-    public void enterTrain() {
-        onTrain = true;
+    public Station getStation(){
+        return this.currentStation;
     }
 
-    /**
-     * Disembark.
-     */
-    public void leaveTrain() {
-
+    public void setStation(Station s) {
+        this.currentStation = s;
     }
 
-    /**
-     * Leave station.
-     */
-    public void leaveStation() {
+    public Platform getPlatform(){
+        return this.currentPlatform;
+    }
 
+    public void setPlatform(Platform p) {
+        this.currentPlatform = p;
+    }
+
+    public Train getTrain() {
+        return this.currentTrain;
+    }
+
+    public void setTrain(Train t) {
+        this.currentTrain = t;
+        if(t == null){
+            this.onTrain = false;
+        }else {
+            this.onTrain = true;
+        }
+    }
+
+
+    /**
+     * Disembarks the train and add itself to the list of arrived passengers
+     */
+    public void disembarkTrain() {
+        this.onTrain = false;
+        this.currentTrain = null;
+        this.currentPlatform.getStation().addArrivingPassenger(this);
     }
 
     //accessor methods
     public Station getDestination() {
         return destination;
     }
-
 
     public Station getCurrentStation() {
         return currentStation;
@@ -118,13 +128,19 @@ public class Passenger extends Loggable {
         return onTrain;
     }
 
-    public int getPassengerID() { return passengerID; }
+    public int getPassengerID() {
+        return passengerID;
+    }
 
-    public void setPassengerID(int passengerID) { this.passengerID = passengerID; }
+    public void setPassengerID(int passengerID) {
+        this.passengerID = passengerID;
+    }
 
     @Override
     public String toString() {
-        return "Passenger info: "+ "\nDestination: " + getDestination() +
+        return "Passenger info: " + "\nDestination: " + getDestination() +
                 "\nCurrent Station: " + getCurrentStation() + "\nPlatform: " + getCurrentPlatform() + "\nOn train: " + onTrain();
     }
+
+
 }

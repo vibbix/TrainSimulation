@@ -37,10 +37,11 @@ public interface IConnector<T> {
             if (getConnector(Direction.Inbound).getOccupant() != null) {
                 throw new Exception("Multiple objects cannot be on the same IConnector");
             }
-
             getConnector(Direction.Inbound).setOccupant(getOccupant());
             if (getOccupant() instanceof IOccupant) {
                 ((IOccupant) getOccupant()).setConnector(getConnector(Direction.Inbound));
+                //((IOccupant) getOccupant()).setDirection(getConnector(Direction.Inbound).);
+
             }
             this.setOccupant(null);
         }
