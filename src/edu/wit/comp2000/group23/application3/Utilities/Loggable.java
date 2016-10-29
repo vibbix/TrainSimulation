@@ -7,14 +7,16 @@ package edu.wit.comp2000.group23.application3.Utilities;
 public abstract class Loggable {
     private Logger logger;
     private String classname;
+    private int classID;
 
     /**
      * Creates a new logger with the default classname
      * @param logger Logger to push events to
      */
-    public Loggable(Logger logger){
+    public Loggable(Logger logger, int cID){
         this.logger = logger;
         this.classname = this.getClass().getSimpleName();
+        this.classID = cID;
     }
 
     /**
@@ -22,16 +24,17 @@ public abstract class Loggable {
      * @param logger Logger to push events to
      * @param name Name of the class
      */
-    public Loggable(Logger logger, String name){
+    public Loggable(Logger logger, String name, int cID){
         this.logger = logger;
         this.classname = name;
+        this.classID = cID;
     }
     /**
      * Logs a new event
      * @param event Event to log
      */
     public void logEvent(String event){
-        logger.AddEvent(new Event(classname, this.hashCode(), event));
+        logger.AddEvent(new Event(classname, this.classID, event));
     }
 
     /**

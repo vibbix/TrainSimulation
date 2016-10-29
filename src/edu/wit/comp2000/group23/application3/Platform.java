@@ -13,13 +13,17 @@ public class Platform extends Loggable implements IConnector<Train> {
     private Train occupant;
     private Direction platformDirection;
     private Station station;
+    private int platformID;
     private IConnector inbound;
     private IConnector outbound;
 
-    public Platform(Logger logger, Direction direction, Station station) {
-        super(logger);
+    private boolean trainReady = false;
+
+    public Platform(Logger logger, Direction direction, Station station, int pID) {
+        super(logger, pID);
         this.platformDirection = direction;
         this.station = station;
+        this.platformID = pID;
     }
 
     //region accessors/mutators
@@ -39,6 +43,9 @@ public class Platform extends Loggable implements IConnector<Train> {
         this.station = station;
     }
 
+    public void setTrainReadyToLeave(boolean ready) {
+        this.trainReady = ready;
+    }
 
     @Override
     public void setOccupant(Train occupant) {

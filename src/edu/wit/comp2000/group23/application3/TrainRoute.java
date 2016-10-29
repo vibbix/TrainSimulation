@@ -12,8 +12,8 @@ public class TrainRoute extends Loggable implements ITrainRoute {
     private long currentTick;
     private ArrayList<Train> trains;
     private ArrayList<Station> stations;
-    public TrainRoute(Logger logger){
-        super(logger);
+    public TrainRoute(Logger logger, int trID){
+        super(logger, trID);
         currentTick = 0;
     }
 

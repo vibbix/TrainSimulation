@@ -38,18 +38,20 @@ public class Passenger extends Loggable {
     private Station currentStation;
     private Platform currentPlatform;
     private boolean onTrain;
+    private int passengerID;
 
     //constructors
     public Passenger(Logger l){
-        this(l, null, null, null);
+        this(l, null, null, null, -1);
     }
 
-    public Passenger(Logger l, Station destination, Platform currentPlatform, Station currentStation) {
-        super(l);
-        onTrain = false;
+    public Passenger(Logger l, Station destination, Platform currentPlatform, Station currentStation, int pID) {
+        super(l, pID);
+        this.onTrain = false;
         this.destination = destination;
         this.currentPlatform = currentPlatform;
         this.currentStation = currentStation;
+        this.passengerID = pID;
     }
 
     //passenger methods (core methods)
@@ -116,10 +118,13 @@ public class Passenger extends Loggable {
         return onTrain;
     }
 
+    public int getPassengerID() { return passengerID; }
+
+    public void setPassengerID(int passengerID) { this.passengerID = passengerID; }
+
     @Override
     public String toString() {
         return "Passenger info: "+ "\nDestination: " + getDestination() +
                 "\nCurrent Station: " + getCurrentStation() + "\nPlatform: " + getCurrentPlatform() + "\nOn train: " + onTrain();
     }
-
 }

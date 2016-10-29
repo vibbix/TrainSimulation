@@ -22,7 +22,7 @@ class EncapsulatedLoggable extends Loggable{
         this(new ByteArrayOutputStream());
     }
     private EncapsulatedLoggable(ByteArrayOutputStream baos){
-        super(new Logger(new PrintStream(baos)));
+        super(new Logger(new PrintStream(baos)), -1);
         this.baos = baos;
     }
     @Override
