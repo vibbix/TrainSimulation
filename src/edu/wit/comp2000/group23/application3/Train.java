@@ -1,34 +1,17 @@
 package edu.wit.comp2000.group23.application3;
 
+import edu.wit.comp2000.group23.application3.Exceptions.TrainPassengerOverflowException;
 import edu.wit.comp2000.group23.application3.Utilities.Event;
-<<<<<<< HEAD
 import edu.wit.comp2000.group23.application3.Utilities.Loggable;
-import edu.wit.comp2000.group23.application3.Utilities.Logger;
-=======
-import edu.wit.comp2000.group23.application3.Utilities.ILogger;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 
 import java.util.ArrayList;
->>>>>>> 9954c5e81420af60d3bfcc215f8edeca7923b51b
 
 /**
  * Implemented by dechristophera on 10/27/2016.
  */
-<<<<<<< HEAD
-//Java doesn't have multiple inheritance so you can't extend both IOccupant & Loggable
-public class Train extends IOccupant {
-    private Loggable logger;
 
-    public Train(Logger l){
-        logger = new Loggable(l) {};
-    }
-    private void LogEvent(String event){
-        logger.logEvent(event);
-    }
-    public boolean canMove(){
-        return true;
-=======
-public class Train implements ILogger {
+public class Train extends IOccupant {
 
     private Direction direction;
     private int speed;
@@ -42,7 +25,7 @@ public class Train implements ILogger {
 
     private ArrayList<Passenger> passengers;
 
-    private Logger logger;
+    private Loggable logger;
 
     /**
      * @param d - enum direction (inbound or outbound)
@@ -58,7 +41,8 @@ public class Train implements ILogger {
 
         this.passengers = new ArrayList<>();
 
-        this.logger = l;
+        this.logger = new Loggable(l, id) {
+        };
     }
 
     public Direction getDirection() {
@@ -81,6 +65,10 @@ public class Train implements ILogger {
         return this.id;
     }
 
+    public boolean canMove() {
+        return true;
+    }
+
     public Station getCurrentStation() {
         return this.currentStation;
     }
@@ -89,16 +77,19 @@ public class Train implements ILogger {
         this.currentStation = s;
     }
 
-    public void embarkPassenger(Passenger p) {
+    public void embarkPassenger(Passenger p) throws TrainPassengerOverflowException {
+        if (passengers.size() >= maxPassengers) {
+            throw new TrainPassengerOverflowException(this.getId() + "");
+        }
         this.passengers.add(p);
         currentPassengers = passengers.size();
-        LogEvent(new Event("Train", this.id, "[TRAIN] " + this.id + " embark passenger: " + p.getId()));
+        LogEvent("[TRAIN] " + this.id + " embark passenger: " + p.getPassengerID());
     }
 
     public void disembarkPassenger(Passenger p) {
         this.passengers.remove(p);
         currentPassengers = passengers.size();
-        LogEvent(new Event("Train", this.id, "[TRAIN] " + this.id + " disembark passenger: " + p.getId()));
+        LogEvent("[TRAIN] " + this.id + " disembark passenger: " + p.getPassengerID());
 
     }
 
@@ -110,14 +101,13 @@ public class Train implements ILogger {
         }
     }
 
-    private void setDirection(Direction d) {
-        this.direction = d;
-        LogEvent(new Event("Train", this.id, "[TRAIN] " + this.id + " changed direction to " + this.direction.name() + "."));
+    public void setDirection(Direction d) {
+        super.setDirection(d);
+        LogEvent("[TRAIN] " + this.id + " changed direction to " + this.direction.name() + ".");
     }
 
-    @Override
-    public void LogEvent(Event event) {
-        this.logger.AddEvent(event);
->>>>>>> 9954c5e81420af60d3bfcc215f8edeca7923b51b
+    private void LogEvent(String event) {
+        this.logger.logEvent(event);
     }
+
 }
