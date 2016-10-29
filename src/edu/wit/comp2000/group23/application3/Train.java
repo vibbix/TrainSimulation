@@ -1,14 +1,33 @@
 package edu.wit.comp2000.group23.application3;
 
 import edu.wit.comp2000.group23.application3.Utilities.Event;
+<<<<<<< HEAD
+import edu.wit.comp2000.group23.application3.Utilities.Loggable;
+import edu.wit.comp2000.group23.application3.Utilities.Logger;
+=======
 import edu.wit.comp2000.group23.application3.Utilities.ILogger;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 
 import java.util.ArrayList;
+>>>>>>> 9954c5e81420af60d3bfcc215f8edeca7923b51b
 
 /**
  * Implemented by dechristophera on 10/27/2016.
  */
+<<<<<<< HEAD
+//Java doesn't have multiple inheritance so you can't extend both IOccupant & Loggable
+public class Train extends IOccupant {
+    private Loggable logger;
+
+    public Train(Logger l){
+        logger = new Loggable(l) {};
+    }
+    private void LogEvent(String event){
+        logger.logEvent(event);
+    }
+    public boolean canMove(){
+        return true;
+=======
 public class Train implements ILogger {
 
     private Direction direction;
@@ -99,5 +118,6 @@ public class Train implements ILogger {
     @Override
     public void LogEvent(Event event) {
         this.logger.AddEvent(event);
+>>>>>>> 9954c5e81420af60d3bfcc215f8edeca7923b51b
     }
 }

@@ -8,11 +8,12 @@ public class Event {
     private int instanceID;
     private String eventText;
 
-    public Event(String classname, int instanceid, String eventtext){
+    public Event(String classname, int instanceid, String eventtext) {
         className = classname;
         instanceID = instanceid;
         eventText = eventtext;
     }
+
     //region Accesors
     public String getClassName() {
         return className;
@@ -28,7 +29,7 @@ public class Event {
 
     //endregion
     @Override
-    public String toString(){
-        return "["+getClassName()+"\t\t]"+"["+getInstanceID()+"\t]" + "[" + getEventText() + "]";
+    public String toString() {
+        return "[" + getClassName() + "\t\t]" + "[" + getInstanceID() + "\t]" + "[" + getEventText() + "]";
     }
 }
