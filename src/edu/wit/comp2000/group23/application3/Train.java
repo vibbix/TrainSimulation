@@ -12,7 +12,6 @@ import java.util.ArrayList;
 public class Train extends IOccupant {
 
     private Direction direction;
-    private int speed;
 
     private int maxPassengers;
     private int currentPassengers = 0;
@@ -30,27 +29,26 @@ public class Train extends IOccupant {
 
     /**
      * @param d - enum direction (inbound or outbound)
-     * @param s - int speed constant
+     * @param max - max capacity
+     * @param id - train id
+     * @param l  - logger
      */
-    public Train(Direction d, int s, int max, int id, Logger l) {
+    public Train(Direction d, int max, int id, Logger l) {
         this.direction = d;
-        this.speed = s;
 
         this.maxPassengers = max;
 
         this.id = id;
 
         this.passengers = new ArrayList<>();
-
         this.logger = new Loggable(l, id) {
         };
     }
 
     public void Sync() {
-
         for(Passenger p : this.getPassengers()) {
-            p.setCurrentStation(this.currentStation);
-            p.setCurrentPlatform(this.currentPlatform);
+            p.setStation(this.currentStation);
+            p.setPlatform(this.currentPlatform);
             p.Sync();
         }
     }
@@ -59,9 +57,6 @@ public class Train extends IOccupant {
         return this.direction;
     }
 
-    public int getSpeed() {
-        return this.speed;
-    }
 
     public int getMaxPassengers() {
         return this.maxPassengers;

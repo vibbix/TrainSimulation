@@ -25,7 +25,6 @@ class EncapsulatedLoggable extends Loggable {
         super(new Logger(new PrintStream(baos)), -1);
         this.baos = baos;
     }
-
     @Override
     public String toString() {
         return new String(baos.toByteArray(), StandardCharsets.UTF_8).trim();

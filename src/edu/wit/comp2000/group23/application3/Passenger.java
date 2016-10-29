@@ -100,8 +100,6 @@ public class Passenger extends Loggable {
             this.onTrain = true;
         }
     }
-
-
     /**
      * Disembarks the train and add itself to the list of arrived passengers
      */

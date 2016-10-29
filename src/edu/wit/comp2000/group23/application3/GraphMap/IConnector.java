@@ -40,7 +40,6 @@ public interface IConnector<T> {
             getConnector(Direction.Inbound).setOccupant(getOccupant());
             if (getOccupant() instanceof IOccupant) {
                 ((IOccupant) getOccupant()).setConnector(getConnector(Direction.Inbound));
-                //((IOccupant) getOccupant()).setDirection(getConnector(Direction.Inbound).);
 
             }
             this.setOccupant(null);

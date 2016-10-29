@@ -16,12 +16,14 @@ public class TrainRoute extends Loggable {
     //private
     public TrainRoute(Logger logger, int trID) {
         super(logger, trID);
-        currentTick = 0;
+        this.currentTick = 0;
+        this.trains = new ArrayList<>();
+        this.stations = new ArrayList<>();
     }
 
     //@Override
     public void Sync() {
-        for (Train t : trains) {
+        for (Train t : this.trains) {
             try {
                 if (t.getConnector() instanceof Platform) {
                     if (((Platform) t.getConnector()).isTrainReadyToLeave()) {
@@ -32,9 +34,10 @@ public class TrainRoute extends Loggable {
                 logEvent("Could not move train. Passengers liquified.");
             }
         }
+        for(Station s : this.stations){
+            s.Sync();
+        }
     }
-
-
     public Direction getRoute(Station start, Station end) {
         throw new NotImplementedException();
     }

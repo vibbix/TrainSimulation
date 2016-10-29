@@ -54,5 +54,4 @@ public class Station extends Loggable {
         arrivedPassengers.add(p);
     }
 
-
 }
