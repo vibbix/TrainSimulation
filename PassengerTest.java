@@ -7,14 +7,21 @@ import org.junit.Test;
  *
  */
 public class PassengerTest {
-
+	
+	
+	/**
+	 * test if the passenger's train is equal to the train 
+	 */
 	@Test
 	public void embarkTrain() throws Exception {
 		Passenger p = new Passenger();
 		p.setTrain(t);
 		Assert.assertEquals(p.getTrain, t);
 	}
-
+	
+	/**
+	 * test toString for Passenger class
+	 */
 	@Test
 	public void toStringTest() throws Exception{
 		Passenger p = new Passenger();
