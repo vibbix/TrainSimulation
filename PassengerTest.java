@@ -12,7 +12,7 @@ public class PassengerTest {
 	public void embarkTrain() throws Exception {
 		Passenger p = new Passenger();
 		p.setTrain(t);
-		
+		Assert.assertEquals(p.getTrain, t);
 	}
 
 	@Test
