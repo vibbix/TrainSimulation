@@ -36,11 +36,11 @@ public class PassengerTest {
 		Logger l = new Logger();
 		Passenger p = new Passenger(l, null, null, null, -1);
 		String string = "Passenger info: ";
+		string += "\nPassenger ID: " + p.getPassengerID();
 		string += "\nDestination: " + p.getDestination();
 		string += "\nCurrent Station: " + p.getCurrentStation();
 		string += "\nPlatform: " + p.getCurrentPlatform();
 		string += "\nOn train: " + p.getOnTrain();
 		Assert.assertEquals(string, p.toString());
 	}
-
 }
