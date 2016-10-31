@@ -218,8 +218,11 @@ public class Passenger extends Loggable {
 	 */
 	@Override
 	public String toString() {
-		return "Passenger info: " + "\nDestination: " + getDestination() + "\nCurrent Station: " + getCurrentStation()
-				+ "\nPlatform: " + getCurrentPlatform() + "\nOn train: " + getOnTrain();
+		return "Passenger info: " + "\nPassenger ID: " + this.getPassengerID() + 
+				"\nDestination: " + this.getDestination() + 
+				"\nCurrent Station: " + this.getCurrentStation() +
+				"\nPlatform: " + this.getCurrentPlatform() + 
+				"\nOn train: " + this.getOnTrain();
 	}
 
 
