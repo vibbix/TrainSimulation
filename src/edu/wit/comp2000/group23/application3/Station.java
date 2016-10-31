@@ -12,12 +12,13 @@ public class Station extends Loggable {
 
     private Platform inbound;
     private Platform outbound;
-    private ArrayList<Passenger> arrivedPassengers = new ArrayList<>();
+    private ArrayList<Passenger> arrivedPassengers;
     private TrainRoute route;
 
     public Station(Logger l, TrainRoute tr, int sID){
         super(l, sID);
         this.route = tr;
+        this.arrivedPassengers = new ArrayList<>();
         inbound = new Platform(l, Direction.Inbound, this, sID*10);
         outbound = new Platform(l, Direction.Outbound, this, (sID*10)+1);
     }
