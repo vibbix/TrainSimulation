@@ -1,6 +1,7 @@
 package edu.wit.comp2000.group23.application3;
 
 import edu.wit.comp2000.group23.application3.GraphMap.IConnector;
+import edu.wit.comp2000.group23.application3.GraphMap.Track;
 import edu.wit.comp2000.group23.application3.Utilities.Loggable;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 
@@ -67,6 +68,11 @@ public class Platform extends Loggable implements IConnector<Train> {
 
     @Override
     public void setConnector(IConnector connector, Direction direction) {
+        if(direction == Direction.Inbound) {
+            inbound = connector;
+        }else{
+            outbound = connector;
+        }
 
     }
 
@@ -94,5 +100,32 @@ public class Platform extends Loggable implements IConnector<Train> {
     public boolean isTrainReadyToLeave() {
         return trainReady;
     }
+
+    public int getPlatformID() {
+        return platformID;
+    }
     //endregion
+    @Override
+    public String toString() {
+        String rtn = "Platform: " + platformID;
+        rtn += "; logger: " + super.getLogger().hashCode();
+        rtn += "; Inbound: ";
+        if (this.inbound == null){
+            rtn += "null";
+        } else if (this.inbound instanceof Platform){
+            rtn += "(Platform)"+ ((Platform) inbound).getPlatformID();
+        } else if (this.inbound instanceof Track){
+            rtn += "(Track)" + ((Track) this.inbound).getTrackID();
+        }
+        rtn += "; Outbound: ";
+        if (this.outbound == null){
+            rtn += "null";
+        } else if (this.outbound instanceof Platform){
+            rtn += "(Platform)"+ ((Platform) outbound).getPlatformID();
+        } else if (this.outbound instanceof Track){
+            rtn += "(Track)" + ((Track) this.outbound).getTrackID();
+        }
+        rtn += "; Occupant: " + (occupant != null ? occupant.toString() : "null");
+        return rtn;
+    }
 }
