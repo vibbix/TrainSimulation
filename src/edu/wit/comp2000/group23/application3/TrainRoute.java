@@ -31,7 +31,7 @@ public class TrainRoute extends Loggable {
                     }
                 }
             } catch (Exception ex) {
-                logEvent("Could not move train. Passengers liquified.");
+                logEvent("Could not move train. Passengers vaporized.");
             }
         }
         for(Station s : this.stations){
