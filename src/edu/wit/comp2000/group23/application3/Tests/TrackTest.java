@@ -148,13 +148,13 @@ public class TrackTest {
 
     @Test
     public void toStringTest() {
-        IConnector section1 = new Track(logger);
-        IConnector section2 = new Track(logger);
-        IConnector section3 = new Track(logger, section1, section2, -1);
-        String rtn = "Track: " + section3.hashCode();
+        IConnector section1 = new Track(logger, null, null, 0);
+        IConnector section2 = new Track(logger, null, null, 1);
+        IConnector section3 = new Track(logger, section1, section2, 2);
+        String rtn = "Track: 2";
         rtn += "; logger: " + logger.hashCode();
-        rtn += "; Inbound: " + section1.hashCode();
-        rtn += "; Outbound: " + section2.hashCode();
+        rtn += "; Inbound: (Track) 0";
+        rtn += "; Outbound: (Track) 1";
         rtn += "; Occupant: " + null;
         assertEquals(rtn, section3.toString());
     }
@@ -170,7 +170,7 @@ public class TrackTest {
     @Test
     public void emptyToStringTest() {
         IConnector section1 = new Track(logger);
-        String rtn = "Track: " + section1.hashCode();
+        String rtn = "Track: -1";
         rtn += "; logger: " + logger.hashCode();
         rtn += "; Inbound: " + null;
         rtn += "; Outbound: " + null;

@@ -48,10 +48,12 @@ public class Track<T> extends Loggable implements IConnector<T> {
 
     @Override
     public void setOccupant(T occupant) {
-        if (occupant instanceof IOccupant) {
+        this.occupant = occupant;
+        if (occupant instanceof IOccupant)
+        {
+
             ((IOccupant) occupant).setConnector(this);
         }
-        this.occupant = occupant;
     }
 
     @Override
@@ -103,17 +105,17 @@ public class Track<T> extends Loggable implements IConnector<T> {
         if (inbound == null){
             rtn += "null";
         } else if (inbound instanceof Platform){
-            rtn += "(Platform)"+ ((Platform) inbound).getPlatformID();
+            rtn += "(Platform) "+ ((Platform) inbound).getPlatformID();
         } else if (inbound instanceof Track){
-            rtn += "(Track)" + ((Track) inbound).trackID;
+            rtn += "(Track) " + ((Track) inbound).trackID;
         }
         rtn += "; Outbound: ";
         if (outbound == null){
             rtn += "null";
         } else if (outbound instanceof Platform){
-            rtn += "(Platform)"+ ((Platform) outbound).getPlatformID();
+            rtn += "(Platform) "+ ((Platform) outbound).getPlatformID();
         } else if (outbound instanceof Track){
-            rtn += "(Track)" + ((Track) outbound).trackID;
+            rtn += "(Track) " + ((Track) outbound).trackID;
         }
         rtn += "; Occupant: " + (occupant != null ? occupant.toString() : "null");
         return rtn;
