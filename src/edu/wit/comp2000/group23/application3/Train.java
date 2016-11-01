@@ -1,5 +1,6 @@
 package edu.wit.comp2000.group23.application3;
 
+import edu.wit.comp2000.group23.application3.GraphMap.IConnector;
 import edu.wit.comp2000.group23.application3.Utilities.Loggable;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 
@@ -136,8 +137,13 @@ public class Train extends IOccupant {
         this.logger.logEvent(event);
     }
 
-    public void setCurrentPlatformTesting(Platform p) {
-        this.currentPlatform = p;
+    public void setConnector(IConnector c){
+        super.setConnector(c);
+        if(c instanceof Platform){
+            this.currentPlatform = (Platform) c;
+        }else{
+            this.currentPlatform = null;
+        }
     }
 
 }

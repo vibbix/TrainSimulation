@@ -73,13 +73,16 @@ public class TrainSimulation extends Loggable {
     public static void main(String[] args){
         Logger logger = new Logger();
         TrainSimulation ts = new TrainSimulation(logger, new String[]{"s1", "s2", "s3", "s4", "s5"}, 0);
-        ts.startSimulation();
+        //ts.startSimulation();
         Scanner s = new Scanner(System.in);
         while(true){
-            String str = s.next();
-            if(str.equals("q")){
-                ts.stopSimulation();
-                return;
+            ts.simtask.run();
+            ts.passengertask.run();
+            try{
+                Thread.sleep(1000);
+
+            }catch(Exception ex){
+
             }
         }
     }

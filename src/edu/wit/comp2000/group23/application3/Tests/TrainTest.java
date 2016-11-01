@@ -99,7 +99,6 @@ public class TrainTest {
         Platform p = new Platform(new Logger(ps), Direction.Inbound, s, 0);
 
         t.setConnector(p);
-        t.setCurrentPlatformTesting(p);
 
         if (t.getConnector() instanceof Platform) {
             t.openDoors();
@@ -125,7 +124,6 @@ public class TrainTest {
         Platform p = new Platform(new Logger(ps), Direction.Inbound, s, 0);
 
         t.setConnector(p);
-        t.setCurrentPlatformTesting(p);
 
         if (t.getConnector() instanceof Platform) {
             t.openDoors();
@@ -148,7 +146,6 @@ public class TrainTest {
         Platform p = new Platform(new Logger(ps), Direction.Inbound, s, 0);
 
         t.setConnector(p);
-        t.setCurrentPlatformTesting(p);
 
         if (t.getConnector() instanceof Platform) {
             t.closeDoors();
@@ -226,8 +223,6 @@ public class TrainTest {
         Passenger p1 = new Passenger(new Logger(ps), s, p, s, 0);
 
         t.setConnector(p);
-        t.setCurrentPlatformTesting(p);
-
         t.embarkPassenger(p1);
 
         boolean success = t.embarkPassenger(p1);
@@ -253,7 +248,6 @@ public class TrainTest {
         Passenger p1 = new Passenger(new Logger(ps), s, p, s, 0);
 
         t.setConnector(p);
-        t.setCurrentPlatformTesting(p);
 
         t.closeDoors();
 
@@ -277,7 +271,6 @@ public class TrainTest {
         Passenger p1 = new Passenger(new Logger(ps), s, p, s, 0);
 
         t.setConnector(p);
-        t.setCurrentPlatformTesting(p);
 
         t.embarkPassenger(p1);
 
@@ -308,7 +301,6 @@ public class TrainTest {
         Platform p = new Platform(new Logger(ps), Direction.Inbound, s, 0);
 
         t.setConnector(p);
-        t.setCurrentPlatformTesting(p);
 
         Assert.assertEquals(p, t.getConnector());
     }
