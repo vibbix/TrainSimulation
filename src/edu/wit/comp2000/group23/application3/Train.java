@@ -43,6 +43,8 @@ public class Train extends IOccupant {
         this.passengers = new ArrayList<>();
         this.logger = new Loggable(l, id) {
         };
+
+        this.setDirectionNoLog(d);
     }
 
     public void Sync() {
@@ -54,9 +56,8 @@ public class Train extends IOccupant {
     }
 
     public Direction getDirection() {
-        return this.direction;
+        return super.getDirection();
     }
-
 
     public int getMaxPassengers() {
         return this.maxPassengers;
@@ -72,6 +73,10 @@ public class Train extends IOccupant {
 
     public ArrayList<Passenger> getPassengers() {
         return this.passengers;
+    }
+
+    public boolean getDoorState() {
+        return this.doorsOpen;
     }
 
     public void openDoors(){
@@ -99,7 +104,7 @@ public class Train extends IOccupant {
 
         this.passengers.add(p);
         p.setTrain(this);
-        currentPassengers = passengers.size();
+        this.currentPassengers = this.passengers.size();
         this.LogEvent("Embark passenger: " + p.getPassengerID());
 
         if (this.passengers.size() == this.maxPassengers) {
@@ -123,8 +128,16 @@ public class Train extends IOccupant {
         this.LogEvent("Changed direction to " + this.direction.name() + ".");
     }
 
-    private void LogEvent(String event) {
+    public void setDirectionNoLog(Direction d) {
+        super.setDirection(d);
+    }
+
+    public void LogEvent(String event) {
         this.logger.logEvent(event);
+    }
+
+    public void setCurrentPlatformTesting(Platform p) {
+        this.currentPlatform = p;
     }
 
 }
