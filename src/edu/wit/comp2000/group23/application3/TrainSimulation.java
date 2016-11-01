@@ -2,31 +2,65 @@ package edu.wit.comp2000.group23.application3;
 
 import edu.wit.comp2000.group23.application3.Utilities.Loggable;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
+
+import java.util.Random;
+import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 /**
- * Created by beznosm on 10/24/2016.
+ * The train simulator, including random passenger generation. and console output
  */
 public class TrainSimulation extends Loggable {
     private final double ticksPerSecond = 1.0;
-    private Timer timer;
-    private TimerTask task;
     private TrainRoute route;
-    public TrainSimulation(Logger logger, String configURI, int tsID){
+    private Timer simtimer;
+    private TimerTask simtask;
+    private Timer passengertimer;
+    private TimerTask passengertask;
+
+    public TrainSimulation(Logger logger, String[] stops, int tsID){
         super(logger, tsID);
-        timer = new Timer("loop");
-        task = new TimerTask(){
+        Random rand = new Random();
+
+        this.simtimer = new Timer("sim loop");
+        this.passengertimer = new Timer("passenger loop");
+        this.simtask = new TimerTask(){
             public void run(){
                 Sync();
             }
         };
+        this.passengertask = new TimerTask() {
+            private int cID = 0;
+            @Override
+            public void run() {
+                for(int i = 0; i < 5; i++){
+                    Station dest = route.getStations().get(rand.nextInt(route.getStations().size()));
+                    Station arrival = route.getStations().get(rand.nextInt(route.getStations().size()));
+                    Passenger p = new Passenger(logger, dest, null, arrival, cID);
+                    cID++;
+                }
+            }
+        };
 
+        this.route = new TrainRoute(logger, 0);
+        this.route.createRoute(stops);
+        this.route.createTrains();
     }
+
+    /**
+     * Starts the simulation
+     */
     public void startSimulation(){
-        timer.schedule(task, (long)(ticksPerSecond*1000));
+        simtimer.schedule(simtask, (long)(ticksPerSecond*1000));
+        passengertimer.schedule(passengertask, 2500);
     }
+
+    /**
+     * Stops the simulation
+     */
     public void stopSimulation(){
-        timer.cancel();
+        simtimer.cancel();
+        passengertask.cancel();
     }
     private void Sync(){
         route.Sync();
@@ -36,5 +70,18 @@ public class TrainSimulation extends Loggable {
     -sync each class
     -Flush logger queue
      */
+    public static void main(String[] args){
+        Logger logger = new Logger();
+        TrainSimulation ts = new TrainSimulation(logger, new String[]{"s1", "s2", "s3", "s4", "s5"}, 0);
+        ts.startSimulation();
+        Scanner s = new Scanner(System.in);
+        while(true){
+            String str = s.next();
+            if(str.equals("q")){
+                ts.stopSimulation();
+                return;
+            }
+        }
+    }
 
 }

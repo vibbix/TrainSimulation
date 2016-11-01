@@ -53,6 +53,8 @@ public class Platform extends Loggable implements IConnector<Train> {
     @Override
     public void setOccupant(Train occupant) {
         this.occupant = occupant;
+        if(occupant.getConnector() != this)
+            occupant.setConnector(this);
     }
 
     @Override

@@ -9,8 +9,6 @@ import org.junit.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static org.junit.Assert.*;
-
 /**
  * Created by beznosm on 10/29/2016.
  */

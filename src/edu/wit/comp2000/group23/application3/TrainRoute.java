@@ -4,7 +4,6 @@ import edu.wit.comp2000.group23.application3.GraphMap.IConnector;
 import edu.wit.comp2000.group23.application3.GraphMap.Track;
 import edu.wit.comp2000.group23.application3.Utilities.Loggable;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 
@@ -81,8 +80,11 @@ public class TrainRoute extends Loggable {
         Train t2 = new Train(Direction.Inbound, 100, 1,super.getLogger());
         trains.add(t1);
         trains.add(t2);
-        stations.get(stations.size()/2).getPlatform(Direction.Inbound).setOccupant(t1);
-        stations.get(stations.size()/2).getPlatform(Direction.Outbound).setOccupant(t2);
+        int half = stations.size()/2;
+        Platform in = stations.get(half).getPlatform(Direction.Inbound);
+        in.setOccupant(t1);
+        Platform out = stations.get(half).getPlatform(Direction.Outbound);//.setOccupant(t2);
+        out.setOccupant(t2);
     }
     private void createInBetweenTrack(Platform s, Platform e, int tickDistance){
         IConnector cnode = s;

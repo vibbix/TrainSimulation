@@ -3,8 +3,6 @@ package edu.wit.comp2000.group23.application3.GraphMap;
 import edu.wit.comp2000.group23.application3.Direction;
 import edu.wit.comp2000.group23.application3.IOccupant;
 import edu.wit.comp2000.group23.application3.Platform;
-import edu.wit.comp2000.group23.application3.Utilities.Event;
-
 import edu.wit.comp2000.group23.application3.Utilities.Loggable;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 

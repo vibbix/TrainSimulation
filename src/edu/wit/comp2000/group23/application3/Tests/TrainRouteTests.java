@@ -4,14 +4,10 @@ import edu.wit.comp2000.group23.application3.Direction;
 import edu.wit.comp2000.group23.application3.GraphMap.IConnector;
 import edu.wit.comp2000.group23.application3.Platform;
 import edu.wit.comp2000.group23.application3.TrainRoute;
-import edu.wit.comp2000.group23.application3.Utilities.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
 /**
  * Created by beznosm on 10/31/2016.
