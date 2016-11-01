@@ -42,7 +42,7 @@ public class Train extends IOccupant {
         this.id = id;
 
         this.passengers = new ArrayList<>();
-        this.logger = new Loggable(l, id) {
+        this.logger = new Loggable(this, l, id) {
         };
 
         this.setDirectionNoLog(d);
