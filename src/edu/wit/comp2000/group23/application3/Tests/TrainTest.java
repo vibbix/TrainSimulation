@@ -58,11 +58,11 @@ public class TrainTest {
     }
 
     @Test
-    public void TestGetId() {
+    public void TestGetID() {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream(baos);
         Train t = new Train(Direction.Inbound, 100, -1, new Logger(ps));
-        Assert.assertEquals(-1, t.getId());
+        Assert.assertEquals(-1, t.getID());
     }
 
     @Test
@@ -100,17 +100,13 @@ public class TrainTest {
 
         t.setConnector(p);
 
-        if (t.getConnector() instanceof Platform) {
-            t.openDoors();
-            Assert.assertEquals(true, t.getDoorState());
-            Assert.assertEquals(false, p.isTrainReadyToLeave());
+        t.openDoors();
+        Assert.assertEquals(true, t.getDoorState());
+        Assert.assertEquals(false, p.isTrainReadyToLeave());
 
-            t.closeDoors();
-            Assert.assertEquals(false, t.getDoorState());
-            Assert.assertEquals(true, p.isTrainReadyToLeave());
-        } else {
-            Assert.fail("Train not at platform.");
-        }
+        t.closeDoors();
+        Assert.assertEquals(false, t.getDoorState());
+        Assert.assertEquals(true, p.isTrainReadyToLeave());
     }
 
     @Test
@@ -125,14 +121,10 @@ public class TrainTest {
 
         t.setConnector(p);
 
-        if (t.getConnector() instanceof Platform) {
-            t.openDoors();
+        t.openDoors();
 
-            Assert.assertEquals(true, t.getDoorState());
-            Assert.assertEquals(false, p.isTrainReadyToLeave());
-        } else {
-            Assert.fail("Train not at platform.");
-        }
+        Assert.assertEquals(true, t.getDoorState());
+        Assert.assertEquals(false, p.isTrainReadyToLeave());
     }
 
     @Test
@@ -147,14 +139,10 @@ public class TrainTest {
 
         t.setConnector(p);
 
-        if (t.getConnector() instanceof Platform) {
-            t.closeDoors();
+        t.closeDoors();
 
-            Assert.assertEquals(false, t.getDoorState());
-            Assert.assertEquals(true, p.isTrainReadyToLeave());
-        } else {
-            Assert.fail("Train not at platform.");
-        }
+        Assert.assertEquals(false, t.getDoorState());
+        Assert.assertEquals(true, p.isTrainReadyToLeave());
     }
 
     @Test

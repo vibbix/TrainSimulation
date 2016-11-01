@@ -68,7 +68,7 @@ public class Train extends IOccupant {
         return this.currentPassengers;
     }
 
-    public int getId() {
+    public int getID() {
         return this.id;
     }
 
@@ -141,9 +141,17 @@ public class Train extends IOccupant {
         super.setConnector(c);
         if(c instanceof Platform){
             this.currentPlatform = (Platform) c;
+            this.setCurrentStation(((Platform) c).getStation());
         }else{
             this.currentPlatform = null;
         }
     }
 
+    public String toString() {
+        return "TRAIN " + this.getID() + " - " + this.getDirection().name() +
+                " [" + this.getCurrentPassengers() + "/" + this.getMaxPassengers() + "] " +
+                "[DOORS" + ((this.getDoorState()) ? "OPEN" : "CLOSED") + "] " +
+                "{Platform: " + ((this.getConnector() instanceof Platform) ? "YES" : "NO") + "} " +
+                "{Station: " + this.getCurrentStation().getID() + "}";
+    }
 }
