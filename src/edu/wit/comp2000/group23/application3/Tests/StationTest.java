@@ -1,6 +1,9 @@
 package edu.wit.comp2000.group23.application3.Tests;
 
-import edu.wit.comp2000.group23.application3.*;
+import edu.wit.comp2000.group23.application3.Passenger;
+import edu.wit.comp2000.group23.application3.Platform;
+import edu.wit.comp2000.group23.application3.Station;
+import edu.wit.comp2000.group23.application3.TrainRoute;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 import org.junit.Assert;
 import org.junit.Test;
@@ -15,7 +18,7 @@ public class StationTest {
     @Test
     public void addArrivingPassengerTest() {
         ArrayList<Passenger> expected = new ArrayList<>();
-        Station s = new Station(null, null, 0);
+        Station s = new Station(new Logger(), new TrainRoute(new Logger(), 0), 0, "MFA");
         Platform inboundTest = new Platform(null, null, null, 0);
 
         for (int i = 0; i < 3; i++) {
