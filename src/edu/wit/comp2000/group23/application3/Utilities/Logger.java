@@ -36,6 +36,4 @@ public class Logger {
     public void AddEvent(Event event) {
         ps.println("[" + currentTick + "]" + event.toString());
     }
-
-
 }

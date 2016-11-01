@@ -110,7 +110,7 @@ public class TrainRoute extends Loggable {
                     }
                 }
             } catch (Exception ex) {
-                logEvent("Could not move train. Passengers liquefied.");
+                logEvent("Could not move train. Passengers vaporized.");
             }
         }
         this.stations.forEach(Station::Sync);
