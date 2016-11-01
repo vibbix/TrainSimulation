@@ -106,7 +106,7 @@ public class Passenger extends Loggable {
     public void disembarkTrain() {
         this.onTrain = false;
         this.currentTrain = null;
-        this.currentPlatform.getStation().addArrivingPassenger(this);
+        this.currentStation.addArrivingPassenger(this);
     }
 
     //accessor methods

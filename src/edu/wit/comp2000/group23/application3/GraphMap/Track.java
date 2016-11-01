@@ -2,8 +2,7 @@ package edu.wit.comp2000.group23.application3.GraphMap;
 
 import edu.wit.comp2000.group23.application3.Direction;
 import edu.wit.comp2000.group23.application3.IOccupant;
-import edu.wit.comp2000.group23.application3.Utilities.Event;
-
+import edu.wit.comp2000.group23.application3.Platform;
 import edu.wit.comp2000.group23.application3.Utilities.Loggable;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 
@@ -35,7 +34,7 @@ public class Track<T> extends Loggable implements IConnector<T> {
      * @param inbound  The inbound connector
      * @param outbound The outbound connector
      */
-    public Track(Logger logger, IConnector<? extends Object> inbound, IConnector<? extends Object> outbound, int tID) {
+    public Track(Logger logger, IConnector<?> inbound, IConnector<?> outbound, int tID) {
         super(logger, tID);
         this.occupant = null;
         this.trackID = tID;
@@ -49,10 +48,12 @@ public class Track<T> extends Loggable implements IConnector<T> {
 
     @Override
     public void setOccupant(T occupant) {
-        if (occupant instanceof IOccupant) {
+        this.occupant = occupant;
+        if (occupant instanceof IOccupant)
+        {
+
             ((IOccupant) occupant).setConnector(this);
         }
-        this.occupant = occupant;
     }
 
     @Override
@@ -73,17 +74,17 @@ public class Track<T> extends Loggable implements IConnector<T> {
     @Override
     public void setConnector(IConnector connector, Direction direction) {
         if (direction == Direction.Inbound) {
-            if (inbound != null)
-                inbound.setConnector(null, Direction.Outbound);
-            inbound = connector;
-            if (inbound.getConnector(Direction.Outbound) != this)
-                inbound.setConnector(this, Direction.Outbound);
+            if (this.inbound != null)
+                this.inbound.setConnector(null, Direction.Outbound);
+            this.inbound = connector;
+            if (this.inbound.getConnector(Direction.Outbound) != this)
+                this.inbound.setConnector(this, Direction.Outbound);
         } else {
-            if (outbound != null)
-                outbound.setConnector(null, Direction.Inbound);
-            outbound = connector;
-            if (outbound.getConnector(Direction.Inbound) != this)
-                outbound.setConnector(this, Direction.Inbound);
+            if (this.outbound != null)
+                this.outbound.setConnector(null, Direction.Inbound);
+            this.outbound = connector;
+            if (this.outbound.getConnector(Direction.Inbound) != this)
+                this.outbound.setConnector(this, Direction.Inbound);
         }
     }
 
@@ -98,10 +99,24 @@ public class Track<T> extends Loggable implements IConnector<T> {
     //endregion
     @Override
     public String toString() {
-        String rtn = "Track: " + this.hashCode();
+        String rtn = "Track: " + this.trackID;
         rtn += "; logger: " + super.getLogger().hashCode();
-        rtn += "; Inbound: " + (inbound != null ? inbound.hashCode() : "null");
-        rtn += "; Outbound: " + (outbound != null ? outbound.hashCode() : "null");
+        rtn += "; Inbound: ";
+        if (inbound == null){
+            rtn += "null";
+        } else if (inbound instanceof Platform){
+            rtn += "(Platform) "+ ((Platform) inbound).getPlatformID();
+        } else if (inbound instanceof Track){
+            rtn += "(Track) " + ((Track) inbound).trackID;
+        }
+        rtn += "; Outbound: ";
+        if (outbound == null){
+            rtn += "null";
+        } else if (outbound instanceof Platform){
+            rtn += "(Platform) "+ ((Platform) outbound).getPlatformID();
+        } else if (outbound instanceof Track){
+            rtn += "(Track) " + ((Track) outbound).trackID;
+        }
         rtn += "; Occupant: " + (occupant != null ? occupant.toString() : "null");
         return rtn;
     }

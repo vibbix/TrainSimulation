@@ -1,6 +1,7 @@
 package edu.wit.comp2000.group23.application3;
 
 import edu.wit.comp2000.group23.application3.GraphMap.IConnector;
+import edu.wit.comp2000.group23.application3.GraphMap.Track;
 
 /**
  * Interface for classes that have direction
@@ -48,15 +49,25 @@ public abstract class IOccupant {
      */
     public void setConnector(IConnector connector) {
         this.connector = connector;
+        if(connector.getOccupant() != this)
+            connector.setOccupant(this);
     }
-
+    @Override
     public String toString() {
         String toStr = "";
-        try {
-            toStr = "Direction: " + direction.toString();
-            toStr += "; Connector: " + connector.toString();
-        } catch (NullPointerException npe) {
-            toStr += "; couldn't get back connector";
+        toStr = "Direction: " + direction.toString();
+        if (connector == null) {
+            toStr += "; Connector: null";
+        } else if (connector instanceof Track) {
+            toStr += "; Connector: (Track) " + ((Track) connector).getTrackID();
+        } else if (connector instanceof Platform){
+            toStr += "; Connector: (Platform) " + ((Platform) connector).getPlatformID();
+        } else{
+            try{
+                toStr += "; Connector: " + connector.toString();
+            }catch(Exception ex){
+                toStr += "; Connector: " + ex.toString();
+            }
         }
         return toStr;
     }
