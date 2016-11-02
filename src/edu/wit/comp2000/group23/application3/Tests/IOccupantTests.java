@@ -26,7 +26,7 @@ public class IOccupantTests {
         };
         ic.setDirection(Direction.Outbound);
         String toStr = "Direction: " + ic.getDirection().toString();
-        toStr += "; couldn't get back connector";
+        toStr += "; Connector: null";
         Assert.assertEquals(toStr, ic.toString());
     }
 
@@ -38,7 +38,7 @@ public class IOccupantTests {
         ic.setConnector(s1);
         ic.setDirection(Direction.Outbound);
         String toStr = "Direction: " + ic.getDirection().toString();
-        toStr += "; Connector: " + s1.toString();
+        toStr += "; Connector: (Track) -1";
         Assert.assertEquals(toStr, ic.toString());
     }
 }

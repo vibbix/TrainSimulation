@@ -20,6 +20,17 @@ public abstract class Loggable {
     }
 
     /**
+     * Creates a new logger with the default classname
+     * @param o object that logger gets name of in logs
+     * @param logger Logger to push events to
+     */
+    public Loggable(Object o, Logger logger, int cID) {
+        this.logger = logger;
+        this.classname = o.getClass().getSimpleName();
+        this.classID = cID;
+    }
+
+    /**
      * Creates a new logger with a specified classname
      * @param logger Logger to push events to
      * @param name Name of the class

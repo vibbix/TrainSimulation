@@ -1,5 +1,6 @@
 package edu.wit.comp2000.group23.application3;
 
+import edu.wit.comp2000.group23.application3.GraphMap.IConnector;
 import edu.wit.comp2000.group23.application3.Utilities.Loggable;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 
@@ -41,8 +42,10 @@ public class Train extends IOccupant {
         this.id = id;
 
         this.passengers = new ArrayList<>();
-        this.logger = new Loggable(l, id) {
+        this.logger = new Loggable(this, l, id) {
         };
+
+        this.setDirectionNoLog(d);
     }
 
     public void Sync() {
@@ -54,9 +57,8 @@ public class Train extends IOccupant {
     }
 
     public Direction getDirection() {
-        return this.direction;
+        return super.getDirection();
     }
-
 
     public int getMaxPassengers() {
         return this.maxPassengers;
@@ -66,12 +68,16 @@ public class Train extends IOccupant {
         return this.currentPassengers;
     }
 
-    public int getId() {
+    public int getID() {
         return this.id;
     }
 
     public ArrayList<Passenger> getPassengers() {
         return this.passengers;
+    }
+
+    public boolean getDoorState() {
+        return this.doorsOpen;
     }
 
     public void openDoors(){
@@ -99,7 +105,7 @@ public class Train extends IOccupant {
 
         this.passengers.add(p);
         p.setTrain(this);
-        currentPassengers = passengers.size();
+        this.currentPassengers = this.passengers.size();
         this.LogEvent("Embark passenger: " + p.getPassengerID());
 
         if (this.passengers.size() == this.maxPassengers) {
@@ -123,8 +129,29 @@ public class Train extends IOccupant {
         this.LogEvent("Changed direction to " + this.direction.name() + ".");
     }
 
-    private void LogEvent(String event) {
+    public void setDirectionNoLog(Direction d) {
+        super.setDirection(d);
+    }
+
+    public void LogEvent(String event) {
         this.logger.logEvent(event);
     }
 
+    public void setConnector(IConnector c){
+        super.setConnector(c);
+        if(c instanceof Platform){
+            this.currentPlatform = (Platform) c;
+            this.setCurrentStation(((Platform) c).getStation());
+        }else{
+            this.currentPlatform = null;
+        }
+    }
+
+    public String toString() {
+        return "TRAIN " + this.getID() + " - " + this.getDirection().name() +
+                " [" + this.getCurrentPassengers() + "/" + this.getMaxPassengers() + "] " +
+                "[DOORS" + ((this.getDoorState()) ? "OPEN" : "CLOSED") + "] " +
+                "{Platform: " + ((this.getConnector() instanceof Platform) ? "YES" : "NO") + "} " +
+                "{Station: " + this.getCurrentStation().getID() + "}";
+    }
 }
