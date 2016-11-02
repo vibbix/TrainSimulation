@@ -39,10 +39,10 @@ public class PassengerTest {
 	@Test
 	public void TrainTest() throws Exception {
 		Logger l = new Logger();
-		Passenger p = new Passenger(l, null, null, null, -1);
+		Passenger p = new Passenger(l, null, null, null, 1);
 		Train t = new Train(null, 0, 0, l);
 		p.setTrain(t);
-		Assert.assertEquals(p.getTrain(), t.getId());
+		Assert.assertEquals(p.getTrain(), t.getID());
 	}
 	
 	/**
@@ -72,7 +72,7 @@ public class PassengerTest {
 		TrainRoute tr = new TrainRoute(l, 1);
 		Station s = new Station(l, tr, 1);
 		p.setStation(s);
-		//Assert.assertEquals(p.getStation(), s.getId());
+		Assert.assertEquals(p.getStation(), s.getID());
 	}
 	
 	/**

@@ -5,31 +5,6 @@ import edu.wit.comp2000.group23.application3.Utilities.Logger;
 
 /**
  * Created by beznosm on 10/24/2016.
- * <p>
- * STEPS OF THE PASSENGER:
- * <p>
- * Leave home: Proceed to departure station
- * <p>
- * Enter station Proceed to platform for desired direction of travel Move into
- * positive at the end of the line of passengers who arrived before you
- * <p>
- * Direction: inbound or outbound?
- * <p>
- * Wait for passengers to disembark, then embark
- * <p>
- * ...
- * <p>
- * If destination == destination, wait for doors to open
- * disembark
- * <p>
- * Leave station
- * <p>
- * HOW INBOUND | OUTBOUND WORKS:
- * <p>
- * Each station is assigned a numeric value, we would use compareTo in this case
- * >1 means inbound, <1 means outbound, =0 means the passenger has arrived
- * <p>
- * IMPLEMENT THIS IN STATION/PLATFORM CLASS
  */
 public class Passenger extends Loggable {
 
@@ -40,12 +15,14 @@ public class Passenger extends Loggable {
 	private Train currentTrain;
 	private boolean onTrain;
 	private int passengerID;
+	private Loggable logger;
 
 	// constructors
 	/**
 	 * Default constructor.
 	 * 
-	 * @param logger 1
+	 * @param logger l
+	 *            
 	 */
 	public Passenger(Logger l) {
 		this(l, null, null, null, -1);
@@ -97,6 +74,8 @@ public class Passenger extends Loggable {
 	public void disembarkTrain() {
 		this.setTrain(null);
 		this.currentPlatform.getStation().addArrivingPassenger(this);
+		
+		this.logEvent("Passenger " + this.getPassengerID() + " disembark.");
 	}
 
 	// accessor methods
@@ -156,6 +135,14 @@ public class Passenger extends Loggable {
 	}
 
 	/**
+	 * accessor method, gets the id of the train
+	 * @return
+	 */
+	public int getTrain(){
+		return this.currentTrain.getID();
+	}
+	
+	/**
 	 * accessor method, sets passenger id
 	 * 
 	 * @return int
@@ -186,8 +173,10 @@ public class Passenger extends Loggable {
 		this.currentTrain = t;
 		if (t.equals(null)) {
 			this.onTrain = false;
+			this.LogEvent("Passenger " + this.getPassengerID() + " is off the train.");
 		} else {
 			this.onTrain = true;
+			this.LogEvent("Passenger " + this.getPassengerID() + " is on the train.");
 		}
 	}
 
@@ -205,7 +194,7 @@ public class Passenger extends Loggable {
 	 * mutator method, sets the platform the passenger is currently on
 	 * 
 	 * @param Platform
-	 *            
+	 * 
 	 */
 	public void setPlatform(Platform p) {
 		this.currentPlatform = p;
@@ -218,12 +207,15 @@ public class Passenger extends Loggable {
 	 */
 	@Override
 	public String toString() {
-		return "Passenger info: " + "\nPassenger ID: " + this.getPassengerID() + 
-				"\nDestination: " + this.getDestination() + 
-				"\nCurrent Station: " + this.getCurrentStation() +
-				"\nPlatform: " + this.getCurrentPlatform() + 
-				"\nOn train: " + this.getOnTrain();
+		return "Passenger info: " + "\nPassenger ID: " + this.getPassengerID() + "\nDestination: "
+				+ this.getDestination() + "\nCurrent Station: " + this.getCurrentStation() + "\nPlatform: "
+				+ this.getCurrentPlatform() + "\nOn train: " + this.getOnTrain();
 	}
-
-
+	
+	/**
+	 * Log events for Passenger class
+	 */
+	public void LogEvent(String event){
+		this.logger.logEvent(event);
+	}
 }
