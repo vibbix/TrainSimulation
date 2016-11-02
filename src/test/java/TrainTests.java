@@ -52,6 +52,8 @@ public class TrainTests {
         Passenger p1 = new Passenger(new Logger(ps), s, p, s, 0);
         Passenger p2 = new Passenger(new Logger(ps), s, p, s, 1);
 
+
+
         try {
             t.embarkPassenger(p1);
             t.embarkPassenger(p2);
@@ -232,15 +234,17 @@ public class TrainTests {
 
         t.setConnector(p);
 
-        boolean success = false;
+        t.openDoors();
+
+        boolean success = true;
 
         try {
             t.embarkPassenger(p1);
-            success = t.embarkPassenger(p1);
+            t.embarkPassenger(p1);
         } catch (TrainPassengerOverflowException e) {
             e.printStackTrace();
         } catch (TrainDoorsClosedException e) {
-            e.printStackTrace();
+            success = false;
         }
 
         Assert.assertEquals(false, success);
@@ -267,15 +271,15 @@ public class TrainTests {
 
         t.closeDoors();
 
-        boolean success = false;
+        boolean success = true;
 
         try {
             t.embarkPassenger(p1);
-            success = t.embarkPassenger(p1);
+            t.embarkPassenger(p1);
         } catch (TrainPassengerOverflowException e) {
             e.printStackTrace();
         } catch (TrainDoorsClosedException e) {
-            e.printStackTrace();
+            success = false;
         }
 
         Assert.assertEquals(false, success);
