@@ -1,4 +1,4 @@
-package edu.wit.comp2000.group23.application3;
+package edu.wit.comp2000.group23.application3.Enums;
 
 /**
  * The Direction things are going
