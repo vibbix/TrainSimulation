@@ -1,4 +1,4 @@
-# Train Simulator [![Build Status](https://travis-ci.com/vibbix/TrainSimulation.svg?token=moTUzkBKjMxZqr8uWPyy)](https://travis-ci.com/vibbix/TrainSimulation) [![Coverage Status](https://coveralls.io/repos/github/vibbix/TrainSimulation/badge.svg)](https://coveralls.io/github/vibbix/TrainSimulation)
+# Train Simulator [![Build Status](https://travis-ci.org/vibbix/TrainSimulation.svg?branch=master)](https://travis-ci.org/vibbix/TrainSimulation) [![Coverage Status](https://coveralls.io/repos/github/vibbix/TrainSimulation/badge.svg)](https://coveralls.io/github/vibbix/TrainSimulation)
 ## What is this
 This is the Group 23's Train Simulation project to demonstrate the Queue ADT.
 
