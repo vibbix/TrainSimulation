@@ -1,5 +1,3 @@
-package edu.wit.comp2000.group23.application3.Tests;
-
 import edu.wit.comp2000.group23.application3.Utilities.Loggable;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 import org.junit.Test;

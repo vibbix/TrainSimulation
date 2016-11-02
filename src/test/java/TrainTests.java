@@ -1,5 +1,3 @@
-package edu.wit.comp2000.group23.application3.Tests;
-
 import edu.wit.comp2000.group23.application3.*;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 import org.junit.Assert;
@@ -13,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Implemented by dechristophera on 10/29/2016.
  */
-public class TrainTest {
+public class TrainTests {
     @Test
     public void CreateTrainTest() {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

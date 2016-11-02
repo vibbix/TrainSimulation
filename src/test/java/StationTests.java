@@ -1,5 +1,3 @@
-package edu.wit.comp2000.group23.application3.Tests;
-
 import edu.wit.comp2000.group23.application3.Passenger;
 import edu.wit.comp2000.group23.application3.Platform;
 import edu.wit.comp2000.group23.application3.Station;
@@ -13,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Created by kucha on 10/30/2016.
  */
-public class StationTest {
+public class StationTests {
 
     @Test
     public void addArrivingPassengerTest() {

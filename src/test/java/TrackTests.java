@@ -1,5 +1,3 @@
-package edu.wit.comp2000.group23.application3.Tests;
-
 import edu.wit.comp2000.group23.application3.Direction;
 import edu.wit.comp2000.group23.application3.GraphMap.IConnector;
 import edu.wit.comp2000.group23.application3.GraphMap.Track;
@@ -14,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by beznosm on 10/27/2016.
  */
-public class TrackTest {
+public class TrackTests {
     private static Logger logger;
     private static EncapsulatedLoggable el;
 

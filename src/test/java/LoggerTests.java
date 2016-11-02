@@ -1,5 +1,3 @@
-package edu.wit.comp2000.group23.application3.Tests;
-
 import edu.wit.comp2000.group23.application3.Utilities.Event;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 import org.junit.Assert;
@@ -14,7 +12,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * Created by beznosm on 10/26/2016.
  */
-public class LoggerTest {
+public class LoggerTests {
     @Test
     public void FlushQueueTest() throws Exception {
         //system.out capturer.
