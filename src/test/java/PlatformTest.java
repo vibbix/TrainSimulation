@@ -1,5 +1,3 @@
-package edu.wit.comp2000.group23.application3.Tests;
-
 import edu.wit.comp2000.group23.application3.Direction;
 import edu.wit.comp2000.group23.application3.Platform;
 import edu.wit.comp2000.group23.application3.Station;
