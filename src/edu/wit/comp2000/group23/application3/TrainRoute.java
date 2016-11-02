@@ -28,6 +28,7 @@ public class TrainRoute extends Loggable {
         this.stations = new ArrayList<>();
         this.tracks = new ArrayList<>();
         this.trackCount = 0;
+
     }
 
     /**
@@ -35,11 +36,13 @@ public class TrainRoute extends Loggable {
      * @param stationNames Array of stations names to create
      */
     public void createRoute(String[] stationNames){
+        logEvent("Creating route");
         if(stationNames.length < 3){
             throw new IllegalArgumentException("Requires at least 3 stops");
         }
         for(int i = 0; i < stationNames.length; i++){
-            this.stations.add(new Station(super.getLogger(), this, i));
+            logEvent("Creating station " + stationNames[i]);
+            this.stations.add(new Station(super.getLogger(), this, i, stationNames[i]));
         }
         for(int i = 1; i <= (this.stations.size() - 2); i++){
             //relative inbound for inbound
@@ -48,15 +51,19 @@ public class TrainRoute extends Loggable {
             Station down = stations.get(i-1);
             //add sanity check here so no train tracks are overridden
             if(c.getPlatform(Direction.Inbound).getConnector(Direction.Outbound) == null){
+                logEvent("Connecting station " + down.getName() + " inbound to " + c.getName() + " inbound");
                 createInBetweenTrack(down.getPlatform(Direction.Inbound), c.getPlatform(Direction.Inbound),4);
             }
             if(c.getPlatform(Direction.Inbound).getConnector(Direction.Inbound) == null) {
+                logEvent("Connecting station " + c.getName() + " inbound to " + up.getName() + " inbound");
                 createInBetweenTrack(c.getPlatform(Direction.Inbound), up.getPlatform(Direction.Inbound), 4);
             }
             if(c.getPlatform(Direction.Outbound).getConnector(Direction.Inbound) == null){
+                logEvent("Connecting station " + up.getName() + " outbound to " + c.getName() + " outbound");
                 createInBetweenTrack(up.getPlatform(Direction.Outbound),c.getPlatform(Direction.Outbound), 4);
             }
             if(c.getPlatform(Direction.Outbound).getConnector(Direction.Inbound) == null) {
+                logEvent("Connecting station " + c.getName() + " outbound to " + down.getName() + " outbound");
                 createInBetweenTrack(c.getPlatform(Direction.Outbound), down.getPlatform(Direction.Outbound), 4);
             }
         }
@@ -65,9 +72,11 @@ public class TrainRoute extends Loggable {
         Station last = stations.get(stations.size() - 1);
         Platform fpo = first.getPlatform(Direction.Inbound);
         Platform fpi = first.getPlatform(Direction.Outbound);
+        logEvent("Connecting platform inbound to outbound on station " + first.getName());
         createInBetweenTrack(fpi, fpo, 1);
         Platform lpo = last.getPlatform(Direction.Inbound);
         Platform lpi = last.getPlatform(Direction.Outbound);
+        logEvent("Connecting platform outbound to inbound on station " + last.getName());
         createInBetweenTrack(lpo, lpi, 1);
     }
 

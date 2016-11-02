@@ -51,7 +51,7 @@ public class Track<T> extends Loggable implements IConnector<T> {
         this.occupant = occupant;
         if (occupant instanceof IOccupant)
         {
-
+            logEvent("Occupant is instanceof IOccupant, propagating occupany");
             ((IOccupant) occupant).setConnector(this);
         }
     }

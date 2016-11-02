@@ -46,4 +46,15 @@ public class TrainRouteTests {
         }
         Assert.assertArrayEquals(expected, actual);
     }
+    @Test
+    public void testCreateRouteLogging(){
+        String[] stops = new String[]{"s1","s2", "s3"};
+        EncapsulatedLoggable el = new EncapsulatedLoggable();
+        TrainRoute tr = new TrainRoute(el.getLogger(), 0);
+        tr.createRoute(stops);
+        String toStr = el.toString();
+        int lines = toStr.split(" ").length;
+        Assert.assertEquals("", toStr);
+
+    }
 }
