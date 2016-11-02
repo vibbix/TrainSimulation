@@ -1,5 +1,8 @@
 package edu.wit.comp2000.group23.application3;
 
+import edu.wit.comp2000.group23.application3.Enums.Direction;
+import edu.wit.comp2000.group23.application3.Exceptions.TrainDoorsClosedException;
+import edu.wit.comp2000.group23.application3.Exceptions.TrainPassengerOverflowException;
 import edu.wit.comp2000.group23.application3.GraphMap.IConnector;
 import edu.wit.comp2000.group23.application3.Utilities.Loggable;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
@@ -158,20 +161,23 @@ public class Train extends IOccupant {
      * @param p passenger
      * @return success of boarding
      */
-    public boolean embarkPassenger(Passenger p) {
+    public boolean embarkPassenger(Passenger p) throws TrainPassengerOverflowException, TrainDoorsClosedException {
         if (!this.doorsOpen) {
-            return false;
+            throw new TrainDoorsClosedException(this.getID() + "");
+        }
+
+        if(this.getCurrentPassengers() == this.getPassengers().size()){
+            throw new TrainPassengerOverflowException(this.getID() + "");
         }
 
         this.passengers.add(p);
         p.setTrain(this);
-        this.currentPassengers = this.passengers.size();
+        this.currentPassengers = this.getPassengers().size();
         this.LogEvent("Embark passenger: " + p.getID());
 
         if (this.passengers.size() == this.maxPassengers) {
             this.closeDoors();
             this.LogEvent("TRAIN FULL");
-            return false;
         }
 
         return true;
@@ -182,9 +188,9 @@ public class Train extends IOccupant {
      * @param p passenger
      * @return success of un-boarding
      */
-    public boolean disembarkPassenger(Passenger p) {
+    public boolean disembarkPassenger(Passenger p) throws TrainDoorsClosedException {
         if (!this.doorsOpen) {
-            return false;
+            throw new TrainDoorsClosedException(this.getID() + "");
         }
 
         this.passengers.remove(p);
