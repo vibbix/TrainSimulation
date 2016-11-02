@@ -1,5 +1,8 @@
 package edu.wit.comp2000.group23.application3;
 
+import edu.wit.comp2000.group23.application3.Enums.Direction;
+import edu.wit.comp2000.group23.application3.Exceptions.TrainDoorsClosedException;
+import edu.wit.comp2000.group23.application3.Exceptions.TrainPassengerOverflowException;
 import edu.wit.comp2000.group23.application3.Utilities.Loggable;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 
@@ -96,9 +99,15 @@ public class Station extends Loggable {
             t.openDoors();
             while (p.canDequeuePassenger() && !p.isTrainReadyToLeave()) {
                 Passenger passenger = p.dequeuePassenger();
-                super.logEvent("Passenger #" + passenger.getID() + " boarding train #" + t.getID());
-                if (!t.embarkPassenger(passenger)){
-                    break;
+                super.logEvent("Dequeueing Passenger #" + passenger.getID() + " onto train #" + t.getID());
+                try{
+                    t.embarkPassenger(passenger);
+                }catch (TrainDoorsClosedException e) {
+                    this.logEvent("FATAL ERROR - TrainDoorsClosedException");
+                    System.exit(0);
+                } catch (TrainPassengerOverflowException ex) {
+                    this.logEvent("FATAL ERROR - TrainPassengerOverflowException");
+                    System.exit(0);
                 }
             }
             t.closeDoors();

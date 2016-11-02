@@ -1,4 +1,7 @@
 import edu.wit.comp2000.group23.application3.*;
+import edu.wit.comp2000.group23.application3.Enums.Direction;
+import edu.wit.comp2000.group23.application3.Exceptions.TrainDoorsClosedException;
+import edu.wit.comp2000.group23.application3.Exceptions.TrainPassengerOverflowException;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 import org.junit.Assert;
 import org.junit.Test;
@@ -49,8 +52,16 @@ public class TrainTests {
         Passenger p1 = new Passenger(new Logger(ps), s, p, s, 0);
         Passenger p2 = new Passenger(new Logger(ps), s, p, s, 1);
 
-        t.embarkPassenger(p1);
-        t.embarkPassenger(p2);
+
+
+        try {
+            t.embarkPassenger(p1);
+            t.embarkPassenger(p2);
+        } catch (TrainPassengerOverflowException e) {
+            e.printStackTrace();
+        } catch (TrainDoorsClosedException e) {
+            e.printStackTrace();
+        }
 
         Assert.assertEquals(2, t.getCurrentPassengers());
     }
@@ -80,8 +91,14 @@ public class TrainTests {
         pl.add(p1);
         pl.add(p2);
 
-        t.embarkPassenger(p1);
-        t.embarkPassenger(p2);
+        try {
+            t.embarkPassenger(p1);
+            t.embarkPassenger(p2);
+        } catch (TrainPassengerOverflowException e) {
+            e.printStackTrace();
+        } catch (TrainDoorsClosedException e) {
+            e.printStackTrace();
+        }
 
         Assert.assertEquals(pl, t.getPassengers());
     }
@@ -185,7 +202,14 @@ public class TrainTests {
 
         Passenger p1 = new Passenger(new Logger(ps), s, p, s, 0);
 
-        boolean success = t.embarkPassenger(p1);
+        boolean success = false;
+        try {
+            success = t.embarkPassenger(p1);
+        } catch (TrainPassengerOverflowException e) {
+            e.printStackTrace();
+        } catch (TrainDoorsClosedException e) {
+            e.printStackTrace();
+        }
 
         Assert.assertEquals(true, success);
     }
@@ -209,9 +233,19 @@ public class TrainTests {
         Passenger p1 = new Passenger(new Logger(ps), s, p, s, 0);
 
         t.setConnector(p);
-        t.embarkPassenger(p1);
 
-        boolean success = t.embarkPassenger(p1);
+        t.openDoors();
+
+        boolean success = true;
+
+        try {
+            t.embarkPassenger(p1);
+            t.embarkPassenger(p1);
+        } catch (TrainPassengerOverflowException e) {
+            e.printStackTrace();
+        } catch (TrainDoorsClosedException e) {
+            success = false;
+        }
 
         Assert.assertEquals(false, success);
     }
@@ -237,9 +271,16 @@ public class TrainTests {
 
         t.closeDoors();
 
-        t.embarkPassenger(p1);
+        boolean success = true;
 
-        boolean success = t.embarkPassenger(p1);
+        try {
+            t.embarkPassenger(p1);
+            t.embarkPassenger(p1);
+        } catch (TrainPassengerOverflowException e) {
+            e.printStackTrace();
+        } catch (TrainDoorsClosedException e) {
+            success = false;
+        }
 
         Assert.assertEquals(false, success);
     }
@@ -258,9 +299,14 @@ public class TrainTests {
 
         t.setConnector(p);
 
-        t.embarkPassenger(p1);
-
-        t.disembarkPassenger(p1);
+        try {
+            t.embarkPassenger(p1);
+            t.disembarkPassenger(p1);
+        } catch (TrainPassengerOverflowException e) {
+            e.printStackTrace();
+        } catch (TrainDoorsClosedException e) {
+            e.printStackTrace();
+        }
 
         Assert.assertEquals(false, t.getPassengers().contains(p1));
     }
