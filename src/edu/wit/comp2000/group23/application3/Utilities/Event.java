@@ -30,6 +30,6 @@ public class Event {
     //endregion
     @Override
     public String toString() {
-        return "[" + getClassName() + "\t\t\t]" + "[" + getInstanceID() + "\t\t]" + "[" + getEventText() + "]";
+        return "[" + getClassName() + "\t\t]" + "[" + getInstanceID() + "\t]" + "[" + getEventText() + "]";
     }
 }

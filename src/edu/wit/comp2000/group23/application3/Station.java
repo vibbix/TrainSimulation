@@ -18,23 +18,23 @@ public class Station extends Loggable {
     private Loggable logger;
     private int stationID;
 
-    public Station(Logger l, TrainRoute tr, int sID){
+    public Station(Logger l, TrainRoute tr, int sID) {
         super(l, sID);
         this.route = tr;
         this.stationID = sID;
         this.arrivedPassengers = new ArrayList<>();
-        inbound = new Platform(l, Direction.Inbound, this, sID*10);
-        outbound = new Platform(l, Direction.Outbound, this, (sID*10)+1);
+        inbound = new Platform(l, Direction.Inbound, this, sID * 10);
+        outbound = new Platform(l, Direction.Outbound, this, (sID * 10) + 1);
     }
 
-    public Station(Logger l, TrainRoute tr, int sID, String name){
+    public Station(Logger l, TrainRoute tr, int sID, String name) {
         super(l, sID);
         this.route = tr;
         this.arrivedPassengers = new ArrayList<>();
         this.name = name;
         this.stationID = sID;
-        inbound = new Platform(l, Direction.Inbound, this, sID*10);
-        outbound = new Platform(l, Direction.Outbound, this, (sID*10)+1);
+        inbound = new Platform(l, Direction.Inbound, this, sID * 10);
+        outbound = new Platform(l, Direction.Outbound, this, (sID * 10) + 1);
     }
 
     //getters/setters
@@ -53,6 +53,7 @@ public class Station extends Loggable {
     public void setStationID(int stationID) {
         this.stationID = stationID;
     }
+
     public TrainRoute getRoute() {
         return route;
     }
@@ -60,6 +61,7 @@ public class Station extends Loggable {
     public void setRoute(TrainRoute route) {
         this.route = route;
     }
+
     public Platform getInbound() {
         return inbound;
     }
@@ -80,41 +82,43 @@ public class Station extends Loggable {
         return arrivedPassengers;
     }
 
-    public Platform getPlatform(Direction d)
-    {
+    public Platform getPlatform(Direction d) {
         if (d == Direction.Outbound)
             return outbound;
         return inbound;
     }
-
     /**
      * Fill train from inbound and outbound platform
-     * */
+     */
     public void Sync() {
         this.getPlatforms().stream().filter(p -> p.getOccupant() != null).forEach(p -> {
             Train t = p.getOccupant();
             t.openDoors();
             while (p.canDequeuePassenger() && !p.isTrainReadyToLeave()) {
-                if (!t.embarkPassenger(p.dequeuePassenger()))
+                Passenger passenger = p.dequeuePassenger();
+                super.logEvent("Dequeueing Passenger #" + passenger.getID() + " onto train #" + t.getID());
+                if (!t.embarkPassenger(passenger)){
                     break;
+                }
             }
             t.closeDoors();
         });
     }
 
     /**
-    *   Returns platform for passenger to enter (inbound or outbound) based on destination station.
-     *
-    *   @param destination End Station of the Passenger
-    */
-
-    public Platform getRoute(Station destination){
-        return inbound;
+     * Returns platform for passenger to enter (inbound or outbound) based on destination station.
+     * @param destination End Station of the Passenger
+     */
+    public Platform getRoute(Station destination) {
+        if(route.getRoute(this, destination) == Direction.Inbound)
+            return inbound;
+        return outbound;
     }
+
     /**
-    *  Returns ArrayList of both inbound and outbound platforms
-    */
-    public ArrayList<Platform> getPlatforms(){
+     * Returns ArrayList of both inbound and outbound platforms
+     */
+    public ArrayList<Platform> getPlatforms() {
         ArrayList<Platform> pt = new ArrayList<>();
         pt.add(inbound);
         pt.add(outbound);
@@ -124,19 +128,18 @@ public class Station extends Loggable {
     /**
      * Adds a Passenger to the a list of passengers getting off a train
      *
-     * @param p  The Passenger getting off the train.
-     *
+     * @param p The Passenger getting off the train.
      */
-    public void addArrivingPassenger(Passenger p){
+    public void addArrivingPassenger(Passenger p) {
         this.arrivedPassengers.add(p);
-        super.logEvent("Passenger Arrived at Destination Station");
+        super.logEvent("Passenger #"+ p.getID() +" Arrived at Destination Station");
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Station info: " + "\nStation Name: " + getName() +
-                "\tStation ID: " + getID() + "\nInbound Platform ID: "+ getInbound().getPlatformID() +
-                "\tOutbound Platform ID: " + getOutbound().getPlatformID()+
-                "\nNumber of Arrived Passengers: " + getArrivedPassengers().size() ;
+                "\tStation ID: " + getID() + "\nInbound Platform ID: " + getInbound().getPlatformID() +
+                "\tOutbound Platform ID: " + getOutbound().getPlatformID() +
+                "\nNumber of Arrived Passengers: " + getArrivedPassengers().size();
     }
 }

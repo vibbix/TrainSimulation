@@ -29,10 +29,10 @@ public class Train extends IOccupant {
     private Loggable logger;
 
     /**
-     * @param d - enum direction (inbound or outbound)
+     * @param d   - enum direction (inbound or outbound)
      * @param max - max capacity
-     * @param id - train id
-     * @param l  - logger
+     * @param id  - train id
+     * @param l   - logger
      */
     public Train(Direction d, int max, int id, Logger l) {
         this.direction = d;
@@ -49,7 +49,7 @@ public class Train extends IOccupant {
     }
 
     public void Sync() {
-        for(Passenger p : this.getPassengers()) {
+        for (Passenger p : this.getPassengers()) {
             p.setStation(this.currentStation);
             p.setPlatform(this.currentPlatform);
             p.Sync();
@@ -58,6 +58,11 @@ public class Train extends IOccupant {
 
     public Direction getDirection() {
         return super.getDirection();
+    }
+
+    public void setDirection(Direction d) {
+        super.setDirection(d);
+        this.LogEvent("Changed direction to " + this.direction.name() + ".");
     }
 
     public int getMaxPassengers() {
@@ -80,13 +85,13 @@ public class Train extends IOccupant {
         return this.doorsOpen;
     }
 
-    public void openDoors(){
+    public void openDoors() {
         this.doorsOpen = true;
         this.currentPlatform.setTrainReadyToLeave(false);
         this.LogEvent("Opened doors");
     }
 
-    public void closeDoors(){
+    public void closeDoors() {
         this.doorsOpen = false;
         this.currentPlatform.setTrainReadyToLeave(true);
         this.LogEvent("Closed doors");
@@ -101,12 +106,14 @@ public class Train extends IOccupant {
     }
 
     public boolean embarkPassenger(Passenger p) {
-        if(!this.doorsOpen){return false;}
+        if (!this.doorsOpen) {
+            return false;
+        }
 
         this.passengers.add(p);
         p.setTrain(this);
         this.currentPassengers = this.passengers.size();
-        this.LogEvent("Embark passenger: " + p.getPassengerID());
+        this.LogEvent("Embark passenger: " + p.getID());
 
         if (this.passengers.size() == this.maxPassengers) {
             this.closeDoors();
@@ -121,12 +128,7 @@ public class Train extends IOccupant {
         this.passengers.remove(p);
         p.setTrain(null);
         this.currentPassengers = passengers.size();
-        this.LogEvent("Disembark passenger: " + p.getPassengerID());
-    }
-
-    public void setDirection(Direction d) {
-        super.setDirection(d);
-        this.LogEvent("Changed direction to " + this.direction.name() + ".");
+        this.LogEvent("Disembark passenger: " + p.getID());
     }
 
     public void setDirectionNoLog(Direction d) {
@@ -137,12 +139,12 @@ public class Train extends IOccupant {
         this.logger.logEvent(event);
     }
 
-    public void setConnector(IConnector c){
+    public void setConnector(IConnector c) {
         super.setConnector(c);
-        if(c instanceof Platform){
+        if (c instanceof Platform) {
             this.currentPlatform = (Platform) c;
             this.setCurrentStation(((Platform) c).getStation());
-        }else{
+        } else {
             this.currentPlatform = null;
         }
     }

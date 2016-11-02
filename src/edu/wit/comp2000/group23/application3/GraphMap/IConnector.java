@@ -10,16 +10,16 @@ import java.util.List;
  */
 public interface IConnector<T> {
     /**
+     * Gets the occupant of the connector
+     */
+    T getOccupant();
+
+    /**
      * Sets the occupant of the connector
      *
      * @param occupant Occupant to set to
      */
     void setOccupant(T occupant);
-
-    /**
-     * Gets the occupant of the connector
-     */
-    T getOccupant();
 
     /**
      * Gets the neighboring connectors for the current connector
@@ -43,6 +43,7 @@ public interface IConnector<T> {
 
             }
             this.setOccupant(null);
+            return;
         }
         if (getConnector(Direction.Outbound).getOccupant() != null) {
             throw new Exception("Multiple objects cannot be on the same IConnector");
@@ -55,6 +56,7 @@ public interface IConnector<T> {
     }
 
     /**
+     * if T extends IOccupant, the occupant moves in the direction set in the property field
      * @param <T> An object that implements IOccupant
      */
     default <T extends IOccupant> void moveConnector() throws Exception {

@@ -33,197 +33,198 @@ import edu.wit.comp2000.group23.application3.Utilities.Logger;
  */
 public class Passenger extends Loggable {
 
-	// private field variables
-	private Station destination;
-	private Station currentStation;
-	private Platform currentPlatform;
-	private Train currentTrain;
-	private boolean onTrain;
-	private int passengerID;
+    // private field variables
+    private Station destination;
+    private Station currentStation;
+    private Platform currentPlatform;
+    private Train currentTrain;
+    private boolean onTrain;
+    private int passengerID;
 
-	// constructors
-	/**
-	 * Default constructor.
-	 * 
-	 * @param logger 1
-	 */
-	public Passenger(Logger l) {
-		this(l, null, null, null, -1);
-	}
+    // constructors
 
-	/**
-	 * Constructor, takes in logger, destination, currentPlatform,
-	 * currentStation, pID
-	 * 
-	 * @param l
-	 * @param destination
-	 * @param currentPlatform
-	 * @param currentStation
-	 * @param pID
-	 */
-	public Passenger(Logger l, Station destination, Platform currentPlatform, Station currentStation, int pID) {
-		super(l, pID);
-		this.onTrain = false;
-		this.destination = destination;
-		this.currentPlatform = currentPlatform;
-		this.currentStation = currentStation;
-		this.passengerID = pID;
-		this.currentTrain = null;
-	}
+    /**
+     * Default constructor.
+     *
+     * @param logger
+     */
+    public Passenger(Logger logger) {
+        this(logger, null, null, null, -1);
+    }
 
-	// passenger methods (core methods)
+    /**
+     * Constructor, takes in logger, destination, currentPlatform,
+     * currentStation, pID
+     *
+     * @param logger          logger to use
+     * @param destination     The station the passenger wants to go to
+     * @param currentPlatform The platform the passenger is currently at
+     * @param currentStation  The station the passenger is currently at
+     * @param pID             Passenger ID
+     */
+    public Passenger(Logger logger, Station destination, Platform currentPlatform, Station currentStation, int pID) {
+        super(logger, pID);
+        this.onTrain = false;
+        this.destination = destination;
+        this.currentPlatform = currentPlatform;
+        this.currentStation = currentStation;
+        this.passengerID = pID;
+        this.currentTrain = null;
+        //super.logEvent("Created new passenger: id=" + this.getID() +
+        //        ";Arrival=" + currentStation.getName() +";Destination=" + destination.getName());
+    }
 
-	/**
-	 * Sync method, updates everytime passenger is at a new station (on train)
-	 */
-	public void Sync() {
-		// at a station, not in queue
-		if (this.currentPlatform == null && this.currentTrain == null) {
-			this.setPlatform(this.currentStation.getRoute(this.destination));
-			this.currentPlatform.enqueuePassenger(this);
-			return;
-		}
-		if (this.currentStation.equals(this.destination)) {
-			if (this.onTrain) {
-				this.disembarkTrain();
-			}
-		}
+    // passenger methods (core methods)
 
-	}
+    /**
+     * Sync method, updates everytime passenger is at a new station (on train)
+     */
+    public void Sync() {
+        // at a station, not in queue
+        if (this.currentPlatform == null && this.currentTrain == null) {
+            this.setPlatform(this.currentStation.getRoute(this.destination));
+            this.currentPlatform.enqueuePassenger(this);
+            super.logEvent("Enqueueing to platform #" + this.currentPlatform.getPlatformID());
+            return;
+        }
+        if (this.currentStation.equals(this.destination)) {
+            if (this.onTrain) {
+                this.disembarkTrain();
+            }
+        }
 
-	/**
-	 * Disembarks the train and add itself to the list of arrived passengers
-	 */
-	public void disembarkTrain() {
-		this.setTrain(null);
-		this.currentPlatform.getStation().addArrivingPassenger(this);
-	}
+    }
 
-	// accessor methods
+    /**
+     * Disembarks the train and add itself to the list of arrived passengers
+     */
+    public void disembarkTrain() {
+        super.logEvent("Disembarking train #" + this.currentTrain.getID());
+        this.setTrain(null);
+        this.currentStation.addArrivingPassenger(this);
+    }
 
-	/**
-	 * accessor method, gets the station of the passenger
-	 * 
-	 * @return
-	 */
-	public Station getStation() {
-		return this.currentStation;
-	}
+    // accessor methods
 
-	/**
-	 * accessor method, gets the platform of the passenger
-	 * 
-	 * @return
-	 */
-	public Platform getPlatform() {
-		return this.currentPlatform;
-	}
+    /**
+     * accessor method, gets the station of the passenger
+     *
+     * @return
+     */
+    public Station getStation() {
+        return this.currentStation;
+    }
 
-	/**
-	 * accessor method, gets the destination of the passenger
-	 * 
-	 * @return Station
-	 */
-	public Station getDestination() {
-		return this.destination;
-	}
+    /**
+     * mutator method, sets the station the passenger is currently on
+     *
+     * @param station
+     */
+    public void setStation(Station station) {
+        this.currentStation = station;
+    }
 
-	/**
-	 * accessor method, gets the current station of the passenger
-	 * 
-	 * @return Station
-	 */
-	public Station getCurrentStation() {
-		return this.currentStation;
-	}
+    /**
+     * accessor method, gets the platform of the passenger
+     * @return
+     */
+    public Platform getPlatform() {
+        return this.currentPlatform;
+    }
 
-	/**
-	 * accessor method, gets if passenger is on current platform
-	 * 
-	 * @return Platform
-	 */
-	public Platform getCurrentPlatform() {
-		return this.currentPlatform;
-	}
+    /**
+     * mutator method, sets the platform the passenger is currently on
+     *
+     * @param platform platform
+     */
+    public void setPlatform(Platform platform) {
+        this.currentPlatform = platform;
 
-	/**
-	 * accessor method, gets if passenger is on train
-	 * 
-	 * @return boolean
-	 */
-	public boolean getOnTrain() {
-		return this.onTrain;
-	}
+    }
 
-	/**
-	 * accessor method, sets passenger id
-	 * 
-	 * @return int
-	 */
-	public int getPassengerID() {
-		return this.passengerID;
-	}
+    /**
+     * accessor method, gets the destination of the passenger
+     *
+     * @return Station
+     */
+    public Station getDestination() {
+        return this.destination;
+    }
 
-	// mutator method
+    /**
+     * accessor method, gets the current station of the passenger
+     *
+     * @return Station
+     */
+    public Station getCurrentStation() {
+        return this.currentStation;
+    }
 
-	/**
-	 * mutator method, sets passenger id
-	 * 
-	 * @param int
-	 *            passengerID
-	 */
-	public void setPassengerID(int passengerID) {
-		this.passengerID = passengerID;
-	}
+    /**
+     * accessor method, gets if passenger is on current platform
+     *
+     * @return Platform
+     */
+    public Platform getCurrentPlatform() {
+        return this.currentPlatform;
+    }
 
-	/**
-	 * mutator method, sets the train the passenger is currently on
-	 * 
-	 * @param Train
-	 *            t
-	 */
-	public void setTrain(Train t) {
-		this.currentTrain = t;
-		if (t.equals(null)) {
-			this.onTrain = false;
-		} else {
-			this.onTrain = true;
-		}
-	}
+    /**
+     * accessor method, gets if passenger is on train
+     *
+     * @return boolean
+     */
+    public boolean getOnTrain() {
+        return this.onTrain;
+    }
 
-	/**
-	 * mutator method, sets the station the passenger is currently on
-	 * 
-	 * @param Station
-	 *            s
-	 */
-	public void setStation(Station s) {
-		this.currentStation = s;
-	}
+    // mutator method
 
-	/**
-	 * mutator method, sets the platform the passenger is currently on
-	 * 
-	 * @param Platform
-	 *            
-	 */
-	public void setPlatform(Platform p) {
-		this.currentPlatform = p;
-	}
+    /**
+     * accessor method, sets passenger id
+     *
+     * @return int
+     */
+    public int getID() {
+        return this.passengerID;
+    }
 
-	/**
-	 * toString method
-	 * 
-	 * @return String
-	 */
-	@Override
-	public String toString() {
-		return "Passenger info: " + "\nPassenger ID: " + this.getPassengerID() + 
-				"\nDestination: " + this.getDestination() + 
-				"\nCurrent Station: " + this.getCurrentStation() +
-				"\nPlatform: " + this.getCurrentPlatform() + 
-				"\nOn train: " + this.getOnTrain();
-	}
+    /**
+     * If the passenger is on a train, it will return a pointer to said train
+     *
+     * @return The train the passenger is on
+     */
+    public Train getTrain() {
+        return this.currentTrain;
+    }
+
+    /**
+     * mutator method, sets the train the passenger is currently on
+     *
+     * @param train
+     */
+    public void setTrain(Train train) {
+        this.currentTrain = train;
+        if (train == null) {
+            this.onTrain = false;
+        } else {
+            this.onTrain = true;
+        }
+    }
+
+    /**
+     * toString method
+     *
+     * @return String
+     */
+    @Override
+    public String toString() {
+        return "Passenger info: " + "\nPassenger ID: " + this.getID() +
+                "\nDestination: " + this.getDestination() +
+                "\nCurrent Station: " + this.getCurrentStation() +
+                "\nPlatform: " + this.getCurrentPlatform() +
+                "\nOn train: " + this.getOnTrain();
+    }
 
 
 }

@@ -47,20 +47,16 @@ public class Platform extends Loggable implements IConnector<Train> {
         this.station = station;
     }
 
-    public void setTrainReadyToLeave(boolean ready) {
-        this.trainReady = ready;
+    @Override
+    public Train getOccupant() {
+        return occupant;
     }
 
     @Override
     public void setOccupant(Train occupant) {
         this.occupant = occupant;
-        if(occupant.getConnector() != this)
+        if (occupant != null && occupant.getConnector() != this)
             occupant.setConnector(this);
-    }
-
-    @Override
-    public Train getOccupant() {
-        return occupant;
     }
 
     @Override
@@ -72,12 +68,11 @@ public class Platform extends Loggable implements IConnector<Train> {
         return al;
     }
 
-
     @Override
     public void setConnector(IConnector connector, Direction direction) {
-        if(direction == Direction.Inbound) {
+        if (direction == Direction.Inbound) {
             inbound = connector;
-        }else{
+        } else {
             outbound = connector;
         }
 
@@ -94,14 +89,17 @@ public class Platform extends Loggable implements IConnector<Train> {
     public void moveConnector() throws Exception {
         moveConnector(occupant.getDirection());
     }
-    public void enqueuePassenger(Passenger p){
-        if(!boardingPassengers.contains(p))
+
+    public void enqueuePassenger(Passenger p) {
+        if (!boardingPassengers.contains(p))
             boardingPassengers.push(p);
     }
-    public boolean canDequeuePassenger(){
+
+    public boolean canDequeuePassenger() {
         return boardingPassengers.size() > 0;
     }
-    public Passenger dequeuePassenger(){
+
+    public Passenger dequeuePassenger() {
         return this.boardingPassengers.pop();
     }
 
@@ -109,9 +107,14 @@ public class Platform extends Loggable implements IConnector<Train> {
         return trainReady;
     }
 
+    public void setTrainReadyToLeave(boolean ready) {
+        this.trainReady = ready;
+    }
+
     public int getPlatformID() {
         return platformID;
     }
+
     //endregion
     @Override
     public String toString() {
@@ -119,19 +122,19 @@ public class Platform extends Loggable implements IConnector<Train> {
         rtn += "; logger: " + super.getLogger().hashCode();
         rtn += "; Inbound: ";
 
-        if (this.inbound == null){
+        if (this.inbound == null) {
             rtn += "null";
-        } else if (this.inbound instanceof Platform){
-            rtn += "(Platform)"+ ((Platform) inbound).getPlatformID();
-        } else if (this.inbound instanceof Track){
+        } else if (this.inbound instanceof Platform) {
+            rtn += "(Platform)" + ((Platform) inbound).getPlatformID();
+        } else if (this.inbound instanceof Track) {
             rtn += "(Track)" + ((Track) this.inbound).getTrackID();
         }
         rtn += "; Outbound: ";
-        if (this.outbound == null){
+        if (this.outbound == null) {
             rtn += "null";
-        } else if (this.outbound instanceof Platform){
-            rtn += "(Platform)"+ ((Platform) outbound).getPlatformID();
-        } else if (this.outbound instanceof Track){
+        } else if (this.outbound instanceof Platform) {
+            rtn += "(Platform)" + ((Platform) outbound).getPlatformID();
+        } else if (this.outbound instanceof Track) {
             rtn += "(Track)" + ((Track) this.outbound).getTrackID();
         }
         rtn += "; Occupant: " + (occupant != null ? occupant.toString() : "null");

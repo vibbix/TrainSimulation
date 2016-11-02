@@ -11,9 +11,10 @@ public abstract class Loggable {
 
     /**
      * Creates a new logger with the default classname
+     *
      * @param logger Logger to push events to
      */
-    public Loggable(Logger logger, int cID){
+    public Loggable(Logger logger, int cID) {
         this.logger = logger;
         this.classname = this.getClass().getSimpleName();
         this.classID = cID;
@@ -21,7 +22,8 @@ public abstract class Loggable {
 
     /**
      * Creates a new logger with the default classname
-     * @param o object that logger gets name of in logs
+     *
+     * @param o      object that logger gets name of in logs
      * @param logger Logger to push events to
      */
     public Loggable(Object o, Logger logger, int cID) {
@@ -32,17 +34,19 @@ public abstract class Loggable {
 
     /**
      * Logs a new event
+     *
      * @param event Event to log
      */
-    public void logEvent(String event){
+    public void logEvent(String event) {
         logger.AddEvent(new Event(classname, this.classID, event));
     }
 
     /**
      * Gets the logger
+     *
      * @return The logger
      */
-    public Logger getLogger(){
+    public Logger getLogger() {
         return logger;
     }
 }

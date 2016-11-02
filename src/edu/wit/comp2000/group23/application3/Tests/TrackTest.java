@@ -15,26 +15,9 @@ import static org.junit.Assert.assertEquals;
  * Created by beznosm on 10/27/2016.
  */
 public class TrackTest {
-    private class StringOccupant extends IOccupant {
-        private String occupant = null;
-
-        public StringOccupant(String occupy) {
-            super();
-            occupant = occupy;
-        }
-
-        public String getOccupant() {
-            return occupant;
-        }
-
-        @Override
-        public String toString() {
-            return occupant;
-        }
-    }
-
     private static Logger logger;
     private static EncapsulatedLoggable el;
+
     @BeforeClass
     public static void setupTest() {
         el = new EncapsulatedLoggable();
@@ -180,9 +163,27 @@ public class TrackTest {
     }
 
     @Test
-    public void loggerTest(){
+    public void loggerTest() {
         IConnector section1 = new Track(logger);
         String str = el.toString();
+    }
+
+    private class StringOccupant extends IOccupant {
+        private String occupant = null;
+
+        public StringOccupant(String occupy) {
+            super();
+            occupant = occupy;
+        }
+
+        public String getOccupant() {
+            return occupant;
+        }
+
+        @Override
+        public String toString() {
+            return occupant;
+        }
     }
 
 

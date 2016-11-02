@@ -11,11 +11,11 @@ import java.util.Arrays;
 
 /**
  * Created by beznosm on 10/31/2016.
-         */
+ */
 public class TrainRouteTests {
     @Test
-    public void verifyPlatformConnect(){
-        String[] stops = new String[]{"s1","s2", "s3"};
+    public void verifyPlatformConnect() {
+        String[] stops = new String[]{"s1", "s2", "s3"};
         EncapsulatedLoggable el = new EncapsulatedLoggable();
         TrainRoute tr = new TrainRoute(el.getLogger(), 0);
         boolean[] expected = new boolean[6];
@@ -36,19 +36,20 @@ public class TrainRouteTests {
         //s2<-s3
         //s1<-s3
         //s1[i]<-s1[o]
-        for(int i = 0; i < pfs.length; i++){
-            while(true){
+        for (int i = 0; i < pfs.length; i++) {
+            while (true) {
                 cnode = cnode.getConnector(Direction.Inbound);
-                if(cnode instanceof Platform)
+                if (cnode instanceof Platform)
                     break;
             }
             actual[i] = (pfs[i] == cnode);
         }
         Assert.assertArrayEquals(expected, actual);
     }
+
     @Test
-    public void testCreateRouteLogging(){
-        String[] stops = new String[]{"s1","s2", "s3"};
+    public void testCreateRouteLogging() {
+        String[] stops = new String[]{"s1", "s2", "s3"};
         EncapsulatedLoggable el = new EncapsulatedLoggable();
         TrainRoute tr = new TrainRoute(el.getLogger(), 0);
         tr.createRoute(stops);
@@ -64,6 +65,9 @@ public class TrainRouteTests {
                 "[0][TrainRoute\t\t][0\t][Connecting platform outbound to inbound on station s3]";
 
         Assert.assertEquals(toStr, el.toString().replace("\r\n", "\n"));
+    }
+    @Test
+    public void getRouteTests(){
 
     }
 }
