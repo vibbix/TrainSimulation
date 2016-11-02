@@ -96,7 +96,7 @@ public class Station extends Loggable {
             t.openDoors();
             while (p.canDequeuePassenger() && !p.isTrainReadyToLeave()) {
                 Passenger passenger = p.dequeuePassenger();
-                super.logEvent("Dequeueing Passenger #" + passenger.getID() + " onto train #" + t.getID());
+                super.logEvent("Passenger #" + passenger.getID() + " boarding train #" + t.getID());
                 if (!t.embarkPassenger(passenger)){
                     break;
                 }

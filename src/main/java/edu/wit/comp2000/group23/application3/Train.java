@@ -1,6 +1,9 @@
 package edu.wit.comp2000.group23.application3;
 
+import com.sun.javaws.exceptions.InvalidArgumentException;
+import edu.wit.comp2000.group23.application3.Exceptions.TrainPassengerOverflowException;
 import edu.wit.comp2000.group23.application3.GraphMap.IConnector;
+import edu.wit.comp2000.group23.application3.GraphMap.Track;
 import edu.wit.comp2000.group23.application3.Utilities.Loggable;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 
@@ -106,15 +109,18 @@ public class Train extends IOccupant {
     }
 
     public boolean embarkPassenger(Passenger p) {
+
         if (!this.doorsOpen) {
+            //throw new IllegalArgumentException("Cannot embark passenger while doors are closed.");
             return false;
         }
-
+        //if(this.passengers.size() == this.maxPassengers){
+        //    throw new TrainPassengerOverflowException();
+        //}
         this.passengers.add(p);
         p.setTrain(this);
         this.currentPassengers = this.passengers.size();
         this.LogEvent("Embark passenger: " + p.getID());
-
         if (this.passengers.size() == this.maxPassengers) {
             this.closeDoors();
             this.LogEvent("TRAIN FULL");
@@ -146,14 +152,23 @@ public class Train extends IOccupant {
             this.setCurrentStation(((Platform) c).getStation());
         } else {
             this.currentPlatform = null;
+            this.currentStation = null;
         }
     }
 
     public String toString() {
-        return "TRAIN " + this.getID() + " - " + this.getDirection().name() +
-                " [" + this.getCurrentPassengers() + "/" + this.getMaxPassengers() + "] " +
-                "[DOORS" + ((this.getDoorState()) ? "OPEN" : "CLOSED") + "] " +
-                "{Platform: " + ((this.getConnector() instanceof Platform) ? "YES" : "NO") + "} " +
-                "{Station: " + this.getCurrentStation().getID() + "}";
+        String str = "TRAIN " + this.getID();
+        str += " - " + this.getDirection().name();
+        str +=        " [" + this.getCurrentPassengers() + "/" + this.getMaxPassengers() + "] " ;
+        str +=        "[DOORS" + ((this.getDoorState()) ? "OPEN" : "CLOSED") + "] " ;
+        if(this.getConnector() instanceof Platform){
+            str +=        "{Platform: " + ((Platform) this.getConnector()).getPlatformID() + "} " ;
+        }else if(this.getConnector() instanceof Track){
+            str +=        "{Track: " + ((Track) this.getConnector()).getTrackID()+"}" ;
+        }
+        if(this.currentStation != null){
+            str +=        "{Station: " + this.getCurrentStation().getID() + "}";
+        }
+        return str;
     }
 }

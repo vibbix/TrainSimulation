@@ -16,6 +16,7 @@ public class TrainRoute extends Loggable {
     private ArrayList<Station> stations;
     private ArrayList<Track> tracks;
     private int trackCount;
+    private boolean trackIntialized;
 
     /**
      * Creates the train route
@@ -30,6 +31,7 @@ public class TrainRoute extends Loggable {
         this.stations = new ArrayList<>();
         this.tracks = new ArrayList<>();
         this.trackCount = 0;
+        this.trackIntialized = false;
 
     }
 
@@ -81,12 +83,16 @@ public class TrainRoute extends Loggable {
         Platform lpi = last.getPlatform(Direction.Outbound);
         logEvent("Connecting platform outbound to inbound on station " + last.getName());
         createInBetweenTrack(lpo, lpi, 1);
+        this.trackIntialized = true;
     }
 
     /**
      * Creates 2 trains for a route in the middle of the section.
      */
     public void createTrains() {
+        if(!this.trackIntialized){
+            throw new SecurityException("The route has not been intialized");
+        }
         //Generate trains
         Train t1 = new Train(Direction.Inbound, 100, 0, super.getLogger());
         Train t2 = new Train(Direction.Inbound, 100, 1, super.getLogger());
@@ -114,6 +120,9 @@ public class TrainRoute extends Loggable {
      * Syncs the Trainroute simulation
      */
     public void Sync() {
+        if(!this.trackIntialized){
+            throw new SecurityException("The route has not been intialized");
+        }
         for (Train t : this.trains) {
             try {
                 boolean hasmoved = false;
@@ -152,6 +161,9 @@ public class TrainRoute extends Loggable {
      * @return The optimal direction the passenger should go to arrive at their destination
      */
     public Direction getRoute(Station start, Station end) {
+        if(!this.trackIntialized){
+            throw new SecurityException("The route has not been intialized");
+        }
         int s = this.stations.indexOf(start);
         int e = this.stations.indexOf(end);
         if (e < s) {
