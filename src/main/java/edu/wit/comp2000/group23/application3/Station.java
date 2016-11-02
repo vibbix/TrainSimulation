@@ -18,6 +18,14 @@ public class Station extends Loggable {
     private Loggable logger;
     private int stationID;
 
+    /**
+     * Creates a new station
+     *
+     * @param l Logger to pass in
+     * @param tr Train route to set to the station
+     * @param sID ID of station
+     *
+     */
     public Station(Logger l, TrainRoute tr, int sID) {
         super(l, sID);
         this.route = tr;
@@ -27,6 +35,15 @@ public class Station extends Loggable {
         outbound = new Platform(l, Direction.Outbound, this, (sID * 10) + 1);
     }
 
+    /**
+     * Creates a new station
+     *
+     * @param l Logger to pass in
+     * @param tr Train route to set to the station
+     * @param sID ID of station
+     * @param name Name of the station
+     *
+     */
     public Station(Logger l, TrainRoute tr, int sID, String name) {
         super(l, sID);
         this.route = tr;
@@ -38,6 +55,7 @@ public class Station extends Loggable {
     }
 
     //getters/setters
+
     public String getName() {
         return name;
     }
@@ -82,6 +100,13 @@ public class Station extends Loggable {
         return arrivedPassengers;
     }
 
+    /**
+     * gets the platform for a passenger to enqueue
+     *
+     * @param d direction of the passenger
+     *
+     * @return Platform to enqueue
+     */
     public Platform getPlatform(Direction d) {
         if (d == Direction.Outbound)
             return outbound;
