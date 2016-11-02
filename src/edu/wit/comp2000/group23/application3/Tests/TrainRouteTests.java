@@ -52,9 +52,18 @@ public class TrainRouteTests {
         EncapsulatedLoggable el = new EncapsulatedLoggable();
         TrainRoute tr = new TrainRoute(el.getLogger(), 0);
         tr.createRoute(stops);
-        String toStr = el.toString();
-        int lines = toStr.split(" ").length;
-        Assert.assertEquals("", toStr);
+        String toStr = "[0][TrainRoute\t\t][0\t][Creating route]\n" +
+                "[0][TrainRoute\t\t][0\t][Creating station s1]\n" +
+                "[0][TrainRoute\t\t][0\t][Creating station s2]\n" +
+                "[0][TrainRoute\t\t][0\t][Creating station s3]\n" +
+                "[0][TrainRoute\t\t][0\t][Connecting station s1 inbound to s2 inbound]\n" +
+                "[0][TrainRoute\t\t][0\t][Connecting station s2 inbound to s3 inbound]\n" +
+                "[0][TrainRoute\t\t][0\t][Connecting station s3 outbound to s2 outbound]\n" +
+                "[0][TrainRoute\t\t][0\t][Connecting station s2 outbound to s1 outbound]\n" +
+                "[0][TrainRoute\t\t][0\t][Connecting platform inbound to outbound on station s1]\n" +
+                "[0][TrainRoute\t\t][0\t][Connecting platform outbound to inbound on station s3]";
+
+        Assert.assertEquals(toStr, el.toString().replace("\r\n", "\n"));
 
     }
 }

@@ -91,16 +91,15 @@ public class Station extends Loggable {
      * Fill train from inbound and outbound platform
      * */
     public void Sync() {
-        for (Platform p : this.getPlatforms()) {
-            if (p.getOccupant() != null) {
-                Train t = p.getOccupant();
-                t.openDoors();
-                while (p.canDequeuePassenger() && !p.isTrainReadyToLeave()) {
-                    if (!t.embarkPassenger(p.dequeuePassenger()))
-                        break;
-                }
+        this.getPlatforms().stream().filter(p -> p.getOccupant() != null).forEach(p -> {
+            Train t = p.getOccupant();
+            t.openDoors();
+            while (p.canDequeuePassenger() && !p.isTrainReadyToLeave()) {
+                if (!t.embarkPassenger(p.dequeuePassenger()))
+                    break;
             }
-        }
+            t.closeDoors();
+        });
     }
 
     /**

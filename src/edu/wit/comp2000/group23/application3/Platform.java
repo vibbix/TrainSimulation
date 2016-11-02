@@ -90,7 +90,8 @@ public class Platform extends Loggable implements IConnector<Train> {
         moveConnector(occupant.getDirection());
     }
     public void enqueuePassenger(Passenger p){
-        boardingPassengers.push(p);
+        if(!boardingPassengers.contains(p))
+            boardingPassengers.push(p);
     }
     public boolean canDequeuePassenger(){
         return boardingPassengers.size() > 0;
