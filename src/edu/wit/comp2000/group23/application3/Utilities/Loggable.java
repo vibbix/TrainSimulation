@@ -31,16 +31,6 @@ public abstract class Loggable {
     }
 
     /**
-     * Creates a new logger with a specified classname
-     * @param logger Logger to push events to
-     * @param name Name of the class
-     */
-    public Loggable(Logger logger, String name, int cID){
-        this.logger = logger;
-        this.classname = name;
-        this.classID = cID;
-    }
-    /**
      * Logs a new event
      * @param event Event to log
      */

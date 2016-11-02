@@ -130,11 +130,7 @@ public class Station extends Loggable {
      */
     public void addArrivingPassenger(Passenger p){
         this.arrivedPassengers.add(p);
-        this.LogEvent("Passenger Arrived at Destination Station");
-    }
-
-    private void LogEvent(String event) {
-        this.logger.logEvent(event);
+        super.logEvent("Passenger Arrived at Destination Station");
     }
 
     @Override
@@ -144,6 +140,4 @@ public class Station extends Loggable {
                 "\tOutbound Platform ID: " + getOutbound().getPlatformID()+
                 "\nNumber of Arrived Passengers: " + getArrivedPassengers().size() ;
     }
-
-
 }
