@@ -8,7 +8,6 @@ import java.io.PrintStream;
  */
 public class Logger {
     private long currentTick;
-    private ArrayQueue<Event> eventQueue;
     private PrintStream ps;
 
     /**
@@ -25,7 +24,6 @@ public class Logger {
      */
     public Logger(PrintStream stream) {
         currentTick = 0;
-        eventQueue = new ArrayQueue<>();
         ps = stream;
     }
 

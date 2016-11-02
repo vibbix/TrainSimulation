@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The track class is analogous to edges in graph theory. The Trains
+ * The track class is analogous to edges in graph theory. The Trains ride along the track towards platforms
  */
 public class Track<T> extends Loggable implements IConnector<T> {
     private T occupant;
@@ -19,8 +19,7 @@ public class Track<T> extends Loggable implements IConnector<T> {
     private int trackID;
 
     /**
-     * Creates the track with preset
-     *
+     * Creates a basic track
      * @param logger Logger for track to use
      */
     public Track(Logger logger) {
@@ -42,25 +41,33 @@ public class Track<T> extends Loggable implements IConnector<T> {
             setConnector(inbound, Direction.Inbound);
         if (outbound != null)
             setConnector(outbound, Direction.Outbound);
-
-
     }
 
-    @Override
-    public void setOccupant(T occupant) {
-        this.occupant = occupant;
-        if (occupant instanceof IOccupant)
-        {
-
-            ((IOccupant) occupant).setConnector(this);
-        }
-    }
-
+    /**
+     * If the tack has an occupant, this will return it
+     * @return The track occupant
+     */
     @Override
     public T getOccupant() {
         return occupant;
     }
 
+    /**
+     * Sets the tracks occupant
+     * @param occupant What to set occupant to
+     */
+    @Override
+    public void setOccupant(T occupant) {
+        this.occupant = occupant;
+        if (occupant instanceof IOccupant) {
+            super.logEvent("Occupant is instanceof IOccupant, propagating occupant");
+            ((IOccupant) occupant).setConnector(this);
+        }
+    }
+    /**
+     * Gets the lists of connectors associated with the track
+     * @return A list of connectors the track is connected to
+     */
     @Override
     public List<IConnector> getConnectors() {
         ArrayList<IConnector> connectors = new ArrayList<>();
@@ -70,7 +77,11 @@ public class Track<T> extends Loggable implements IConnector<T> {
     }
 
 
-    //region Accessors/Mutators
+    /**
+     * Sets the connector in the direction passed.
+     * @param connector Connector to assign to graph
+     * @param direction Direction connector is going
+     */
     @Override
     public void setConnector(IConnector connector, Direction direction) {
         if (direction == Direction.Inbound) {
@@ -88,6 +99,11 @@ public class Track<T> extends Loggable implements IConnector<T> {
         }
     }
 
+    /**
+     * Gets the connector in the direction
+     * @param direction Direction to get connector
+     * @return Connector in the specified direction
+     */
     @Override
     public IConnector getConnector(Direction direction) {
         if (direction == Direction.Inbound)
@@ -102,25 +118,29 @@ public class Track<T> extends Loggable implements IConnector<T> {
         String rtn = "Track: " + this.trackID;
         rtn += "; logger: " + super.getLogger().hashCode();
         rtn += "; Inbound: ";
-        if (inbound == null){
+        if (inbound == null) {
             rtn += "null";
-        } else if (inbound instanceof Platform){
-            rtn += "(Platform) "+ ((Platform) inbound).getPlatformID();
-        } else if (inbound instanceof Track){
+        } else if (inbound instanceof Platform) {
+            rtn += "(Platform) " + ((Platform) inbound).getPlatformID();
+        } else if (inbound instanceof Track) {
             rtn += "(Track) " + ((Track) inbound).trackID;
         }
         rtn += "; Outbound: ";
-        if (outbound == null){
+        if (outbound == null) {
             rtn += "null";
-        } else if (outbound instanceof Platform){
-            rtn += "(Platform) "+ ((Platform) outbound).getPlatformID();
-        } else if (outbound instanceof Track){
+        } else if (outbound instanceof Platform) {
+            rtn += "(Platform) " + ((Platform) outbound).getPlatformID();
+        } else if (outbound instanceof Track) {
             rtn += "(Track) " + ((Track) outbound).trackID;
         }
         rtn += "; Occupant: " + (occupant != null ? occupant.toString() : "null");
         return rtn;
     }
 
+    /**
+     * Gets the tracks ID
+     * @return The trackID
+     */
     public int getTrackID() {
         return trackID;
     }

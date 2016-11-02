@@ -49,9 +49,10 @@ public abstract class IOccupant {
      */
     public void setConnector(IConnector connector) {
         this.connector = connector;
-        if(connector.getOccupant() != this)
+        if (connector.getOccupant() != this)
             connector.setOccupant(this);
     }
+
     @Override
     public String toString() {
         String toStr = "";
@@ -60,12 +61,12 @@ public abstract class IOccupant {
             toStr += "; Connector: null";
         } else if (connector instanceof Track) {
             toStr += "; Connector: (Track) " + ((Track) connector).getTrackID();
-        } else if (connector instanceof Platform){
+        } else if (connector instanceof Platform) {
             toStr += "; Connector: (Platform) " + ((Platform) connector).getPlatformID();
-        } else{
-            try{
+        } else {
+            try {
                 toStr += "; Connector: " + connector.toString();
-            }catch(Exception ex){
+            } catch (Exception ex) {
                 toStr += "; Connector: " + ex.toString();
             }
         }

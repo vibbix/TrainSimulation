@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class TrainTest {
     @Test
-    public void CreateTrainTest(){
+    public void CreateTrainTest() {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream(baos);
         Train t = new Train(Direction.Inbound, 100, -1, new Logger(ps));
