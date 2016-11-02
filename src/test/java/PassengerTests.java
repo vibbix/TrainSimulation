@@ -8,7 +8,7 @@ import org.junit.Test;
  *
  * @author wongt1
  */
-public class PassengerTest {
+public class PassengerTests {
 
     /**
      * test if passenger is on train

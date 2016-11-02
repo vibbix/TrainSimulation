@@ -11,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Created by kucha on 10/30/2016.
  */
-public class StationTest {
+public class StationTests {
 
     @Test
     public void addArrivingPassengerTest() {

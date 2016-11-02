@@ -11,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Implemented by dechristophera on 10/29/2016.
  */
-public class TrainTest {
+public class TrainTests {
     @Test
     public void CreateTrainTest() {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

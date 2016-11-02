@@ -12,7 +12,7 @@ import java.io.PrintStream;
 /**
  * Created by lindelandj on 10/31/2016.
  */
-public class PlatformTest {
+public class PlatformTests {
 
     @Test
     public void CreatePlatformTest() {

@@ -12,7 +12,7 @@ import java.nio.charset.StandardCharsets;
 /**
  * Created by beznosm on 10/26/2016.
  */
-public class LoggerTest {
+public class LoggerTests {
     @Test
     public void FlushQueueTest() throws Exception {
         //system.out capturer.
