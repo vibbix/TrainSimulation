@@ -12,19 +12,18 @@ import java.util.ArrayList;
 
 public class Train extends IOccupant {
 
+    private int id;
     private Direction direction;
 
     private int maxPassengers;
     private int currentPassengers = 0;
 
-    private boolean doorsOpen = true;
+    private ArrayList<Passenger> passengers;
 
-    private int id;
+    private boolean doorsOpen = true;
 
     private Station currentStation;
     private Platform currentPlatform;
-
-    private ArrayList<Passenger> passengers;
 
     private Loggable logger;
 
@@ -48,6 +47,9 @@ public class Train extends IOccupant {
         this.setDirectionNoLog(d);
     }
 
+    /**
+     * Propagates Sync to all passengers in the train
+     */
     public void Sync() {
         for (Passenger p : this.getPassengers()) {
             p.setStation(this.currentStation);
@@ -56,55 +58,106 @@ public class Train extends IOccupant {
         }
     }
 
+
+    /**
+     * Returns current train direction (inbound, outbound)
+     * @return
+     */
     public Direction getDirection() {
         return super.getDirection();
     }
 
+
+    /**
+     * Sets the direction of the train
+     * @param d Direction to set the train
+     */
     public void setDirection(Direction d) {
         super.setDirection(d);
         this.LogEvent("Changed direction to " + this.direction.name() + ".");
     }
 
+    /**
+     * @return max passenger capacity
+     */
     public int getMaxPassengers() {
         return this.maxPassengers;
     }
 
+
+    /**
+     * @return number of current passengers aboard train
+     */
     public int getCurrentPassengers() {
         return this.currentPassengers;
     }
 
+
+    /**
+     * @return train id
+     */
     public int getID() {
         return this.id;
     }
 
+
+    /**
+     * @return ArrayList of current passengers aboard train
+     */
     public ArrayList<Passenger> getPassengers() {
         return this.passengers;
     }
 
+
+    /**
+     * @return whether or not the door is open
+     */
     public boolean getDoorState() {
         return this.doorsOpen;
     }
 
+
+    /**
+     * Opens train doors and sets the train as not ready to leave
+     */
     public void openDoors() {
         this.doorsOpen = true;
         this.currentPlatform.setTrainReadyToLeave(false);
         this.LogEvent("Opened doors");
     }
 
+    /**
+     * Closes train doors and sets train as ready to leave
+     */
     public void closeDoors() {
         this.doorsOpen = false;
         this.currentPlatform.setTrainReadyToLeave(true);
         this.LogEvent("Closed doors");
     }
 
+
+    /**
+     * @return station train is currently at
+     */
     public Station getCurrentStation() {
         return this.currentStation;
     }
 
+
+    /**
+     * Sets the station the train is currently at
+     * @param s station
+     */
     public void setCurrentStation(Station s) {
         this.currentStation = s;
     }
 
+
+    /**
+     * Boards passenger on train
+     * @param p passenger
+     * @return success of boarding
+     */
     public boolean embarkPassenger(Passenger p) {
         if (!this.doorsOpen) {
             return false;
@@ -124,21 +177,47 @@ public class Train extends IOccupant {
         return true;
     }
 
-    public void disembarkPassenger(Passenger p) {
+    /**
+     * Passenger leaves train
+     * @param p passenger
+     * @return success of un-boarding
+     */
+    public boolean disembarkPassenger(Passenger p) {
+        if (!this.doorsOpen) {
+            return false;
+        }
+
         this.passengers.remove(p);
         p.setTrain(null);
         this.currentPassengers = passengers.size();
         this.LogEvent("Disembark passenger: " + p.getID());
+
+        return true;
     }
 
+
+    /**
+     * Sets direction for testing in a simple manner
+     * @param d direction
+     */
     public void setDirectionNoLog(Direction d) {
         super.setDirection(d);
     }
 
+
+    /**
+     * Pushes event to event logger
+     * @param event
+     */
     public void LogEvent(String event) {
         this.logger.logEvent(event);
     }
 
+
+    /**
+     * Returns current track or platform train resides on
+     * @param c track or platform
+     */
     public void setConnector(IConnector c) {
         super.setConnector(c);
         if (c instanceof Platform) {
@@ -149,6 +228,10 @@ public class Train extends IOccupant {
         }
     }
 
+
+    /**
+     * @return string representation of current train
+     */
     public String toString() {
         return "TRAIN " + this.getID() + " - " + this.getDirection().name() +
                 " [" + this.getCurrentPassengers() + "/" + this.getMaxPassengers() + "] " +
