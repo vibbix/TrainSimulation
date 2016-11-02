@@ -87,7 +87,8 @@ public class Passenger extends Loggable {
             super.logEvent("Enqueueing to platform #" + this.currentPlatform.getPlatformID());
             return;
         }
-        if (this.currentStation.equals(this.destination)) {
+
+        if (this.currentStation == this.destination) {
             if (this.onTrain) {
                 this.disembarkTrain();
             }
