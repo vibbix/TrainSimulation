@@ -166,7 +166,7 @@ public class Train extends IOccupant {
             throw new TrainDoorsClosedException(this.getID() + "");
         }
 
-        if(this.getCurrentPassengers() == this.getPassengers().size()){
+        if(this.getCurrentPassengers() == this.getMaxPassengers()){
             throw new TrainPassengerOverflowException(this.getID() + "");
         }
 
@@ -175,7 +175,7 @@ public class Train extends IOccupant {
         this.currentPassengers = this.getPassengers().size();
         this.LogEvent("Embark passenger: " + p.getID());
 
-        if (this.passengers.size() == this.maxPassengers) {
+        if (this.passengers.size() == this.getMaxPassengers()) {
             this.closeDoors();
             this.LogEvent("TRAIN FULL");
         }
