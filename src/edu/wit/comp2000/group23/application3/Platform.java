@@ -5,6 +5,7 @@ import edu.wit.comp2000.group23.application3.GraphMap.Track;
 import edu.wit.comp2000.group23.application3.Utilities.Loggable;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingDeque;
 
@@ -64,7 +65,11 @@ public class Platform extends Loggable implements IConnector<Train> {
 
     @Override
     public List<IConnector> getConnectors() {
-        return null;
+
+        ArrayList<IConnector> al = new ArrayList<>();
+        al.add(this.inbound);
+        al.add(this.outbound);
+        return al;
     }
 
 
@@ -113,6 +118,7 @@ public class Platform extends Loggable implements IConnector<Train> {
         String rtn = "Platform: " + platformID;
         rtn += "; logger: " + super.getLogger().hashCode();
         rtn += "; Inbound: ";
+
         if (this.inbound == null){
             rtn += "null";
         } else if (this.inbound instanceof Platform){
