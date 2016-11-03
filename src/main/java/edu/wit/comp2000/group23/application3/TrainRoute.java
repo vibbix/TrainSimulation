@@ -33,7 +33,6 @@ public class TrainRoute extends Loggable {
         this.tracks = new ArrayList<>();
         this.trackCount = 0;
         this.trackIntialized = false;
-
     }
 
     /**

@@ -345,7 +345,7 @@ public class TrainTests {
 
         t.LogEvent("TESTING");
 
-        Assert.assertEquals("[0][Train\t\t][-1\t][TESTING]", baos.toString().trim());
+        Assert.assertEquals("[0][Train\t\t\t][-1\t][TESTING]", baos.toString().trim());
     }
 
 }

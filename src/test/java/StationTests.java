@@ -43,8 +43,10 @@ public class StationTests {
 
     @Test
     public void getRouteTest() {
-        Station currentStation = new Station(new Logger(), new TrainRoute(new Logger(), 0), 0, "MFA");
-        Station destinationStation = new Station(new Logger(), new TrainRoute(new Logger(), 0), 1, "Down Town Crossing");
+        TrainRoute tr = new TrainRoute(new Logger(), 0);
+        tr.createRoute(new String[]{"MFA", "Copley", "Down Town Crossing"});
+        Station currentStation = tr.getStations().get(0);
+        Station destinationStation = tr.getStations().get(2);
         Platform testPlatform = new Platform(new Logger(), Direction.Inbound, currentStation, 0);
         Passenger p = new Passenger(new Logger(), destinationStation, testPlatform, currentStation, 0);
 

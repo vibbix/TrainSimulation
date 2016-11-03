@@ -8,13 +8,13 @@ public class Event {
     private int instanceID;
     private String eventText;
 
-    public Event(String classname, int instanceid, String eventtext) {
+    public Event(String classname, int iID, String eText) {
         className = classname;
-        instanceID = instanceid;
-        eventText = eventtext;
+        instanceID = iID;
+        eventText = eText;
     }
 
-    //region Accesors
+    //region Accessors
     public String getClassName() {
         return className;
     }
@@ -26,10 +26,13 @@ public class Event {
     public String getEventText() {
         return eventText;
     }
-
     //endregion
+
     @Override
     public String toString() {
-        return "[" + getClassName() + "\t\t]" + "[" + getInstanceID() + "\t]" + "[" + getEventText() + "]";
+        if(this.getClassName().equals("Train") || this.getClassName().equals("Track") || this.getClassName().equals("Station")){
+            return "[" + this.getClassName() + "\t\t\t]" + "[" + this.getInstanceID() + "\t]" + "[" + this.getEventText() + "]";
+        }
+        return "[" + this.getClassName() + "\t\t]" + "[" + this.getInstanceID() + "\t]" + "[" + this.getEventText() + "]";
     }
 }
