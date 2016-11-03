@@ -73,7 +73,6 @@ public class TrainSimulation extends Loggable {
         Platform out = this.route.getStations().get(half).getPlatform(Direction.Outbound);//.setOccupant(t2);
         out.setOccupant(t2);
     }
-
     /*
     event simulation order:
     -sync each class
@@ -85,11 +84,7 @@ public class TrainSimulation extends Loggable {
         Scanner s = new Scanner(System.in);
         ts.generatePassengers();
         while (true) {
-            ts.simtask.run();
-            try {
-                Thread.sleep(1000);
-            } catch (Exception ex) {
-            }
+            ts.Sync();
             ts.logEvent(ts.getSimulationProgress());
             if(ts.isSimulationDone())
             {
