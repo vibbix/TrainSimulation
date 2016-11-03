@@ -44,7 +44,7 @@ public class StationTests {
     @Test
     public void getRouteTest() {
         TrainRoute t = new TrainRoute(new Logger(), 0);
-        String[] TestRoute = TestRoute = new String[]{"One", "Two", "Three"};
+        String[] TestRoute = new String[]{"One", "Two", "Three"};
         t.createRoute(TestRoute);
         
         Station currentStation = new Station(new Logger(),t, 0, "MFA");
