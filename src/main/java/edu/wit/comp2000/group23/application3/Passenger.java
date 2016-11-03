@@ -173,17 +173,6 @@ public class Passenger extends Loggable {
         this.currentStation.addArrivingPassenger(this);
     }
 
-    // accessor methods
-
-    /**
-     * accessor method, gets the station of the passenger
-     *
-     * @return
-     */
-    public Station getStation() {
-        return this.currentStation;
-    }
-
     /**
      * mutator method, sets the station the passenger is currently on
      *
