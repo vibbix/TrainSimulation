@@ -1,5 +1,7 @@
 import edu.wit.comp2000.group23.application3.*;
 import edu.wit.comp2000.group23.application3.Enums.Direction;
+import edu.wit.comp2000.group23.application3.Exceptions.TrainDoorsClosedException;
+import edu.wit.comp2000.group23.application3.Exceptions.TrainPassengerOverflowException;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 import junit.framework.Assert;
 import org.junit.Test;
@@ -26,6 +28,25 @@ public class PassengerTests {
         Assert.assertEquals(true, p.getOnTrain());
     }
 
+    /**
+     * test for passenger disembarkTrain method
+     * @throws TrainPassengerOverflowException
+     * @throws TrainDoorsClosedException
+     */
+    @SuppressWarnings("deprecation")
+    @Test
+    public void disembarkTrainTest() throws TrainPassengerOverflowException, TrainDoorsClosedException{
+    	Logger l = new Logger();
+        Passenger p = new Passenger(l, null, null, null, -1);
+        Train t = new Train(null, 2, 1, l);
+        TrainRoute tr = new TrainRoute(l, 1);
+        Station s = new Station(l, tr, 1);
+        p.setStation(s);
+        t.embarkPassenger(p);
+        p.disembarkTrain();
+        Assert.assertEquals(false, p.getOnTrain());
+    }
+    
     /**
      * test if the passenger's train is equal to the train
      *
