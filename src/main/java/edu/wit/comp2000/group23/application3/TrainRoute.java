@@ -87,24 +87,7 @@ public class TrainRoute extends Loggable {
         this.trackIntialized = true;
     }
 
-    /**
-     * Creates 2 trains for a route in the middle of the section.
-     */
-    public void createTrains() {
-        if(!this.trackIntialized){
-            throw new SecurityException("The route has not been intialized");
-        }
-        //Generate trains
-        Train t1 = new Train(Direction.Inbound, 100, 0, super.getLogger());
-        Train t2 = new Train(Direction.Inbound, 100, 1, super.getLogger());
-        trains.add(t1);
-        trains.add(t2);
-        int half = stations.size() / 2;
-        Platform in = stations.get(half).getPlatform(Direction.Inbound);
-        in.setOccupant(t1);
-        Platform out = stations.get(half).getPlatform(Direction.Outbound);//.setOccupant(t2);
-        out.setOccupant(t2);
-    }
+
 
     private void createInBetweenTrack(Platform s, Platform e, int tickDistance) {
         IConnector cnode = s;
@@ -148,8 +131,8 @@ public class TrainRoute extends Loggable {
                 logEvent("Could not move train. Passengers vaporized.");
             }
         }
-        this.trains.forEach(Train::Sync);
-        this.stations.forEach(Station::Sync);
+        this.trains.forEach(Train::Sync); // passengers -> platform
+        this.stations.forEach(Station::Sync); // passengers -> train
         this.getLogger().Sync();
         currentTick++;
     }

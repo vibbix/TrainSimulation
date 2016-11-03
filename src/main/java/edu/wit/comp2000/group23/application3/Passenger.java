@@ -1,5 +1,6 @@
 package edu.wit.comp2000.group23.application3;
 
+import edu.wit.comp2000.group23.application3.Exceptions.TrainDoorsClosedException;
 import edu.wit.comp2000.group23.application3.Utilities.Loggable;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 
@@ -73,6 +74,25 @@ public class Passenger extends Loggable {
         //super.logEvent("Created new passenger: id=" + this.getID() +
         //        ";Arrival=" + currentStation.getName() +";Destination=" + destination.getName());
     }
+    /**
+     * Constructor, takes in logger, destination, currentPlatform,
+     * currentStation, pID
+     *
+     * @param logger          logger to use
+     * @param destination     The station the passenger wants to go to
+     * @param currentStation  The station the passenger is currently at
+     * @param pID             Passenger ID
+     */
+    public Passenger(Logger logger, Station destination, Station currentStation, int pID) {
+        super(logger, pID);
+        this.onTrain = false;
+        this.destination = destination;
+        this.currentStation = currentStation;
+        this.passengerID = pID;
+        this.currentTrain = null;
+        super.logEvent("Created new passenger: id=" + this.getID() +
+                ";Arrival=" + currentStation.getName() +";Destination=" + destination.getName());
+    }
 
     // passenger methods (core methods)
 
@@ -82,16 +102,21 @@ public class Passenger extends Loggable {
     public void Sync() {
         // at a station, not in queue
         if (this.currentPlatform == null && this.currentTrain == null) {
-            this.setPlatform(this.currentStation.getRoute(this.destination));
+            try{
+                this.setPlatform(this.currentStation.getRoute(this.destination));
+            } catch(Exception ex){
+                super.logEvent("Passenger is fucking stupid. Vaporized.");
+                return;
+            }
             this.currentPlatform.enqueuePassenger(this);
             super.logEvent("Enqueueing to platform #" + this.currentPlatform.getPlatformID());
             return;
         }
-
         if (this.currentStation == this.destination) {
             if (this.onTrain) {
                 this.disembarkTrain();
             }
+
         }
 
     }
@@ -101,7 +126,11 @@ public class Passenger extends Loggable {
      */
     public void disembarkTrain() {
         super.logEvent("Disembarking train #" + this.currentTrain.getID());
-        this.setTrain(null);
+        try{
+            this.currentTrain.disembarkPassenger(this);
+        }catch (TrainDoorsClosedException tdce){
+            super.logEvent("Dumb passenger walks into door. Vaporized.");
+        }
         this.currentStation.addArrivingPassenger(this);
     }
 
@@ -140,7 +169,8 @@ public class Passenger extends Loggable {
      */
     public void setPlatform(Platform platform) {
         this.currentPlatform = platform;
-
+        if(platform != null)
+            this.currentStation = this.currentPlatform.getStation();
     }
 
     /**
