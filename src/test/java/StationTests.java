@@ -1,5 +1,6 @@
 import edu.wit.comp2000.group23.application3.*;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
+import edu.wit.comp2000.group23.application3.Enums.Direction;
 import org.junit.Assert;
 import org.junit.Test;
 
