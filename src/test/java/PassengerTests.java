@@ -4,6 +4,10 @@ import edu.wit.comp2000.group23.application3.Exceptions.TrainDoorsClosedExceptio
 import edu.wit.comp2000.group23.application3.Exceptions.TrainPassengerOverflowException;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 import junit.framework.Assert;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import org.junit.Test;
 
 /**
@@ -21,17 +25,23 @@ public class PassengerTests {
 	public void PassengerDefaultConstructorTest() throws Exception {
 		Logger l = new Logger();
 		Passenger p = new Passenger(l);
-		
+
 		Assert.assertEquals(l, p.getLogger());
 	}
 
 	/**
 	 * test for Passenger constructor with param:
-	 * @param Logger logger
-	 * @param Station destination
-	 * @param Platform currentPlatform
-	 * @param Statoin currentStation
-	 * @param int pID
+	 * 
+	 * @param Logger
+	 *            logger
+	 * @param Station
+	 *            destination
+	 * @param Platform
+	 *            currentPlatform
+	 * @param Statoin
+	 *            currentStation
+	 * @param int
+	 *            pID
 	 */
 	@SuppressWarnings("deprecation")
 	@Test
@@ -41,10 +51,10 @@ public class PassengerTests {
 		Station s = new Station(l, tr, 1);
 		Station destination = new Station(l, tr, 1);
 		Passenger p = new Passenger(l, s, destination, -1);
-		
+
 		Assert.assertEquals(-1, p.getID());
 	}
-	
+
 	/**
 	 * test if passenger is on train
 	 *
@@ -69,6 +79,65 @@ public class PassengerTests {
 	@SuppressWarnings("deprecation")
 	@Test
 	public void disembarkTrainTest() throws TrainPassengerOverflowException, TrainDoorsClosedException {
+		Logger l = new Logger();
+		Passenger p = new Passenger(l, null, null, null, -1);
+		Train t = new Train(null, 2, 1, l);
+		TrainRoute tr = new TrainRoute(l, 1);
+		Station s = new Station(l, tr, 1);
+		p.setStation(s);
+		t.embarkPassenger(p);
+		p.disembarkTrain();
+		Assert.assertEquals(false, p.getOnTrain());
+	}
+
+	/**
+	 * disembark train with iterator parameter
+	 * @throws Exception
+	 */
+	@SuppressWarnings("deprecation")
+	@Test
+	public void disembarkTrainTestWithIterator() throws Exception{
+		ArrayList<Passenger> list = new ArrayList<>();
+		Logger l = new Logger();
+		Passenger p = new Passenger(l, null, null, null, -1);
+		list.add(p);
+		Iterator<Passenger> itp = list.iterator();
+		Train t = new Train(null, 2, 1, l);
+		TrainRoute tr = new TrainRoute(l, 1);
+		Station s = new Station(l, tr, 1);
+		p.setStation(s);
+		t.embarkPassenger(itp.next());
+		p.disembarkTrain(itp);
+		Assert.assertEquals(false, p.getOnTrain());
+		
+	}
+	
+	@SuppressWarnings("deprecation")
+	@Test
+	public void PassengerArrivalTest() throws Exception {
+		Logger l = new Logger();
+		TrainRoute tr = new TrainRoute(l, 1);
+		Station s = new Station(l, tr, 1, "Station");
+		Station d = new Station(l, tr, 1, "Station");
+		Passenger p = new Passenger(l, s, null, d, -1);
+		Train t = new Train(null, 2, 1, l);
+		p.setStation(s);
+		t.embarkPassenger(p);
+		if (p.getCurrentStation() == p.getDestination()) {
+			if (p.getOnTrain()) {
+				p.disembarkTrain();
+			}
+		}
+		Assert.assertEquals(false, p.getOnTrain());
+	}
+
+	/**
+	 * test for passenger's intelligence (Exception is thrown when Passenger is
+	 * on the track or something idek)
+	 */
+	@SuppressWarnings("deprecation")
+	@Test
+	public void PassengerStationDestinationTest() throws Exception {
 		Logger l = new Logger();
 		Passenger p = new Passenger(l, null, null, null, -1);
 		Train t = new Train(null, 2, 1, l);
@@ -112,16 +181,6 @@ public class PassengerTests {
 		p.setPlatform(pf);
 		Assert.assertEquals(pf, p.getPlatform());
 	}
-	
-	@SuppressWarnings("deprecation")
-	@Test
-	public void setNotNullPlatformTest() throws Exception {
-		Logger l = new Logger();
-		Passenger p = new Passenger(l, null, null, null, -1);
-		TrainRoute tr = new TrainRoute(l, 1);
-		Station s = new Station(l, tr, 1);
-		Platform pf = new Platform(l, Direction.Inbound, s, 1);
-	}
 
 	/**
 	 * tests if the passenger is in the station (using station id) uncomment
@@ -159,7 +218,7 @@ public class PassengerTests {
 	 * test for TrainDoorsClosedException, when the passenger tries to leave the
 	 * train but the doors is closed...
 	 */
-	@Test(expected = TrainDoorsClosedException.class)
+	@Test
 	public void TrainDoorsClosedExceptionTest() throws Exception {
 		Logger l = new Logger();
 		Passenger p = new Passenger(l, null, null, null, -1);
@@ -170,22 +229,10 @@ public class PassengerTests {
 		pf.setOccupant(t);
 		p.setTrain(t);
 		t.closeDoors();
-		p.getTrain().disembarkPassenger(p);
-	}
+		try {
+			t.disembarkPassenger(p);
+		} catch (TrainDoorsClosedException ex) {
 
-	/**
-	 * test for passenger's intelligence (Exception is thrown when Passenger is
-	 * on the track or something idek)
-	 */
-	@SuppressWarnings("deprecation")
-	@Test(expected = Exception.class)
-	public void ExceptionTest() throws Exception {
-		Logger l = new Logger();
-		Passenger p = new Passenger(l, null, null, null, -1);
-		Train t = new Train(null, 2, 1, l);
-		TrainRoute tr = new TrainRoute(l, 1);
-		Station s = new Station(l, tr, 1);
-
-		p.setPlatform(p.getCurrentStation().getRoute(p.getDestination()));
+		}
 	}
 }
