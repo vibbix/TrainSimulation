@@ -1,5 +1,6 @@
 import edu.wit.comp2000.group23.application3.*;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
+import edu.wit.comp2000.group23.application3.Enums.Direction;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -42,8 +43,13 @@ public class StationTests {
 
     @Test
     public void getRouteTest() {
-        Station currentStation = new Station(new Logger(), new TrainRoute(new Logger(), 0), 0, "MFA");
-        Station destinationStation = new Station(new Logger(), new TrainRoute(new Logger(), 0), 1, "Down Town Crossing");
+        TrainRoute t = new TrainRoute(new Logger(), 0);
+        String[] TestRoute = TestRoute = new String[]{"One", "Two", "Three"};
+        t.createRoute(TestRoute);
+        
+        Station currentStation = new Station(new Logger(),t, 0, "MFA");
+        Station destinationStation = new Station(new Logger(),t, 1, "Down Town Crossing");
+
         Platform testPlatform = new Platform(new Logger(), Direction.Inbound, currentStation, 0);
         Passenger p = new Passenger(new Logger(), destinationStation, testPlatform, currentStation, 0);
 
