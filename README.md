@@ -1,5 +1,7 @@
 # Train Simulator [![Build Status](https://travis-ci.com/vibbix/TrainSimulation.svg?token=moTUzkBKjMxZqr8uWPyy&branch=master)](https://travis-ci.com/vibbix/TrainSimulation) [![codecov](https://codecov.io/gh/vibbix/TrainSimulation/branch/master/graph/badge.svg?token=yKDFGZoZQw)](https://codecov.io/gh/vibbix/TrainSimulation)
 
+![Railroad Engineering](https://img.gta5-mods.com/q95/images/railroad-engineer/f0174b-Cover.jpg)
+
 ## What is this
 This is the Group 23's Train Simulation project to demonstrate the Queue ADT.
 
