@@ -10,6 +10,45 @@ import java.util.ArrayList;
  * Created by kucha on 10/30/2016.
  */
 public class StationTests {
+    @Test
+    public void nameTests(){
+        Station s = new Station(new Logger(), new TrainRoute(new Logger(), 0), 0, "MFA");
+        Assert.assertEquals("MFA",s.getName());
+        s.setName("Longwood");
+        Assert.assertEquals("Longwood",s.getName());
+    }
+
+    @Test
+    public void IDTest(){
+        Station s = new Station(new Logger(), new TrainRoute(new Logger(), 0), 0);
+        Assert.assertEquals(0,s.getID());
+        s.setStationID(2);
+        Assert.assertEquals(2,s.getID());
+    }
+
+    @Test
+    public void routeTests(){
+        Station s = new Station(new Logger(), new TrainRoute(new Logger(), 0), 0);
+        TrainRoute tr = new TrainRoute(new Logger(), 0);
+        tr.createRoute(new String[]{"MFA", "Copley", "Down Town Crossing"});
+        s.setRoute(tr);
+        Assert.assertEquals(tr,s.getRoute());
+    }
+    @Test
+    public void inboundTests(){
+        Station s = new Station(new Logger(), new TrainRoute(new Logger(), 0), 0);
+        Platform inboundTest = new Platform(new Logger(), Direction.Inbound, s,0);
+        s.setInbound(inboundTest);
+        Assert.assertEquals(inboundTest,s.getInbound());
+    }
+
+    @Test
+    public void outboundTests(){
+        Station s = new Station(new Logger(), new TrainRoute(new Logger(), 0), 0);
+        Platform outboundTest = new Platform(new Logger(), Direction.Outbound, s,0);
+        s.setOutbound(outboundTest);
+        Assert.assertEquals(outboundTest,s.getOutbound());
+    }
 
     @Test
     public void addArrivingPassengerTest() {
