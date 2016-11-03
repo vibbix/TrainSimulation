@@ -4,6 +4,8 @@ import edu.wit.comp2000.group23.application3.Exceptions.TrainDoorsClosedExceptio
 import edu.wit.comp2000.group23.application3.Utilities.Loggable;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 
+import java.util.Iterator;
+
 /**
  * Created by beznosm on 10/24/2016.
  * <p>
@@ -118,7 +120,30 @@ public class Passenger extends Loggable {
             }
 
         }
+    }
+    /**
+     * Sync method, updates everytime passenger is at a new station (on train)
+     * @param itp The iterator for passenger
+     */
+    public void Sync(Iterator<Passenger> itp) {
+        // at a station, not in queue
+        if (this.currentPlatform == null && this.currentTrain == null) {
+            try{
+                this.setPlatform(this.currentStation.getRoute(this.destination));
+            } catch(Exception ex){
+                super.logEvent("Passenger ran into door. Vaporized.");
+                return;
+            }
+            this.currentPlatform.enqueuePassenger(this);
+            super.logEvent("Enqueueing to platform #" + this.currentPlatform.getPlatformID());
+            return;
+        }
+        if (this.currentStation == this.destination) {
+            if (this.onTrain) {
+                this.disembarkTrain(itp);
+            }
 
+        }
     }
 
     /**
@@ -128,6 +153,20 @@ public class Passenger extends Loggable {
         super.logEvent("Disembarking train #" + this.currentTrain.getID());
         try{
             this.currentTrain.disembarkPassenger(this);
+            //this.currentTrain.disembarkPassenger(this, itp)
+        }catch (TrainDoorsClosedException tdce){
+            super.logEvent("Dumb passenger walks into door. Vaporized.");
+        }
+        this.currentStation.addArrivingPassenger(this);
+    }
+    /**
+     * Disembarks the train and add itself to the list of arrived passengers
+     */
+    public void disembarkTrain(Iterator<Passenger> itp) {
+        super.logEvent("Disembarking train #" + this.currentTrain.getID());
+        try{
+            this.currentTrain.disembarkPassenger(this, itp);
+            //this.currentTrain.disembarkPassenger(this, itp)
         }catch (TrainDoorsClosedException tdce){
             super.logEvent("Dumb passenger walks into door. Vaporized.");
         }
