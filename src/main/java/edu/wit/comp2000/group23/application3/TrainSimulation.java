@@ -86,10 +86,15 @@ public class TrainSimulation extends Loggable {
         ts.generatePassengers();
         while (true) {
             ts.simtask.run();
-            ts.passengertask.run();
             try {
                 Thread.sleep(1000);
             } catch (Exception ex) {
+            }
+            ts.logEvent(ts.getSimulationProgress());
+            if(ts.isSimulationDone())
+            {
+                ts.logEvent("Simulation over. All passengers have been vaporized.");
+                return;
             }
         }
     }
@@ -117,14 +122,27 @@ public class TrainSimulation extends Loggable {
             int cap = 30 + rand.nextInt(70);
             for (int i = 0; i < cap; i++) {
                 Station dest = route.getStations().get(rand.nextInt(route.getStations().size()));
-                Passenger pass = new Passenger(logger, dest, null, s, passengerID);
+                Passenger pass = new Passenger(logger, dest, s, passengerID);
+                passengerID++;
                 pass.Sync();
             }
         }
     }
 
-
-
+    private boolean isSimulationDone(){
+        int count = 0;
+        for(Station s : this.route.getStations()){
+            count += s.getArrivedPassengers().size();
+        }
+        return count >= passengerID;
+    }
+    private String getSimulationProgress(){
+        int count = 0;
+        for(Station s : this.route.getStations()){
+            count += s.getArrivedPassengers().size();
+        }
+        return count + "/" + passengerID;
+    }
     /**
      * Stops the simulation
      */

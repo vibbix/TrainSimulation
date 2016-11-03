@@ -96,8 +96,11 @@ public class Station extends Loggable {
     public void Sync() {
         this.getPlatforms().stream().filter(p -> p.getOccupant() != null).forEach(p -> {
             Train t = p.getOccupant();
-            t.openDoors();
+            if(!t.getDoorState())
+                t.openDoors();
             while (p.canDequeuePassenger() && !p.isTrainReadyToLeave()) {
+                if(t.getCurrentPassengers() == t.getMaxPassengers())
+                    break;
                 Passenger passenger = p.dequeuePassenger();
                 super.logEvent("Dequeueing Passenger #" + passenger.getID() + " onto train #" + t.getID());
                 try{
@@ -110,7 +113,7 @@ public class Station extends Loggable {
                     System.exit(0);
                 }
             }
-            t.closeDoors();
+            t.closeDoors(); //closed in Train.sync()
         });
     }
 

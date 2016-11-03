@@ -131,8 +131,8 @@ public class TrainRoute extends Loggable {
                 logEvent("Could not move train. Passengers vaporized.");
             }
         }
-        this.trains.forEach(Train::Sync);
-        this.stations.forEach(Station::Sync);
+        this.trains.forEach(Train::Sync); // passengers -> platform
+        this.stations.forEach(Station::Sync); // passengers -> train
         this.getLogger().Sync();
         currentTick++;
     }
