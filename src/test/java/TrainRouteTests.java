@@ -1,8 +1,6 @@
+import edu.wit.comp2000.group23.application3.*;
 import edu.wit.comp2000.group23.application3.Enums.Direction;
 import edu.wit.comp2000.group23.application3.GraphMap.IConnector;
-import edu.wit.comp2000.group23.application3.Platform;
-import edu.wit.comp2000.group23.application3.Station;
-import edu.wit.comp2000.group23.application3.TrainRoute;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 import org.junit.Assert;
 import org.junit.Test;
@@ -72,23 +70,7 @@ public class TrainRouteTests {
         TrainRoute tr = new TrainRoute(new Logger(), 0);
         tr.createRoute(stops);
     }
-    @Test
-    public void createTrainTest(){
-        String[] stops = new String[]{"s1", "s2", "s3"};
-        TrainRoute tr = new TrainRoute(new Logger(), 0);
-        Assert.assertEquals(0, tr.getTrains().size());
-        tr.createRoute(stops);
-        tr.createTrains();
-        Assert.assertEquals(2, tr.getTrains().size());
-    }
 
-    @Test(expected = SecurityException.class)
-    public void createTrainBeforeRouteTest(){
-        String[] stops = new String[]{"s1", "s2", "s3"};
-        TrainRoute tr = new TrainRoute(new Logger(), 0);
-        Assert.assertEquals(0, tr.getTrains().size());
-        tr.createTrains();
-    }
     @Test(expected = SecurityException.class)
     public void getRouteBeforeRouteTest(){
         String[] stops = new String[]{"s1", "s2", "s3"};
@@ -132,40 +114,52 @@ public class TrainRouteTests {
     public void testTrainMovementSync(){
         String[] stops = new String[]{"s1", "s2", "s3"};
         EncapsulatedLoggable el = new EncapsulatedLoggable();
-        TrainRoute tr = new TrainRoute(el.getLogger(), 0);
-        tr.createRoute(stops);
-        //t1@s2i
+        TrainRoute route = new TrainRoute(el.getLogger(), 0);
+        route.createRoute(stops);
+        //t1@s2ite(stops);
         //t2@s2o
-        tr.createTrains();
-        tr.getTrains().get(0).closeDoors();
-        tr.getTrains().get(1).closeDoors();
-        Assert.assertEquals(tr.getStations().get(1).getPlatform(Direction.Inbound), tr.getTrains().get(0).getConnector());
-        Assert.assertEquals(tr.getStations().get(1).getPlatform(Direction.Outbound), tr.getTrains().get(1).getConnector());
-        tr.Sync();
-        Assert.assertEquals(tr.getStations().get(1).getPlatform(Direction.Inbound).getConnector(Direction.Inbound),
-                tr.getTrains().get(0).getConnector());
-        Assert.assertEquals(tr.getStations().get(1).getPlatform(Direction.Outbound).getConnector(Direction.Inbound),
-                tr.getTrains().get(1).getConnector());
+        Train t1 = new Train(Direction.Inbound, 100, 0, el.getLogger());
+        Train t2 = new Train(Direction.Inbound, 100, 1, el.getLogger());
+
+        route.getTrains().add(t1);
+        route.getTrains().add(t2);
+        int half = route.getStations().size() / 2;
+        Platform in = route.getStations().get(half).getPlatform(Direction.Inbound);
+        in.setOccupant(t1);
+        Platform out = route.getStations().get(half).getPlatform(Direction.Outbound);//.setOccupant(t2);
+        out.setOccupant(t2);
+        t1.closeDoors();
+        t2.closeDoors();
+        Assert.assertEquals(route.getStations().get(1).getPlatform(Direction.Inbound),
+                route.getTrains().get(0).getConnector());
+        Assert.assertEquals(route.getStations().get(1).getPlatform(Direction.Outbound),
+                route.getTrains().get(1).getConnector());
+        route.Sync();
+        Assert.assertEquals(
+                route.getStations().get(1).getPlatform(Direction.Inbound).getConnector(Direction.Inbound),
+                route.getTrains().get(0).getConnector());
+        Assert.assertEquals(
+                route.getStations().get(1).getPlatform(Direction.Outbound).getConnector(Direction.Inbound),
+                route.getTrains().get(1).getConnector());
     }
     @Test
     public void testTrainMovementDoorsOpenSync(){
         String[] stops = new String[]{"s1", "s2", "s3"};
         EncapsulatedLoggable el = new EncapsulatedLoggable();
-        TrainRoute tr = new TrainRoute(el.getLogger(), 0);
-        tr.createRoute(stops);
+        TrainSimulation ts = new TrainSimulation(el.getLogger(), stops, false, 0);
         //t1@s2i
         //t2@s2o
-        tr.createTrains();
-        tr.getTrains().get(0).openDoors();
-        tr.getTrains().get(1).openDoors();
-        Assert.assertEquals(tr.getStations().get(1).getPlatform(Direction.Inbound),
-                tr.getTrains().get(0).getConnector());
-        Assert.assertEquals(tr.getStations().get(1).getPlatform(Direction.Outbound),
-                tr.getTrains().get(1).getConnector());
-        tr.Sync();
-        Assert.assertEquals(tr.getStations().get(1).getPlatform(Direction.Inbound),
-                tr.getTrains().get(0).getConnector());
-        Assert.assertEquals(tr.getStations().get(1).getPlatform(Direction.Outbound),
-                tr.getTrains().get(1).getConnector());
+        ts.createTrains();
+        ts.getRoute().getTrains().get(0).openDoors();
+        ts.getRoute().getTrains().get(1).openDoors();
+        Assert.assertEquals(ts.getRoute().getStations().get(1).getPlatform(Direction.Inbound),
+                ts.getRoute().getTrains().get(0).getConnector());
+        Assert.assertEquals(ts.getRoute().getStations().get(1).getPlatform(Direction.Outbound),
+                ts.getRoute().getTrains().get(1).getConnector());
+        ts.getRoute().Sync();
+        Assert.assertEquals(ts.getRoute().getStations().get(1).getPlatform(Direction.Inbound),
+                ts.getRoute().getTrains().get(0).getConnector());
+        Assert.assertEquals(ts.getRoute().getStations().get(1).getPlatform(Direction.Outbound),
+                ts.getRoute().getTrains().get(1).getConnector());
     }
 }

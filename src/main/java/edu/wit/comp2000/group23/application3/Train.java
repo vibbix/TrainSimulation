@@ -55,13 +55,19 @@ public class Train extends IOccupant {
      * Propagates Sync to all passengers in the train
      */
     public void Sync() {
-        for (Passenger p : this.getPassengers()) {
+        if(this.currentPlatform  != null)
+            if(!this.getDoorState())
+                this.openDoors();
+        for (int i = 0; i < this.getPassengers().size(); i++) {
+            Passenger p = this.passengers.get(i);
             p.setStation(this.currentStation);
             p.setPlatform(this.currentPlatform);
             p.Sync();
         }
+        if(this.currentPlatform != null){
+            this.closeDoors();
+        }
     }
-
 
     /**
      * Returns current train direction (inbound, outbound)
@@ -179,6 +185,7 @@ public class Train extends IOccupant {
         this.LogEvent("Embark passenger: " + p.getID());
         if (this.passengers.size() == this.getMaxPassengers()) {
             this.closeDoors();
+
             this.LogEvent("TRAIN FULL");
         }
 

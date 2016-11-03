@@ -166,7 +166,7 @@ public class TrackTests {
         String str = el.toString();
     }
 
-    private class StringOccupant extends IOccupant {
+    protected class StringOccupant extends IOccupant {
         private String occupant = null;
 
         public StringOccupant(String occupy) {
