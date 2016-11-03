@@ -9,6 +9,7 @@ import edu.wit.comp2000.group23.application3.Utilities.Loggable;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Implemented by dechristophera on 10/27/2016.
@@ -58,11 +59,11 @@ public class Train extends IOccupant {
         if(this.currentPlatform  != null)
             if(!this.getDoorState())
                 this.openDoors();
-        for (int i = 0; i < this.getPassengers().size(); i++) {
-            Passenger p = this.passengers.get(i);
+        for (Iterator<Passenger> itp = this.passengers.iterator(); itp.hasNext();) {
+            Passenger p = itp.next();
             p.setStation(this.currentStation);
             p.setPlatform(this.currentPlatform);
-            p.Sync();
+            p.Sync(itp);
         }
         if(this.currentPlatform != null){
             this.closeDoors();
@@ -201,8 +202,24 @@ public class Train extends IOccupant {
         if (!this.doorsOpen) {
             throw new TrainDoorsClosedException(this.getID() + "");
         }
-
         this.passengers.remove(p);
+        p.setTrain(null);
+        this.currentPassengers = passengers.size();
+        this.LogEvent("Disembark passenger: " + p.getID());
+
+        return true;
+    }
+
+    /**
+     * Passenger leaves train
+     * @param p passenger
+     * @return success of un-boarding
+     */
+    public boolean disembarkPassenger(Passenger p, Iterator<Passenger> itp) throws TrainDoorsClosedException {
+        if (!this.doorsOpen) {
+            throw new TrainDoorsClosedException(this.getID() + "");
+        }
+        itp.remove();
         p.setTrain(null);
         this.currentPassengers = passengers.size();
         this.LogEvent("Disembark passenger: " + p.getID());
