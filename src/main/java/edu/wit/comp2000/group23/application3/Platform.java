@@ -122,7 +122,6 @@ public class Platform extends Loggable implements IConnector<Train> {
         String rtn = "Platform: " + platformID;
         rtn += "; logger: " + super.getLogger().hashCode();
         rtn += "; Inbound: ";
-
         if (this.inbound == null) {
             rtn += "null";
         } else if (this.inbound instanceof Platform) {

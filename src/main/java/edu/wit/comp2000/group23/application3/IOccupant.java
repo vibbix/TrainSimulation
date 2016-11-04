@@ -51,7 +51,10 @@ public abstract class IOccupant {
     public void setConnector(IConnector connector) {
         this.connector = connector;
         if (connector.getOccupant() != this)
-            connector.setOccupant(this);
+            if (connector instanceof Platform && this instanceof Train)
+                connector.setOccupant(this);
+
+
     }
 
     @Override
@@ -72,5 +75,6 @@ public abstract class IOccupant {
             }
         }
         return toStr;
+
     }
 }

@@ -100,37 +100,12 @@ public class Passenger extends Loggable {
      */
     public void Sync(Iterator<Passenger> itp) {
         // at a station, not in queue
-        if (this.currentPlatform == null && this.currentTrain == null) {
-            try {
-                this.setPlatform(this.currentStation.getRoute(this.destination));
-            } catch (Exception ex) {
-                super.logEvent("Passenger ran into door. Vaporized.");
-                return;
-            }
-            this.currentPlatform.enqueuePassenger(this);
-            super.logEvent("Enqueueing to platform #" + this.currentPlatform.getPlatformID());
-            return;
-        }
         if (this.currentStation == this.destination) {
             if (this.onTrain) {
                 this.disembarkTrain(itp);
             }
 
         }
-    }
-
-    /**
-     * Disembarks the train and add itself to the list of arrived passengers
-     */
-    public void disembarkTrain() {
-        super.logEvent("Disembarking train #" + this.currentTrain.getID());
-        try {
-            this.currentTrain.disembarkPassenger(this);
-            //this.currentTrain.disembarkPassenger(this, itp)
-        } catch (TrainDoorsClosedException tdce) {
-            super.logEvent("Dumb passenger walks into door. Vaporized.");
-        }
-        this.currentStation.addArrivingPassenger(this);
     }
 
     /**

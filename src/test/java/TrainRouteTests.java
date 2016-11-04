@@ -154,7 +154,6 @@ public class TrainRouteTests {
         TrainSimulation ts = new TrainSimulation(el.getLogger(), stops, false, 0);
         //t1@s2i
         //t2@s2o
-        ts.createTrains();
         ts.getRoute().getTrains().get(0).openDoors();
         ts.getRoute().getTrains().get(1).openDoors();
         Assert.assertEquals(ts.getRoute().getStations().get(1).getPlatform(Direction.Inbound),

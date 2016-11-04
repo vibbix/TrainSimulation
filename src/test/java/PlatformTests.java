@@ -1,5 +1,6 @@
 import edu.wit.comp2000.group23.application3.Enums.Direction;
 import edu.wit.comp2000.group23.application3.GraphMap.IConnector;
+import edu.wit.comp2000.group23.application3.GraphMap.Track;
 import edu.wit.comp2000.group23.application3.*;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 import org.junit.Assert;
@@ -107,8 +108,6 @@ public class PlatformTests {
         p1in.setOccupant(t1);
         p1in.moveConnector();
         Assert.assertEquals(t1, p2in.getOccupant());
-
-
     }
 
     @Test
@@ -119,5 +118,31 @@ public class PlatformTests {
         Assert.assertEquals(99, p.getPlatformID());
     }
 
+    @Test
+    public void platformConnectionToStringTest() {
+        Logger l = new Logger();
+        Train t1 = new Train(Direction.Outbound, 100, 0, l);
+        Platform p1in = new Platform(l, Direction.Inbound, null, 0);
+        //Platform p1out = new Platform(new Logger(), Direction.Outbound, firstStation, 50);
+        Platform p2in = new Platform(l, Direction.Inbound, null, 1);
+        //Platform p2out = new Platform(new Logger(), Direction.Outbound, secondStation, 51);
+        Platform p3in = new Platform(l, Direction.Inbound, null, 2);
+        p2in.setConnector(p3in, Direction.Inbound);
+        p2in.setConnector(p1in, Direction.Outbound);
+        p2in.setOccupant(t1);
+        Assert.assertEquals("Platform: 1; logger: " + l.hashCode() + "; Inbound: (Platform)2; Outbound: (Platform)0; Occupant: TRAIN 0 - Outbound [0/100] [DOORSOPEN] {Platform: 1} ", p2in.toString());
+    }
+
+    @Test
+    public void trackConnectionToStringTest() {
+        Logger l = new Logger();
+        Train t1 = new Train(Direction.Outbound, 100, 0, l);
+        Platform p2in = new Platform(l, Direction.Inbound, null, 0);
+        Track track1 = new Track(l);
+        Track track2 = new Track(l);
+        p2in.setConnector(track1, Direction.Inbound);
+        p2in.setConnector(track2, Direction.Outbound);
+        Assert.assertEquals("Platform: 0; logger: " + l.hashCode() + "; Inbound: (Track)-1; Outbound: (Track)-1; Occupant: null", p2in.toString());
+    }
 
 }

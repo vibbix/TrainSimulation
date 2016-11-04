@@ -80,7 +80,13 @@ public class PassengerTests {
         Station s = new Station(l, tr, 1);
         p.setStation(s);
         t.embarkPassenger(p);
-        p.disembarkTrain();
+        ArrayList<Passenger> pass = new ArrayList<>();
+        pass.add(p);
+        for (Iterator<Passenger> itp = pass.iterator(); itp.hasNext(); ) {
+            Passenger p1 = itp.next();
+            p1.disembarkTrain(itp);
+        }
+
         Assert.assertEquals(false, p.getOnTrain());
     }
 
@@ -120,17 +126,15 @@ public class PassengerTests {
         t.embarkPassenger(p);
         if (p.getCurrentStation() == p.getDestination()) {
             if (p.getOnTrain()) {
-                p.disembarkTrain();
+                ArrayList<Passenger> pass = new ArrayList<>();
+                pass.add(p);
+                for (Iterator<Passenger> itp = pass.iterator(); itp.hasNext(); )
+                    itp.next().disembarkTrain(itp);
             }
         }
         Assert.assertEquals(false, p.getOnTrain());
     }
 
-    /**
-     * test for passenger's intelligence (Exception is thrown when Passenger is
-     * on the track or something idek)
-     */
-    @SuppressWarnings("deprecation")
     @Test
     public void PassengerStationDestinationTest() throws Exception {
         Logger l = new Logger();
@@ -140,7 +144,11 @@ public class PassengerTests {
         Station s = new Station(l, tr, 1);
         p.setStation(s);
         t.embarkPassenger(p);
-        p.disembarkTrain();
+        ArrayList<Passenger> pass = new ArrayList<>();
+        pass.add(p);
+        for (Iterator<Passenger> itp = pass.iterator(); itp.hasNext(); ) {
+            itp.next().disembarkTrain(itp);
+        }
         Assert.assertEquals(false, p.getOnTrain());
     }
 

@@ -1,9 +1,6 @@
 import edu.wit.comp2000.group23.application3.Enums.Direction;
 import edu.wit.comp2000.group23.application3.GraphMap.Track;
-import edu.wit.comp2000.group23.application3.Passenger;
-import edu.wit.comp2000.group23.application3.Station;
-import edu.wit.comp2000.group23.application3.Train;
-import edu.wit.comp2000.group23.application3.TrainRoute;
+import edu.wit.comp2000.group23.application3.*;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 import org.junit.Assert;
 import org.junit.Test;
@@ -58,7 +55,16 @@ public class EndToEndTests {
         }
         Assert.assertEquals(3, s2.getArrivedPassengers().size());
     }
-    //Passenger overflow
 
-    //
+    @Test
+    public void TrainSimulationTest() {
+        Logger l = new Logger();
+        TrainSimulation ts = new TrainSimulation(l,
+                new String[]{"Back Bay", "Fenway", "Aquarium"}, false, 0);
+        for (int i = 0; i < 250; i++)
+            ts.getRoute().Sync();
+
+
+        Assert.assertEquals(true, ts.isSimulationDone());
+    }
 }

@@ -2,6 +2,7 @@ import edu.wit.comp2000.group23.application3.Enums.Direction;
 import edu.wit.comp2000.group23.application3.GraphMap.IConnector;
 import edu.wit.comp2000.group23.application3.GraphMap.Track;
 import edu.wit.comp2000.group23.application3.IOccupant;
+import edu.wit.comp2000.group23.application3.Platform;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -129,7 +130,7 @@ public class TrackTests {
     }
 
     @Test
-    public void toStringTest() {
+    public void tracktoStringTest() {
         IConnector section1 = new Track(logger, null, null, 0);
         IConnector section2 = new Track(logger, null, null, 1);
         IConnector section3 = new Track(logger, section1, section2, 2);
@@ -137,6 +138,19 @@ public class TrackTests {
         rtn += "; logger: " + logger.hashCode();
         rtn += "; Inbound: (Track) 0";
         rtn += "; Outbound: (Track) 1";
+        rtn += "; Occupant: " + null;
+        assertEquals(rtn, section3.toString());
+    }
+
+    @Test
+    public void platformtoStringTest() {
+        IConnector section1 = new Platform(logger, null, null, 0);
+        IConnector section2 = new Platform(logger, null, null, 1);
+        IConnector section3 = new Track(logger, section1, section2, 2);
+        String rtn = "Track: 2";
+        rtn += "; logger: " + logger.hashCode();
+        rtn += "; Inbound: (Platform) 0";
+        rtn += "; Outbound: (Platform) 1";
         rtn += "; Occupant: " + null;
         assertEquals(rtn, section3.toString());
     }
@@ -159,6 +173,7 @@ public class TrackTests {
         rtn += "; Occupant: " + null;
         assertEquals(rtn, section1.toString());
     }
+
 
     @Test
     public void loggerTest() {

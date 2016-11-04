@@ -6,8 +6,6 @@ import edu.wit.comp2000.group23.application3.Utilities.Logger;
 
 import java.util.Random;
 import java.util.Scanner;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * The train simulator, including random passenger generation. and console output
@@ -59,7 +57,7 @@ public class TrainSimulation extends Loggable {
     /**
      * Creates 2 trains for a route in the middle of the section.
      */
-    public void createTrains() {
+    private void createTrains() {
         //Generate trains
         Train t1 = new Train(Direction.Inbound, 100, 0, super.getLogger());
         Train t2 = new Train(Direction.Inbound, 100, 1, super.getLogger());
@@ -73,10 +71,8 @@ public class TrainSimulation extends Loggable {
     }
 
     /**
-     * Starts the simulation
+     * Generates the passengers, randomly distributed among each station
      */
-
-
     private void generatePassengers() {
         for (Station s : route.getStations()) {
             int cap = 30 + rand.nextInt(70);
@@ -88,7 +84,12 @@ public class TrainSimulation extends Loggable {
         }
     }
 
-    private boolean isSimulationDone() {
+    /**
+     * Returns true if the simulation is over
+     *
+     * @return True if the simulation is over
+     */
+    public boolean isSimulationDone() {
         int count = 0;
         for (Station s : this.route.getStations()) {
             count += s.getArrivedPassengers().size();
@@ -103,7 +104,6 @@ public class TrainSimulation extends Loggable {
         }
         return count + "/" + passengerID;
     }
-
 
     /**
      * Gets the simulations route
