@@ -10,9 +10,17 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
- * JUnit test for Passenger
+ * Comp2000 - Data Structures
+ * Application 3 - Queues (TrainSim)
+ * Group #23
  *
- * @author wongt1
+ * Team:
+ * Andrew DeChristopher
+ * Mark Beznos
+ * Bryon Kucharski
+ * Tin Wong
+ * Jeffery Lindeland
+ * Shakib Hassan
  */
 public class PassengerTests {
 
@@ -28,15 +36,7 @@ public class PassengerTests {
         Assert.assertEquals(l, p.getLogger());
     }
 
-    /**
-     * test for Passenger constructor with param:
-     *
-     * @param Logger   logger
-     * @param Station  destination
-     * @param Platform currentPlatform
-     * @param Statoin  currentStation
-     * @param int      pID
-     */
+
     @SuppressWarnings("deprecation")
     @Test
     public void PassengerConstructorTest() throws Exception {

@@ -48,7 +48,7 @@ public class TrainSimulation extends Loggable {
             ts.getRoute().Sync();
             ts.logEvent(ts.getSimulationProgress());
             if (ts.isSimulationDone()) {
-                ts.logEvent("Simulation over. All passengers have been vaporized.");
+                ts.logEvent("Simulation over. All passengers have arrived.");
                 return;
             }
         }
@@ -85,7 +85,7 @@ public class TrainSimulation extends Loggable {
     }
 
     /**
-     * Returns true if the simulation is over
+     * Returns the simulations current run status
      *
      * @return True if the simulation is over
      */

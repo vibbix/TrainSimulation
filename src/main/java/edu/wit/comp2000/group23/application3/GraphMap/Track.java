@@ -10,6 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Comp2000 - Data Structures
+ * Application 3 - Queues (TrainSim)
+ * Group #23
+ *
+ * Team:
+ * Andrew DeChristopher
+ * Mark Beznos
+ * Bryon Kucharski
+ * Tin Wong
+ * Jeffery Lindeland
+ * Shakib Hassan
+ *
  * The track class is analogous to edges in graph theory. The Trains ride along the track towards platforms
  */
 public class Track<T> extends Loggable implements IConnector<T> {

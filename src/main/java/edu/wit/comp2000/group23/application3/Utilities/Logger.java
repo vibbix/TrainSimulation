@@ -4,6 +4,18 @@ package edu.wit.comp2000.group23.application3.Utilities;
 import java.io.PrintStream;
 
 /**
+ * Comp2000 - Data Structures
+ * Application 3 - Queues (TrainSim)
+ * Group #23
+ *
+ * Team:
+ * Andrew DeChristopher
+ * Mark Beznos
+ * Bryon Kucharski
+ * Tin Wong
+ * Jeffery Lindeland
+ * Shakib Hassan
+ *
  * Created by beznosm on 10/24/2016.
  */
 public class Logger {

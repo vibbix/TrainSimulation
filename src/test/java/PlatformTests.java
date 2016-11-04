@@ -11,7 +11,17 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 
 /**
- * Created by lindelandj on 10/31/2016.
+ * Comp2000 - Data Structures
+ * Application 3 - Queues (TrainSim)
+ * Group #23
+ *
+ * Team:
+ * Andrew DeChristopher
+ * Mark Beznos
+ * Bryon Kucharski
+ * Tin Wong
+ * Jeffery Lindeland
+ * Shakib Hassan
  */
 public class PlatformTests {
 

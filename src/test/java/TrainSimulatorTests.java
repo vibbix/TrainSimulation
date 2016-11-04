@@ -4,7 +4,17 @@ import org.junit.Assert;
 import org.junit.Test;
 
 /**
- * Created by beznosm on 11/2/2016.
+ * Comp2000 - Data Structures
+ * Application 3 - Queues (TrainSim)
+ * Group #23
+ *
+ * Team:
+ * Andrew DeChristopher
+ * Mark Beznos
+ * Bryon Kucharski
+ * Tin Wong
+ * Jeffery Lindeland
+ * Shakib Hassan
  */
 public class TrainSimulatorTests {
     @Test

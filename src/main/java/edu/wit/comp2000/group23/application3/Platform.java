@@ -11,6 +11,18 @@ import java.util.List;
 import java.util.concurrent.LinkedBlockingDeque;
 
 /**
+ * Comp2000 - Data Structures
+ * Application 3 - Queues (TrainSim)
+ * Group #23
+ *
+ * Team:
+ * Andrew DeChristopher
+ * Mark Beznos
+ * Bryon Kucharski
+ * Tin Wong
+ * Jeffery Lindeland
+ * Shakib Hassan
+ *
  * Created by beznosm on 10/24/2016.
  */
 public class Platform extends Loggable implements IConnector<Train> {
