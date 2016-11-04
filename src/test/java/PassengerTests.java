@@ -112,6 +112,39 @@ public class PassengerTests {
         Assert.assertEquals(false, p.getOnTrain());
 
     }
+    @Test
+    public void TrainDoorsClosedWhileDisembarkingTest()throws Exception{
+        ArrayList<Passenger> list = new ArrayList<>();
+        Logger l = new Logger();
+        Passenger p = new Passenger(l, null, null, -1);
+        list.add(p);
+        Iterator<Passenger> itp = list.iterator();
+        Train t = new Train(null, 2, 1, l);
+        TrainRoute tr = new TrainRoute(l, 1);
+        Station s = new Station(l, tr, 1);
+        p.setStation(s);
+        t.setConnector(s.getPlatform(Direction.Outbound));
+        t.embarkPassenger(itp.next());
+        t.closeDoors();
+        p.disembarkTrain(itp);
+        Assert.assertEquals(true, p.getOnTrain());
+    }
+    @Test(expected = TrainDoorsClosedException.class)
+    public void TrainDoorsClosedWhileEmbarkingTest()throws Exception{
+        ArrayList<Passenger> list = new ArrayList<>();
+        Logger l = new Logger();
+        Passenger p = new Passenger(l, null, null, -1);
+        list.add(p);
+        Iterator<Passenger> itp = list.iterator();
+        Train t = new Train(null, 2, 1, l);
+        TrainRoute tr = new TrainRoute(l, 1);
+        Station s = new Station(l, tr, 1);
+        p.setStation(s);
+        t.setConnector(s.getPlatform(Direction.Outbound));
+        t.closeDoors();
+        t.embarkPassenger(itp.next());
+        Assert.assertEquals(false, p.getOnTrain());
+    }
 
     @SuppressWarnings("deprecation")
     @Test
