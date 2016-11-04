@@ -1,6 +1,6 @@
-import edu.wit.comp2000.group23.application3.*;
 import edu.wit.comp2000.group23.application3.Enums.Direction;
 import edu.wit.comp2000.group23.application3.GraphMap.IConnector;
+import edu.wit.comp2000.group23.application3.*;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 import org.junit.Assert;
 import org.junit.Test;
@@ -53,13 +53,14 @@ public class PlatformTests {
         p.setPlatformDirection(Direction.Outbound);
         Assert.assertEquals(p.getPlatformDirection(), Direction.Outbound);
     }
+
     @Test
-    public void passengerPlatformTest(){
+    public void passengerPlatformTest() {
         TrainRoute tr = new TrainRoute(new Logger(), 0);
         Station firstStation = new Station(new Logger(), tr, 0);
         Station secondStation = new Station(new Logger(), tr, 1);
         Platform p = new Platform(new Logger(), Direction.Inbound, firstStation, 1);
-        Passenger enteringPassenger = new Passenger(new Logger(), secondStation, p, firstStation, 1);
+        Passenger enteringPassenger = new Passenger(new Logger(), secondStation, firstStation, 1);
         Assert.assertEquals(p.canDequeuePassenger(), false);
         p.enqueuePassenger(enteringPassenger);
         Assert.assertEquals(p.canDequeuePassenger(), true);
@@ -68,7 +69,7 @@ public class PlatformTests {
     }
 
     @Test
-    public void setOccupantTest(){
+    public void setOccupantTest() {
         Train t = new Train(Direction.Inbound, 100, 0, new Logger());
         TrainRoute tr = new TrainRoute(new Logger(), 0);
         Station s = new Station(new Logger(), tr, 0);
@@ -111,7 +112,7 @@ public class PlatformTests {
     }
 
     @Test
-    public void getPlatformIDTest(){
+    public void getPlatformIDTest() {
         TrainRoute tr = new TrainRoute(new Logger(), 0);
         Station s = new Station(new Logger(), tr, 0);
         Platform p = new Platform(new Logger(), Direction.Inbound, s, 99);

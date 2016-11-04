@@ -1,4 +1,3 @@
-import edu.wit.comp2000.group23.application3.TrainRoute;
 import edu.wit.comp2000.group23.application3.TrainSimulation;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 import org.junit.Assert;
@@ -9,7 +8,7 @@ import org.junit.Test;
  */
 public class TrainSimulatorTests {
     @Test
-    public void createTrainTest(){
+    public void createTrainTest() {
         Logger logger = new Logger();
         String[] stops = new String[]{"s1", "s2", "s3"};
         TrainSimulation ts = new TrainSimulation(logger, stops, false, 0);

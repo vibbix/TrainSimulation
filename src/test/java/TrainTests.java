@@ -1,7 +1,7 @@
-import edu.wit.comp2000.group23.application3.*;
 import edu.wit.comp2000.group23.application3.Enums.Direction;
 import edu.wit.comp2000.group23.application3.Exceptions.TrainDoorsClosedException;
 import edu.wit.comp2000.group23.application3.Exceptions.TrainPassengerOverflowException;
+import edu.wit.comp2000.group23.application3.*;
 import edu.wit.comp2000.group23.application3.Utilities.Logger;
 import org.junit.Assert;
 import org.junit.Test;
@@ -49,9 +49,8 @@ public class TrainTests {
         Station s = new Station(new Logger(ps), tr, 0);
         Platform p = new Platform(new Logger(ps), Direction.Inbound, s, 0);
 
-        Passenger p1 = new Passenger(new Logger(ps), s, p, s, 0);
-        Passenger p2 = new Passenger(new Logger(ps), s, p, s, 1);
-
+        Passenger p1 = new Passenger(new Logger(ps), s, s, 0);
+        Passenger p2 = new Passenger(new Logger(ps), s, s, 1);
 
 
         try {
@@ -84,8 +83,8 @@ public class TrainTests {
         Station s = new Station(new Logger(ps), tr, 0);
         Platform p = new Platform(new Logger(ps), Direction.Inbound, s, 0);
 
-        Passenger p1 = new Passenger(new Logger(ps), s, p, s, 0);
-        Passenger p2 = new Passenger(new Logger(ps), s, p, s, 1);
+        Passenger p1 = new Passenger(new Logger(ps), s, s, 0);
+        Passenger p2 = new Passenger(new Logger(ps), s, s, 1);
 
         ArrayList<Passenger> pl = new ArrayList<>();
         pl.add(p1);
@@ -200,7 +199,7 @@ public class TrainTests {
         Station s = new Station(new Logger(ps), tr, 0);
         Platform p = new Platform(new Logger(ps), Direction.Inbound, s, 0);
 
-        Passenger p1 = new Passenger(new Logger(ps), s, p, s, 0);
+        Passenger p1 = new Passenger(new Logger(ps), s, s, 0);
 
         boolean success = false;
         try {
@@ -230,7 +229,7 @@ public class TrainTests {
         Station s = new Station(new Logger(ps), tr, 0);
         Platform p = new Platform(new Logger(ps), Direction.Inbound, s, 0);
 
-        Passenger p1 = new Passenger(new Logger(ps), s, p, s, 0);
+        Passenger p1 = new Passenger(new Logger(ps), s, s, 0);
 
         t.setConnector(p);
 
@@ -265,7 +264,7 @@ public class TrainTests {
         Station s = new Station(new Logger(ps), tr, 0);
         Platform p = new Platform(new Logger(ps), Direction.Inbound, s, 0);
 
-        Passenger p1 = new Passenger(new Logger(ps), s, p, s, 0);
+        Passenger p1 = new Passenger(new Logger(ps), s, s, 0);
 
         t.setConnector(p);
 
@@ -295,7 +294,7 @@ public class TrainTests {
         Station s = new Station(new Logger(ps), tr, 0);
         Platform p = new Platform(new Logger(ps), Direction.Inbound, s, 0);
 
-        Passenger p1 = new Passenger(new Logger(ps), s, p, s, 0);
+        Passenger p1 = new Passenger(new Logger(ps), s, s, 0);
 
         t.setConnector(p);
 
@@ -316,9 +315,7 @@ public class TrainTests {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PrintStream ps = new PrintStream(baos);
         Train t = new Train(Direction.Inbound, 100, -1, new Logger(ps));
-
         t.setDirection(Direction.Outbound);
-
         Assert.assertEquals(Direction.Outbound, t.getDirection());
     }
 

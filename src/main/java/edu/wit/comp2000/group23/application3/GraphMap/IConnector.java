@@ -57,6 +57,7 @@ public interface IConnector<T> {
 
     /**
      * if T extends IOccupant, the occupant moves in the direction set in the property field
+     *
      * @param <T> An object that implements IOccupant
      */
     default <T extends IOccupant> void moveConnector() throws Exception {

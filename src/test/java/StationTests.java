@@ -1,6 +1,9 @@
-import edu.wit.comp2000.group23.application3.*;
-import edu.wit.comp2000.group23.application3.Utilities.Logger;
 import edu.wit.comp2000.group23.application3.Enums.Direction;
+import edu.wit.comp2000.group23.application3.Passenger;
+import edu.wit.comp2000.group23.application3.Platform;
+import edu.wit.comp2000.group23.application3.Station;
+import edu.wit.comp2000.group23.application3.TrainRoute;
+import edu.wit.comp2000.group23.application3.Utilities.Logger;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -11,53 +14,55 @@ import java.util.ArrayList;
  */
 public class StationTests {
     @Test
-    public void nameTests(){
+    public void nameTests() {
         Station s = new Station(new Logger(), new TrainRoute(new Logger(), 0), 0, "MFA");
-        Assert.assertEquals("MFA",s.getName());
+        Assert.assertEquals("MFA", s.getName());
         s.setName("Longwood");
-        Assert.assertEquals("Longwood",s.getName());
+        Assert.assertEquals("Longwood", s.getName());
     }
 
     @Test
-    public void IDTest(){
+    public void IDTest() {
         Station s = new Station(new Logger(), new TrainRoute(new Logger(), 0), 0);
-        Assert.assertEquals(0,s.getID());
+        Assert.assertEquals(0, s.getID());
         s.setStationID(2);
-        Assert.assertEquals(2,s.getID());
+        Assert.assertEquals(2, s.getID());
     }
 
     @Test
-    public void routeTests(){
+    public void routeTests() {
         Station s = new Station(new Logger(), new TrainRoute(new Logger(), 0), 0);
         TrainRoute tr = new TrainRoute(new Logger(), 0);
         tr.createRoute(new String[]{"MFA", "Copley", "Down Town Crossing"});
         s.setRoute(tr);
-        Assert.assertEquals(tr,s.getRoute());
-    }
-    @Test
-    public void inboundTests(){
-        Station s = new Station(new Logger(), new TrainRoute(new Logger(), 0), 0);
-        Platform inboundTest = new Platform(new Logger(), Direction.Inbound, s,0);
-        s.setInbound(inboundTest);
-        Assert.assertEquals(inboundTest,s.getInbound());
+        Assert.assertEquals(tr, s.getRoute());
     }
 
     @Test
-    public void outboundTests(){
+    public void inboundTests() {
         Station s = new Station(new Logger(), new TrainRoute(new Logger(), 0), 0);
-        Platform outboundTest = new Platform(new Logger(), Direction.Outbound, s,0);
+        Platform inboundTest = new Platform(new Logger(), Direction.Inbound, s, 0);
+        s.setInbound(inboundTest);
+        Assert.assertEquals(inboundTest, s.getInbound());
+    }
+
+    @Test
+    public void outboundTests() {
+        Station s = new Station(new Logger(), new TrainRoute(new Logger(), 0), 0);
+        Platform outboundTest = new Platform(new Logger(), Direction.Outbound, s, 0);
         s.setOutbound(outboundTest);
-        Assert.assertEquals(outboundTest,s.getOutbound());
+        Assert.assertEquals(outboundTest, s.getOutbound());
     }
 
     @Test
     public void addArrivingPassengerTest() {
+        Logger l = new Logger();
         ArrayList<Passenger> expected = new ArrayList<>();
         Station s = new Station(new Logger(), new TrainRoute(new Logger(), 0), 0, "MFA");
-        Platform inboundTest = new Platform(null, null, null, 0);
-
+        Platform inboundTest = new Platform(l, null, null, 0);
         for (int i = 0; i < 3; i++) {
-            Passenger pass = new Passenger(null, null, null, null, i);
+            Passenger pass = new Passenger(l, null, null, i);
+            pass.setPlatform(inboundTest);
             expected.add(pass);
             s.addArrivingPassenger(pass);
         }
@@ -87,8 +92,7 @@ public class StationTests {
         Station currentStation = tr.getStations().get(0);
         Station destinationStation = tr.getStations().get(2);
         Platform testPlatform = new Platform(new Logger(), Direction.Inbound, currentStation, 0);
-        Passenger p = new Passenger(new Logger(), destinationStation, testPlatform, currentStation, 0);
-
+        Passenger p = new Passenger(new Logger(), destinationStation, currentStation, 0);
         Assert.assertEquals(currentStation.getInbound(), currentStation.getRoute(destinationStation));
     }
 
@@ -96,11 +100,8 @@ public class StationTests {
     public void toStringTest() {
         Station s = new Station(new Logger(), new TrainRoute(new Logger(), 0), 0, "MFA");
         Station destinationStation = new Station(new Logger(), new TrainRoute(new Logger(), 0), 1, "Down Town Crossing");
-
-        Platform testPlatform = new Platform(new Logger(), Direction.Inbound, s, 0);
-        Passenger p1 = new Passenger(new Logger(), destinationStation, testPlatform, s, 0);
-        Passenger p2 = new Passenger(new Logger(), destinationStation, testPlatform, s, 1);
-
+        Passenger p1 = new Passenger(new Logger(), destinationStation, s, 0);
+        Passenger p2 = new Passenger(new Logger(), destinationStation, s, 1);
         s.addArrivingPassenger(p1);
         s.addArrivingPassenger(p2);
         String expected = "Station info: \nStation Name: MFA\tStation ID: 0\nInbound Platform ID: 0" +

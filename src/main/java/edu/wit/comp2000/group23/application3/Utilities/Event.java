@@ -30,7 +30,7 @@ public class Event {
 
     @Override
     public String toString() {
-        if(this.getClassName().equals("Train") || this.getClassName().equals("Track") || this.getClassName().equals("Station")){
+        if (this.getClassName().equals("Train") || this.getClassName().equals("Track") || this.getClassName().equals("Station")) {
             return "[" + this.getClassName() + "\t\t\t]" + "[" + this.getInstanceID() + "\t]" + "[" + this.getEventText() + "]";
         }
         return "[" + this.getClassName() + "\t\t]" + "[" + this.getInstanceID() + "\t]" + "[" + this.getEventText() + "]";

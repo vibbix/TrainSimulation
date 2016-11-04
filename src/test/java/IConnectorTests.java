@@ -10,7 +10,7 @@ import org.junit.Test;
  */
 public class IConnectorTests {
     @Test
-    public void moveConnectorInbound() throws Exception{
+    public void moveConnectorInbound() throws Exception {
         Logger logger = new Logger();
         IConnector t1 = new Track(logger);
         IConnector t2 = new Track(logger);

@@ -20,6 +20,7 @@ public class Track<T> extends Loggable implements IConnector<T> {
 
     /**
      * Creates a basic track
+     *
      * @param logger Logger for track to use
      */
     public Track(Logger logger) {
@@ -45,6 +46,7 @@ public class Track<T> extends Loggable implements IConnector<T> {
 
     /**
      * If the tack has an occupant, this will return it
+     *
      * @return The track occupant
      */
     @Override
@@ -54,6 +56,7 @@ public class Track<T> extends Loggable implements IConnector<T> {
 
     /**
      * Sets the tracks occupant
+     *
      * @param occupant What to set occupant to
      */
     @Override
@@ -64,8 +67,10 @@ public class Track<T> extends Loggable implements IConnector<T> {
             ((IOccupant) occupant).setConnector(this);
         }
     }
+
     /**
      * Gets the lists of connectors associated with the track
+     *
      * @return A list of connectors the track is connected to
      */
     @Override
@@ -79,6 +84,7 @@ public class Track<T> extends Loggable implements IConnector<T> {
 
     /**
      * Sets the connector in the direction passed.
+     *
      * @param connector Connector to assign to graph
      * @param direction Direction connector is going
      */
@@ -101,6 +107,7 @@ public class Track<T> extends Loggable implements IConnector<T> {
 
     /**
      * Gets the connector in the direction
+     *
      * @param direction Direction to get connector
      * @return Connector in the specified direction
      */
@@ -139,6 +146,7 @@ public class Track<T> extends Loggable implements IConnector<T> {
 
     /**
      * Gets the tracks ID
+     *
      * @return The trackID
      */
     public int getTrackID() {
