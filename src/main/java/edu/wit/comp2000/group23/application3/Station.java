@@ -9,6 +9,18 @@ import edu.wit.comp2000.group23.application3.Utilities.Logger;
 import java.util.ArrayList;
 
 /**
+ * Comp2000 - Data Structures
+ * Application 3 - Queues (TrainSim)
+ * Group #23
+ *
+ * Team:
+ * Andrew DeChristopher
+ * Mark Beznos
+ * Bryon Kucharski
+ * Tin Wong
+ * Jeffery Lindeland
+ * Shakib Hassan
+ *
  * Created by beznosm on 10/24/2016.
  */
 public class Station extends Loggable {
@@ -24,10 +36,9 @@ public class Station extends Loggable {
     /**
      * Creates a new station
      *
-     * @param l Logger to pass in
-     * @param tr Train route to set to the station
+     * @param l   Logger to pass in
+     * @param tr  Train route to set to the station
      * @param sID ID of station
-     *
      */
     public Station(Logger l, TrainRoute tr, int sID) {
         super(l, sID);
@@ -41,11 +52,10 @@ public class Station extends Loggable {
     /**
      * Creates a new station
      *
-     * @param l Logger to pass in
-     * @param tr Train route to set to the station
-     * @param sID ID of station
+     * @param l    Logger to pass in
+     * @param tr   Train route to set to the station
+     * @param sID  ID of station
      * @param name Name of the station
-     *
      */
     public Station(Logger l, TrainRoute tr, int sID, String name) {
         super(l, sID);
@@ -107,7 +117,6 @@ public class Station extends Loggable {
      * gets the platform for a passenger to enqueue
      *
      * @param d direction of the passenger
-     *
      * @return Platform to enqueue
      */
     public Platform getPlatform(Direction d) {
@@ -115,22 +124,23 @@ public class Station extends Loggable {
             return outbound;
         return inbound;
     }
+
     /**
      * Fill train from inbound and outbound platform
      */
     public void Sync() {
         this.getPlatforms().stream().filter(p -> p.getOccupant() != null).forEach(p -> {
             Train t = p.getOccupant();
-            if(!t.getDoorState())
+            if (!t.getDoorState())
                 t.openDoors();
             while (p.canDequeuePassenger() && !p.isTrainReadyToLeave()) {
-                if(t.getCurrentPassengers() == t.getMaxPassengers())
+                if (t.getCurrentPassengers() == t.getMaxPassengers())
                     break;
                 Passenger passenger = p.dequeuePassenger();
                 super.logEvent("Dequeueing Passenger #" + passenger.getID() + " onto train #" + t.getID());
-                try{
+                try {
                     t.embarkPassenger(passenger);
-                }catch (TrainDoorsClosedException e) {
+                } catch (TrainDoorsClosedException e) {
                     this.logEvent("FATAL ERROR - TrainDoorsClosedException");
                     System.exit(0);
                 } catch (TrainPassengerOverflowException ex) {
@@ -144,10 +154,11 @@ public class Station extends Loggable {
 
     /**
      * Returns platform for passenger to enter (inbound or outbound) based on destination station.
+     *
      * @param destination End Station of the Passenger
      */
     public Platform getRoute(Station destination) {
-        if(route.getRoute(this, destination) == Direction.Inbound)
+        if (route.getRoute(this, destination) == Direction.Inbound)
             return inbound;
         return outbound;
     }
@@ -169,7 +180,7 @@ public class Station extends Loggable {
      */
     public void addArrivingPassenger(Passenger p) {
         this.arrivedPassengers.add(p);
-        super.logEvent("Passenger #"+ p.getID() +" Arrived at Destination Station");
+        super.logEvent("Passenger #" + p.getID() + " Arrived at Destination Station");
     }
 
     @Override

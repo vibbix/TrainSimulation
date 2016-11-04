@@ -5,6 +5,18 @@ import edu.wit.comp2000.group23.application3.GraphMap.IConnector;
 import edu.wit.comp2000.group23.application3.GraphMap.Track;
 
 /**
+ * Comp2000 - Data Structures
+ * Application 3 - Queues (TrainSim)
+ * Group #23
+ *
+ * Team:
+ * Andrew DeChristopher
+ * Mark Beznos
+ * Bryon Kucharski
+ * Tin Wong
+ * Jeffery Lindeland
+ * Shakib Hassan
+ *
  * Interface for classes that have direction
  */
 public abstract class IOccupant {
@@ -51,7 +63,10 @@ public abstract class IOccupant {
     public void setConnector(IConnector connector) {
         this.connector = connector;
         if (connector.getOccupant() != this)
-            connector.setOccupant(this);
+            if (connector instanceof Platform && this instanceof Train)
+                connector.setOccupant(this);
+
+
     }
 
     @Override
@@ -72,5 +87,6 @@ public abstract class IOccupant {
             }
         }
         return toStr;
+
     }
 }

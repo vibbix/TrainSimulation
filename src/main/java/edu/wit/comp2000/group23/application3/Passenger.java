@@ -7,6 +7,19 @@ import edu.wit.comp2000.group23.application3.Utilities.Logger;
 import java.util.Iterator;
 
 /**
+ * /**
+ * Comp2000 - Data Structures
+ * Application 3 - Queues (TrainSim)
+ * Group #23
+ *
+ * Team:
+ * Andrew DeChristopher
+ * Mark Beznos
+ * Bryon Kucharski
+ * Tin Wong
+ * Jeffery Lindeland
+ * Shakib Hassan
+ *
  * Created by beznosm on 10/24/2016.
  * <p>
  * STEPS OF THE PASSENGER:
@@ -52,38 +65,17 @@ public class Passenger extends Loggable {
      * @param logger
      */
     public Passenger(Logger logger) {
-        this(logger, null, null, null, -1);
+        this(logger, null, null, -1);
     }
 
     /**
      * Constructor, takes in logger, destination, currentPlatform,
      * currentStation, pID
      *
-     * @param logger          logger to use
-     * @param destination     The station the passenger wants to go to
-     * @param currentPlatform The platform the passenger is currently at
-     * @param currentStation  The station the passenger is currently at
-     * @param pID             Passenger ID
-     */
-    public Passenger(Logger logger, Station destination, Platform currentPlatform, Station currentStation, int pID) {
-        super(logger, pID);
-        this.onTrain = false;
-        this.destination = destination;
-        this.currentPlatform = currentPlatform;
-        this.currentStation = currentStation;
-        this.passengerID = pID;
-        this.currentTrain = null;
-        //super.logEvent("Created new passenger: id=" + this.getID() +
-        //        ";Arrival=" + currentStation.getName() +";Destination=" + destination.getName());
-    }
-    /**
-     * Constructor, takes in logger, destination, currentPlatform,
-     * currentStation, pID
-     *
-     * @param logger          logger to use
-     * @param destination     The station the passenger wants to go to
-     * @param currentStation  The station the passenger is currently at
-     * @param pID             Passenger ID
+     * @param logger         logger to use
+     * @param destination    The station the passenger wants to go to
+     * @param currentStation The station the passenger is currently at
+     * @param pID            Passenger ID
      */
     public Passenger(Logger logger, Station destination, Station currentStation, int pID) {
         super(logger, pID);
@@ -93,51 +85,34 @@ public class Passenger extends Loggable {
         this.passengerID = pID;
         this.currentTrain = null;
         super.logEvent("Created new passenger: id=" + this.getID() +
-                ";Arrival=" + currentStation.getName() +";Destination=" + destination.getName());
+                ";Arrival=" + (this.currentStation != null ? currentStation.getName() : "null") +
+                ";Destination=" + (this.destination != null ? destination.getName() : "null"));
+        this.getOnPlatform();
     }
 
     // passenger methods (core methods)
 
     /**
-     * Sync method, updates everytime passenger is at a new station (on train)
+     * Gets the passenger onto the platform
      */
-    public void Sync() {
+    private void getOnPlatform() {
         // at a station, not in queue
-        if (this.currentPlatform == null && this.currentTrain == null) {
-            try{
-                this.setPlatform(this.currentStation.getRoute(this.destination));
-            } catch(Exception ex){
-                super.logEvent("Passenger is fucking stupid. Vaporized.");
-                return;
-            }
+        try {
+            this.setPlatform(this.currentStation.getRoute(this.destination));
             this.currentPlatform.enqueuePassenger(this);
             super.logEvent("Enqueueing to platform #" + this.currentPlatform.getPlatformID());
-            return;
-        }
-        if (this.currentStation == this.destination) {
-            if (this.onTrain) {
-                this.disembarkTrain();
-            }
-
+        } catch (Exception ex) {
+            super.logEvent("Passenger ran into door. Vaporized.");
         }
     }
+
     /**
      * Sync method, updates everytime passenger is at a new station (on train)
-     * @param itp The iterator for passenger
+     *
+     * @param itp The iterator for passenger, so the Passenger can be safely removed from the passenger list
      */
     public void Sync(Iterator<Passenger> itp) {
         // at a station, not in queue
-        if (this.currentPlatform == null && this.currentTrain == null) {
-            try{
-                this.setPlatform(this.currentStation.getRoute(this.destination));
-            } catch(Exception ex){
-                super.logEvent("Passenger ran into door. Vaporized.");
-                return;
-            }
-            this.currentPlatform.enqueuePassenger(this);
-            super.logEvent("Enqueueing to platform #" + this.currentPlatform.getPlatformID());
-            return;
-        }
         if (this.currentStation == this.destination) {
             if (this.onTrain) {
                 this.disembarkTrain(itp);
@@ -149,25 +124,12 @@ public class Passenger extends Loggable {
     /**
      * Disembarks the train and add itself to the list of arrived passengers
      */
-    public void disembarkTrain() {
-        super.logEvent("Disembarking train #" + this.currentTrain.getID());
-        try{
-            this.currentTrain.disembarkPassenger(this);
-            //this.currentTrain.disembarkPassenger(this, itp)
-        }catch (TrainDoorsClosedException tdce){
-            super.logEvent("Dumb passenger walks into door. Vaporized.");
-        }
-        this.currentStation.addArrivingPassenger(this);
-    }
-    /**
-     * Disembarks the train and add itself to the list of arrived passengers
-     */
     public void disembarkTrain(Iterator<Passenger> itp) {
         super.logEvent("Disembarking train #" + this.currentTrain.getID());
-        try{
+        try {
             this.currentTrain.disembarkPassenger(this, itp);
             //this.currentTrain.disembarkPassenger(this, itp)
-        }catch (TrainDoorsClosedException tdce){
+        } catch (TrainDoorsClosedException tdce) {
             super.logEvent("Dumb passenger walks into door. Vaporized.");
         }
         this.currentStation.addArrivingPassenger(this);
@@ -184,6 +146,7 @@ public class Passenger extends Loggable {
 
     /**
      * accessor method, gets the platform of the passenger
+     *
      * @return
      */
     public Platform getPlatform() {
@@ -197,7 +160,7 @@ public class Passenger extends Loggable {
      */
     public void setPlatform(Platform platform) {
         this.currentPlatform = platform;
-        if(platform != null)
+        if (platform != null)
             this.currentStation = this.currentPlatform.getStation();
     }
 

@@ -12,6 +12,18 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
+ * Comp2000 - Data Structures
+ * Application 3 - Queues (TrainSim)
+ * Group #23
+ *
+ * Team:
+ * Andrew DeChristopher
+ * Mark Beznos
+ * Bryon Kucharski
+ * Tin Wong
+ * Jeffery Lindeland
+ * Shakib Hassan
+ *
  * Implemented by dechristophera on 10/27/2016.
  */
 
@@ -56,22 +68,23 @@ public class Train extends IOccupant {
      * Propagates Sync to all passengers in the train
      */
     public void Sync() {
-        if(this.currentPlatform  != null)
-            if(!this.getDoorState())
+        if (this.currentPlatform != null)
+            if (!this.getDoorState())
                 this.openDoors();
-        for (Iterator<Passenger> itp = this.passengers.iterator(); itp.hasNext();) {
+        for (Iterator<Passenger> itp = this.passengers.iterator(); itp.hasNext(); ) {
             Passenger p = itp.next();
             p.setStation(this.currentStation);
             p.setPlatform(this.currentPlatform);
             p.Sync(itp);
         }
-        if(this.currentPlatform != null){
+        if (this.currentPlatform != null) {
             this.closeDoors();
         }
     }
 
     /**
      * Returns current train direction (inbound, outbound)
+     *
      * @return
      */
     public Direction getDirection() {
@@ -81,6 +94,7 @@ public class Train extends IOccupant {
 
     /**
      * Sets the direction of the train
+     *
      * @param d Direction to set the train
      */
     public void setDirection(Direction d) {
@@ -157,6 +171,7 @@ public class Train extends IOccupant {
 
     /**
      * Sets the station the train is currently at
+     *
      * @param s station
      */
     public void setCurrentStation(Station s) {
@@ -166,6 +181,7 @@ public class Train extends IOccupant {
 
     /**
      * Boards passenger on train
+     *
      * @param p passenger
      * @return success of boarding
      */
@@ -176,7 +192,7 @@ public class Train extends IOccupant {
             throw new TrainDoorsClosedException(this.getID() + "");
         }
         //if(this.passengers.size() == this.maxPassengers){
-        if(this.getCurrentPassengers() == this.getMaxPassengers()){
+        if (this.getCurrentPassengers() == this.getMaxPassengers()) {
             throw new TrainPassengerOverflowException(this.getID() + "");
         }
 
@@ -195,6 +211,7 @@ public class Train extends IOccupant {
 
     /**
      * Passenger leaves train
+     *
      * @param p passenger
      * @return success of un-boarding
      */
@@ -212,6 +229,7 @@ public class Train extends IOccupant {
 
     /**
      * Passenger leaves train
+     *
      * @param p passenger
      * @return success of un-boarding
      */
@@ -230,6 +248,7 @@ public class Train extends IOccupant {
 
     /**
      * Sets direction for testing in a simple manner
+     *
      * @param d direction
      */
     public void setDirectionNoLog(Direction d) {
@@ -239,6 +258,7 @@ public class Train extends IOccupant {
 
     /**
      * Pushes event to event logger
+     *
      * @param event
      */
     public void LogEvent(String event) {
@@ -248,6 +268,7 @@ public class Train extends IOccupant {
 
     /**
      * Returns current track or platform train resides on
+     *
      * @param c track or platform
      */
     public void setConnector(IConnector c) {
@@ -268,15 +289,15 @@ public class Train extends IOccupant {
     public String toString() {
         String str = "TRAIN " + this.getID();
         str += " - " + this.getDirection().name();
-        str +=        " [" + this.getCurrentPassengers() + "/" + this.getMaxPassengers() + "] " ;
-        str +=        "[DOORS" + ((this.getDoorState()) ? "OPEN" : "CLOSED") + "] " ;
-        if(this.getConnector() instanceof Platform){
-            str +=        "{Platform: " + ((Platform) this.getConnector()).getPlatformID() + "} " ;
-        }else if(this.getConnector() instanceof Track){
-            str +=        "{Track: " + ((Track) this.getConnector()).getTrackID()+"}" ;
+        str += " [" + this.getCurrentPassengers() + "/" + this.getMaxPassengers() + "] ";
+        str += "[DOORS" + ((this.getDoorState()) ? "OPEN" : "CLOSED") + "] ";
+        if (this.getConnector() instanceof Platform) {
+            str += "{Platform: " + ((Platform) this.getConnector()).getPlatformID() + "} ";
+        } else if (this.getConnector() instanceof Track) {
+            str += "{Track: " + ((Track) this.getConnector()).getTrackID() + "}";
         }
-        if(this.currentStation != null){
-            str +=        "{Station: " + this.getCurrentStation().getID() + "}";
+        if (this.currentStation != null) {
+            str += "{Station: " + this.getCurrentStation().getID() + "}";
         }
         return str;
     }

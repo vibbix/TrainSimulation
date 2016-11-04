@@ -1,6 +1,18 @@
 package edu.wit.comp2000.group23.application3.Utilities;
 
 /**
+ * Comp2000 - Data Structures
+ * Application 3 - Queues (TrainSim)
+ * Group #23
+ *
+ * Team:
+ * Andrew DeChristopher
+ * Mark Beznos
+ * Bryon Kucharski
+ * Tin Wong
+ * Jeffery Lindeland
+ * Shakib Hassan
+ *
  * An immutable logged Event.
  */
 public class Event {
@@ -30,7 +42,7 @@ public class Event {
 
     @Override
     public String toString() {
-        if(this.getClassName().equals("Train") || this.getClassName().equals("Track") || this.getClassName().equals("Station")){
+        if (this.getClassName().equals("Train") || this.getClassName().equals("Track") || this.getClassName().equals("Station")) {
             return "[" + this.getClassName() + "\t\t\t]" + "[" + this.getInstanceID() + "\t]" + "[" + this.getEventText() + "]";
         }
         return "[" + this.getClassName() + "\t\t]" + "[" + this.getInstanceID() + "\t]" + "[" + this.getEventText() + "]";

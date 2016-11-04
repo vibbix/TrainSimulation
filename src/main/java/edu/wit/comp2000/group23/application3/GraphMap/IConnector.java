@@ -6,6 +6,18 @@ import edu.wit.comp2000.group23.application3.IOccupant;
 import java.util.List;
 
 /**
+ * Comp2000 - Data Structures
+ * Application 3 - Queues (TrainSim)
+ * Group #23
+ *
+ * Team:
+ * Andrew DeChristopher
+ * Mark Beznos
+ * Bryon Kucharski
+ * Tin Wong
+ * Jeffery Lindeland
+ * Shakib Hassan
+ *
  * The connection interface for vertices and edges.
  */
 public interface IConnector<T> {
@@ -57,6 +69,7 @@ public interface IConnector<T> {
 
     /**
      * if T extends IOccupant, the occupant moves in the direction set in the property field
+     *
      * @param <T> An object that implements IOccupant
      */
     default <T extends IOccupant> void moveConnector() throws Exception {

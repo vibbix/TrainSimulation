@@ -9,7 +9,19 @@ import edu.wit.comp2000.group23.application3.Utilities.Logger;
 import java.util.ArrayList;
 
 /**
- * Created by beznosm on 10/24/2016.
+ * Comp2000 - Data Structures
+ * Application 3 - Queues (TrainSim)
+ * Group #23
+ *
+ * Team:
+ * Andrew DeChristopher
+ * Mark Beznos
+ * Bryon Kucharski
+ * Tin Wong
+ * Jeffery Lindeland
+ * Shakib Hassan
+ *
+ * The trainroute for the simulation.
  */
 public class TrainRoute extends Loggable {
     private long currentTick;
@@ -87,7 +99,6 @@ public class TrainRoute extends Loggable {
     }
 
 
-
     private void createInBetweenTrack(Platform s, Platform e, int tickDistance) {
         IConnector cnode = s;
         for (int i = 0; i < tickDistance; i++) {
@@ -103,7 +114,7 @@ public class TrainRoute extends Loggable {
      * Syncs the Trainroute simulation
      */
     public void Sync() {
-        if(!this.trackIntialized){
+        if (!this.trackIntialized) {
             throw new SecurityException("The route has not been intialized");
         }
         for (Train t : this.trains) {
@@ -116,15 +127,15 @@ public class TrainRoute extends Loggable {
                         hasmoved = true;
                     }
                 }
-                if (t.getConnector() instanceof Track && !hasmoved){
+                if (t.getConnector() instanceof Track && !hasmoved) {
                     t.getConnector().moveConnector();
                     hasmoved = true;
                 }
-                if(hasmoved){
+                if (hasmoved) {
                     IConnector c = t.getConnector();
-                    logEvent("Moved Train #"+t.getID() + " to " +
-                            (c instanceof Platform ? "(Platform)"+((Platform) c).getPlatformID() :
-                                    "(Track)" + ((Track)c).getTrackID()));
+                    logEvent("Moved Train #" + t.getID() + " to " +
+                            (c instanceof Platform ? "(Platform)" + ((Platform) c).getPlatformID() :
+                                    "(Track)" + ((Track) c).getTrackID()));
                 }
             } catch (Exception ex) {
                 logEvent("Could not move train. Passengers vaporized.");
@@ -144,7 +155,7 @@ public class TrainRoute extends Loggable {
      * @return The optimal direction the passenger should go to arrive at their destination
      */
     public Direction getRoute(Station start, Station end) {
-        if(!this.trackIntialized){
+        if (!this.trackIntialized) {
             throw new SecurityException("The route has not been intialized");
         }
         int s = this.stations.indexOf(start);
